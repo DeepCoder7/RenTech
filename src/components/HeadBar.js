@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     Appbar: {
         backgroundColor: '#2c2c2c',
-        height: 50,
+        height: 60,
         justifyContent: 'center',
         zIndex: theme.zIndex.drawer + 1,
     },

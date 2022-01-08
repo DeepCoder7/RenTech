@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { Divider, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { useMediaQuery, Divider, List, ListItem, ListItemText, Typography, AppBar, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        // marginTop: 50,
+        height: 60,
+        marginTop: 60,
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -37,11 +38,10 @@ const useStyles = makeStyles((theme) => ({
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
-        marginTop: 50,
     },
     drawerPaper: {
         width: drawerWidth,
-        marginTop: 50,
+        marginTop: 60,
         backgroundColor: '#272B40',
         color: 'white'
     },
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
-        // marginTop: 50
     },
     content: {
         flexGrow: 1,
@@ -62,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         marginLeft: -drawerWidth,
-        marginTop: 50
+        marginTop: 120
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
@@ -70,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
-        // marginTop: 50
     },
     divider: {
         // Theme Color, or use css color in quote
@@ -86,11 +84,29 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Layout = ({open,children}) => {
+const Layout = ({ open, children }) => {
     const classes = useStyles();
+    const matches = useMediaQuery('(min-width:600px)');
+
+    useEffect(() => {
+        console.log(matches);
+    }, [matches])
+
     return (
         <div className={classes.root}>
             <CssBaseline />
+            <AppBar
+                position='fixed'
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
+                <Toolbar>
+                    <Typography variant='h6' className={classes.title}>
+                        RentTech
+                    </Typography>
+                </Toolbar>
+            </AppBar>
             <Drawer
                 className={classes.drawer}
                 variant="persistent"

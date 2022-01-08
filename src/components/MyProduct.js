@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import productContext from '../contexts/products/productContext'
-import ProductItem from './ProductItem'
+import { Container, Grid } from '@material-ui/core';
+import ProductCard from './ProductCard';
 
 const MyProduct = () => {
     const context = useContext(productContext);
@@ -14,11 +15,13 @@ const MyProduct = () => {
     }, [])
     return (
         <>
-            <div className="w-100 bg-light d-flex flex-wrap my-3">
-                {myProducts.map((product) =>{
-                    return <ProductItem key={product._id} myPro={true} DeleteProduct={DeleteProduct} product={product} />
-                })}
-            </div>
+            <Container>
+                <Grid container spacing={5}>
+                    {myProducts.map((product) => {
+                        return <ProductCard key={product._id} product={product}/>
+                    })}
+                </Grid>
+            </Container>
         </>
     )
 }

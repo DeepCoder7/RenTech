@@ -1,6 +1,7 @@
+import { Container, Grid } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react'
 import productContext from '../contexts/products/productContext'
-import ProductItem from './ProductItem';
+import ProductCard from './ProductCard';
 
 const Home = () => {
     const productCon = useContext(productContext);
@@ -18,11 +19,13 @@ const Home = () => {
                 <div className="btn btn-outline-secondary align-self-center">Console</div>
             </div>
             <hr />
-            <div className="w-100 bg-light d-flex my-3 flex-wrap">
-                {products.map((product) =>{
-                    return <ProductItem key={product._id} myPro={false} product={product}/>
-                })}
-            </div>
+            <Container>
+                <Grid container spacing={5}>
+                    {products.map((product) => {
+                        return <ProductCard key={product._id} product={product}/>
+                    })}
+                </Grid>
+            </Container>
         </>
     )
 }
