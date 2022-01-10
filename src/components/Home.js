@@ -13,11 +13,6 @@ const Home = () => {
     }, [])
     return (
         <>
-            <div className="w-100 bg-light d-flex justify-content-around my-3" style={{ height: '40px', backgroundColor: 'ghostwhite' }}>
-                <div className="btn btn-outline-secondary align-self-center">Computer</div>
-                <div className="btn btn-outline-secondary align-self-center">Laptop</div>
-                <div className="btn btn-outline-secondary align-self-center">Console</div>
-            </div>
             <hr />
             <Container>
                 <Grid container spacing={5}>

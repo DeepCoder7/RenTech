@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react'
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useMediaQuery, Divider, List, ListItem, ListItemText, Typography, AppBar, Toolbar } from '@material-ui/core';
+import { InputBase, useMediaQuery, Divider, List, ListItem, ListItemText, Typography, AppBar, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import SearchIcon from '@material-ui/icons/Search';
+import Category from './Category';
+
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+    //1. for Roor 
     root: {
         display: 'flex',
     },
+
+    //2. AppBar and It's Elements
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
@@ -19,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
         }),
         height: 60,
         marginTop: 60,
+        // backgroundColor: 'white',
+        // color: 'black',
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -35,6 +43,47 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: 'none',
     },
+
+    // 3. For the search Design
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+        },
+    },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    },
+
+    //4. For the drawer
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
@@ -53,6 +102,8 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
     },
+
+    // 5. For the content
     content: {
         flexGrow: 1,
         padding: theme.spacing(2),
@@ -85,8 +136,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Layout = ({ open, children }) => {
-    const classes = useStyles();
     const matches = useMediaQuery('(min-width:600px)');
+    const classes = useStyles(matches);
 
     useEffect(() => {
         console.log(matches);
@@ -95,18 +146,7 @@ const Layout = ({ open, children }) => {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar
-                position='fixed'
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <Typography variant='h6' className={classes.title}>
-                        RentTech
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            {/* Drawer */}
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
@@ -142,11 +182,39 @@ const Layout = ({ open, children }) => {
                     </Link>
                 </List>
             </Drawer>
+
+            {/* AppBar for search and Notification Icon */}
+            <AppBar
+                position='fixed'
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
+                <Toolbar>
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon />
+                        </div>
+                        <InputBase
+                            placeholder="Search…"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                    </div>
+                    {matches && <Category />}
+                </Toolbar>
+            </AppBar>
+
+
             <main
                 className={clsx(classes.content, {
                     [classes.contentShift]: open,
                 })}
             >
+                {!matches && <Category />}
                 {children}
             </main>
         </div>

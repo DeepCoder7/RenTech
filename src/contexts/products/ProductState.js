@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ProductContext from "./productContext";
 
 const ProductState = (props) =>{
+    const [authToken, setAuthToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFiOGE0ZWE3YjJjZmQ3YWVmZDU3MDJiIn0sImlhdCI6MTY0MDI4MDMxNH0.rqfORNXMoBYiSGZ35VzRT35JutVdYqZUxtVYmIDGWCY');
+    
     const host = 'http://localhost:8500/api/productDetail'
     const [products, setProducts] = useState([]);
     const [myProducts, setMyProducts] = useState([]);
@@ -12,7 +14,7 @@ const ProductState = (props) =>{
             method : 'GET',
             headers : {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFiOGE0ZWE3YjJjZmQ3YWVmZDU3MDJiIn0sImlhdCI6MTY0MDI4MDMxNH0.rqfORNXMoBYiSGZ35VzRT35JutVdYqZUxtVYmIDGWCY'
+                'auth-token': authToken
             }
         })
 
@@ -26,7 +28,7 @@ const ProductState = (props) =>{
             method : 'GET',
             headers : {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFiOGE0ZWE3YjJjZmQ3YWVmZDU3MDJiIn0sImlhdCI6MTY0MDI4MDMxNH0.rqfORNXMoBYiSGZ35VzRT35JutVdYqZUxtVYmIDGWCY'
+                'auth-token': authToken
             }
         })
 
@@ -40,7 +42,7 @@ const ProductState = (props) =>{
             method : 'POST',
             headers : {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFiOGE0ZWE3YjJjZmQ3YWVmZDU3MDJiIn0sImlhdCI6MTY0MDI4MDMxNH0.rqfORNXMoBYiSGZ35VzRT35JutVdYqZUxtVYmIDGWCY'
+                'auth-token': authToken
             },
             body: JSON.stringify(postProduct)
         })
@@ -54,7 +56,7 @@ const ProductState = (props) =>{
             method : 'DELETE',
             headers : {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFiOGE0ZWE3YjJjZmQ3YWVmZDU3MDJiIn0sImlhdCI6MTY0MDI4MDMxNH0.rqfORNXMoBYiSGZ35VzRT35JutVdYqZUxtVYmIDGWCY'
+                'auth-token': authToken
             }
         })
 

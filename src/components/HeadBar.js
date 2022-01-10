@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#2c2c2c',
         height: 60,
         justifyContent: 'center',
+        flexWrap: 'wrap',
         zIndex: theme.zIndex.drawer + 1,
     },
     title: {
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center'
     },
+    wrap : {
+        display: 'flex',
+        flexWrap: 'wrap',
+    }
 }))
 
 const HeadBar = (props) => {
@@ -32,17 +37,17 @@ const HeadBar = (props) => {
     return (
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.Appbar}>
-                <Toolbar>
+                <Toolbar className={classes.wrap}>
                     <IconButton onClick={()=>{props.ToggleBar();}} edge='start' className={classes.menuButton} color='inherit' aria-label="menu">
                         <MenuIcon />
                     </IconButton>
                     <Typography variant='h6' className={classes.title}>
                         RentTech
                     </Typography>
-                    <Button color='inherit'>
+                    <Button color='inherit' variant='outlined'>
                         Sign-In
                     </Button>
-                    <Button color='inherit'>
+                    <Button color='inherit' variant='outlined' style={{marginLeft:'10px'}}>
                         Log-In
                     </Button>
                 </Toolbar>

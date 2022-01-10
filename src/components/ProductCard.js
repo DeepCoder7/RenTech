@@ -36,7 +36,7 @@ const ProductCard = (props) => {
                             Price: <Typography variant="subtitle2" component="span">${price}</Typography>
                         </Typography>
                         <Typography variant="subtitle1" >
-                            Location: <Typography variant="subtitle2" component="span">-{location}</Typography>
+                            Location: <Typography variant="subtitle2" component="span"> {location}</Typography>
                         </Typography>
                     </CardContent>
                 </CardActionArea>
