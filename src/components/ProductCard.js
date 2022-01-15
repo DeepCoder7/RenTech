@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 
 const ProductCard = (props) => {
     const classes = useStyles();
-    const { productName, price, location } = props.product;
+    const { productName, price, location, productImage } = props.product;
     return (
         <Grid item xs={6} sm={4}>
 
@@ -21,7 +21,7 @@ const ProductCard = (props) => {
                         component="img"
                         alt="Laptop"
                         height="200"
-                        src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=345&q=80"
+                        src={`http://${productImage}`}
                         title="Laptop"
                     />
                     {/* For Details */}

@@ -139,10 +139,6 @@ const Layout = ({ open, children }) => {
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyles(matches);
 
-    useEffect(() => {
-        console.log(matches);
-    }, [matches])
-
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -187,7 +183,7 @@ const Layout = ({ open, children }) => {
             <AppBar
                 position='fixed'
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
+                    [classes.appBarShift]: (open && matches),
                 })}
             >
                 <Toolbar>
@@ -211,7 +207,7 @@ const Layout = ({ open, children }) => {
 
             <main
                 className={clsx(classes.content, {
-                    [classes.contentShift]: open,
+                    [classes.contentShift]: (open && matches),
                 })}
             >
                 {!matches && <Category />}

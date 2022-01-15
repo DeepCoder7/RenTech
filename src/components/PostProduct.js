@@ -2,15 +2,19 @@ import React, { useState, useContext } from 'react'
 import productContext from '../contexts/products/productContext'
 
 const PostProduct = () => {
-    const [productDe, setProductDe] = useState({ productName: '', price: '', location: '', category:'', model:'', duration:28, noOfProduct:1 });
+    const [productDe, setProductDe] = useState({ productName: '', price: '', location: '', category:'', model:'', duration:28, noOfProduct:1, productImage:'' });
     const context = useContext(productContext);
     const { postProduct } = context;
     const onChange = (e) => {
         setProductDe({ ...productDe, [e.target.name]: e.target.value });
     }
+    const uploadImage = e =>{
+        console.log((e.target.files[0]));
+        setProductDe({...productDe, productImage: e.target.files[0]});
+    }
     const submitProduct = e => {
         e.preventDefault();
-        // console.log(productDe);
+        console.log(productDe);
         postProduct(productDe);
         setProductDe({ productName: '', price: '', location: '', category:'', model:'', duration:28, noOfProduct:1 })
     }
@@ -20,6 +24,10 @@ const PostProduct = () => {
                 <div className="mb-3">
                     <label htmlFor="productName" className="form-label">Product Name</label>
                     <input type="text" className="form-control" onChange={onChange} value={productDe.productName} name="productName" id="productName" />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="productImage" className="form-label">Product Image</label>
+                    <input type="file" className="form-control" onChange={uploadImage} name="productImage" id="productImage" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="price" className="form-label">Price</label>

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useContext } from "react";
 import ProductContext from "./productContext";
 
 const ProductState = (props) =>{
     const [authToken, setAuthToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFiOGE0ZWE3YjJjZmQ3YWVmZDU3MDJiIn0sImlhdCI6MTY0MDI4MDMxNH0.rqfORNXMoBYiSGZ35VzRT35JutVdYqZUxtVYmIDGWCY');
-    
     const host = 'http://localhost:8500/api/productDetail'
     const [products, setProducts] = useState([]);
     const [myProducts, setMyProducts] = useState([]);
@@ -37,18 +37,33 @@ const ProductState = (props) =>{
         setMyProducts(Pjson);
     }
 
-    const postProduct = async(postProduct) =>{
-        const response = await fetch(`${host}/addProduct`,{
-            method : 'POST',
-            headers : {
-                'Content-Type': 'application/json',
-                'auth-token': authToken
-            },
-            body: JSON.stringify(postProduct)
-        })
+    const postProduct = async(productDe) =>{
+        var formData = new FormData();
 
-        const Pjson = await response.json();
-        console.log(Pjson);
+        axios.defaults.headers.common['auth-token'] = authToken;
+        axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+
+        formData.append("productImage",productDe.productImage,productDe.productImage.name);
+        formData.append("productName",productDe.productName);
+        formData.append("price",productDe.price);
+        formData.append("location",productDe.location);
+        formData.append("category",productDe.category);
+        formData.append("model",productDe.model);
+        formData.append("noOfProduct",productDe.noOfProduct);
+        formData.append("duration",productDe.duration);
+        // const response = await fetch(`${host}/addProduct`,{
+        //     method : 'POST',
+        //     headers : {
+        //         "Content-Type": "multipart/form-data",
+        //         'auth-token': authToken
+        //     },
+        //     body: formData
+        // })
+
+        const response = await axios.post(`${host}/addProduct`,formData);
+
+        // const Pjson = await response.json();
+        console.log(response);
     }
 
     const deleteProduct = async(_id) =>{
