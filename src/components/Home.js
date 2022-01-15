@@ -11,9 +11,8 @@ const Home = () => {
     const { products, getProductDetails } = productCon;
     // console.log(product);
     useEffect(() => {
-        getProductDetails();
-        // eslint-disable-next-line
-    }, [])
+        getProductDetails(category);
+    }, [category])
 
     // useEffect(() => {
     //     console.log(category);

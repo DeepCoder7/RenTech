@@ -16,16 +16,12 @@ const Category = () => {
     const context = useContext(categoryContext);
     const { category, setCategory } = context;
 
-    const onClick = String23 => {
-        setCategory(String23);
-        
-    }
     return (
         <Box justifyContent='space-around' className={classes.Category}>
-            <Button variant="contained" onClick={() => onClick('Computer')} disabled={category==='Computer'} value='Computer'><ImportantDevices /></Button>
-            <Button variant="contained" onClick={() => onClick('Laptop')} disabled={category==='Laptop'} value='Laptop'><LaptopChromebook /></Button>
-            <Button variant="contained" onClick={() => onClick('Console')} disabled={category==='Console'} value='Console'><SportsEsports /></Button>
-            <Button variant="contained" onClick={() => onClick('Camera')} disabled={category==='Camera'} value='Camera'><PhotoCameraIcon /></Button>
+            <Button variant="contained" onClick={() => setCategory('Computer')} disabled={category==='Computer'} value='Computer'><ImportantDevices /></Button>
+            <Button variant="contained" onClick={() => setCategory('Laptop')} disabled={category==='Laptop'} value='Laptop'><LaptopChromebook /></Button>
+            <Button variant="contained" onClick={() => setCategory('Console')} disabled={category==='Console'} value='Console'><SportsEsports /></Button>
+            <Button variant="contained" onClick={() => setCategory('Camera')} disabled={category==='Camera'} value='Camera'><PhotoCameraIcon /></Button>
         </Box>
     )
 }

@@ -33,7 +33,6 @@ const App = () => {
           </Router>
         </ProductState>
       </CategoryState>
-
     </>
   )
 }

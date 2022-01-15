@@ -9,8 +9,8 @@ const ProductState = (props) =>{
     const [myProducts, setMyProducts] = useState([]);
 
     // To get the product details from api
-    const getProductDetails = async() =>{
-        const response = await fetch(`${host}/getProduct`,{
+    const getProductDetails = async(category) =>{
+        const response = await fetch(`${host}/getProduct/${category}`,{
             method : 'GET',
             headers : {
                 'Content-Type': 'application/json',
