@@ -7,6 +7,7 @@ import { InputBase, useMediaQuery, Divider, List, ListItem, ListItemText, Typogr
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import Category from './Category';
+import { Bookmark, Notifications } from '@material-ui/icons';
 
 
 const drawerWidth = 240;
@@ -83,6 +84,30 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 
+    // for icons
+    Icons: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '5rem',
+        height: '100%',
+        cursor: 'pointer',
+        '& > *:hover': {
+            borderRadius: '100%',
+            backgroundColor: '#2f42a2',
+        }
+    },
+
+    IconsDiv: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '60%',
+        width: '50%'
+    },
+
+
+
     //4. For the drawer
     drawer: {
         width: drawerWidth,
@@ -137,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ open, children }) => {
     const matches = useMediaQuery('(min-width:600px)');
-    const classes = useStyles(matches);
+    const classes = useStyles();
 
     return (
         <div className={classes.root}>
@@ -201,6 +226,14 @@ const Layout = ({ open, children }) => {
                         />
                     </div>
                     {matches && <Category />}
+                    <div className={classes.Icons}>
+                        <div className={classes.IconsDiv}>
+                            <Notifications />
+                        </div>
+                        <div className={classes.IconsDiv}>
+                            <Bookmark />
+                        </div>
+                    </div>
                 </Toolbar>
             </AppBar>
 
@@ -209,8 +242,7 @@ const Layout = ({ open, children }) => {
                 className={clsx(classes.content, {
                     [classes.contentShift]: (open && matches),
                 })}
-            >
-                {!matches && <Category />}
+            >   
                 {children}
             </main>
         </div>

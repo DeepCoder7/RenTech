@@ -42,7 +42,7 @@ const HeadBar = (props) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant='h6' className={classes.title}>
-                        RentTech
+                        RenTech
                     </Typography>
                     <Button color='inherit' variant='outlined'>
                         Sign-In
