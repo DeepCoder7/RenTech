@@ -32,7 +32,7 @@ const ProductState = (props) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': authToken
+                'auth-token': localStorage.getItem('renToken')
             }
         })
 
@@ -44,7 +44,7 @@ const ProductState = (props) => {
     const postProduct = async (productDe) => {
         var formData = new FormData();
 
-        axios.defaults.headers.common['auth-token'] = authToken;
+        axios.defaults.headers.common['auth-token'] = localStorage.getItem('renToken');
         axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
         formData.append("productImage", productDe.productImage, productDe.productImage.name);

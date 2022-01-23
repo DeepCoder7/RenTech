@@ -1,22 +1,31 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import productContext from '../contexts/products/productContext'
+import { useNavigate } from 'react-router-dom';
 
 const PostProduct = () => {
-    const [productDe, setProductDe] = useState({ productName: '', price: '', location: '', category:'', model:'', duration:28, noOfProduct:1, productImage:'' });
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(!localStorage.getItem('renToken')){
+            navigate('/');
+        }
+    }, []);
+
+
+    const [productDe, setProductDe] = useState({ productName: '', price: '', location: '', category: '', model: '', duration: 28, noOfProduct: 1, productImage: '' });
     const context = useContext(productContext);
     const { postProduct } = context;
     const onChange = (e) => {
         setProductDe({ ...productDe, [e.target.name]: e.target.value });
     }
-    const uploadImage = e =>{
+    const uploadImage = e => {
         console.log((e.target.files[0]));
-        setProductDe({...productDe, productImage: e.target.files[0]});
+        setProductDe({ ...productDe, productImage: e.target.files[0] });
     }
     const submitProduct = e => {
         e.preventDefault();
         console.log(productDe);
         postProduct(productDe);
-        setProductDe({ productName: '', price: '', location: '', category:'', model:'', duration:28, noOfProduct:1 })
+        setProductDe({ productName: '', price: '', location: '', category: '', model: '', duration: 28, noOfProduct: 1 })
     }
     return (
         <div className='container'>
@@ -47,7 +56,7 @@ const PostProduct = () => {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={submitProduct}>Post Product</button>
             </form>
-            
+
         </div>
     )
 }

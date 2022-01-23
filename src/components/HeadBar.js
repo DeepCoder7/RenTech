@@ -4,6 +4,8 @@ import SignUp from './Forms/SignUp';
 import Modal from 'react-modal';
 import { Close, Menu } from '@material-ui/icons';
 import { Divider, AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import Login from './Forms/Login';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,20 +39,21 @@ const useStyles = makeStyles((theme) => ({
 Modal.setAppElement('#root');
 
 const HeadBar = (props) => {
-
+    const navigate = useNavigate();
     const classes = useStyles();
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
     useEffect(() => {
-        // console.log(localStorage.getItem('renToken'));
-        console.log(authToken);
+        console.log(localStorage.getItem('renToken'));
     }, [localStorage.getItem('renToken')]);
-    
+
     const logOut = e => {
         // e.preventDefault();
         localStorage.removeItem('renToken');
+        navigate('/');
     }
+
     return (
         <>
             <div className={classes.root}>
@@ -66,7 +69,7 @@ const HeadBar = (props) => {
                             <Button color='inherit' variant='outlined' onClick={() => setIsSignUpOpen(true)}>
                                 Sign-In
                             </Button>
-                            <Button color='inherit' variant='outlined' style={{ marginLeft: '10px' }}>
+                            <Button color='inherit' variant='outlined' onClick={() => setIsLoginOpen(true)} style={{ marginLeft: '10px' }}>
                                 Log-In
                             </Button>
                         </> : <Button color='inherit' variant='outlined' onClick={logOut}>Log Out</Button>
@@ -97,6 +100,30 @@ const HeadBar = (props) => {
                 </div>
                 <Divider variant="middle" />
                 <SignUp setIsSignUpOpen={setIsSignUpOpen} />
+            </Modal>
+            <Modal
+                isOpen={isLoginOpen}
+                style={
+                    {
+                        overlay: {
+                            backgroundColor: 'rgba(115,115,115,0.2)',
+                        },
+                        content: {
+                            width: '1000px',
+                            marginTop: '5.5%',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            height: '580px',
+                        }
+                    }
+                }
+            >
+                <div className={classes.close}>
+                    <Typography variant='h6' align='center' style={{ width: '100%' }} >Sign UP</Typography>
+                    <Button color="secondary" onClick={() => setIsLoginOpen(false)}><Close /></Button>
+                </div>
+                <Divider variant="middle" />
+                <Login setIsLoginOpen={setIsLoginOpen} />
             </Modal>
         </>
     )

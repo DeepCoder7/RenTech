@@ -3,10 +3,12 @@ import productContext from '../contexts/products/productContext'
 import { Container, Grid } from '@material-ui/core';
 import MyProductCard from './Products/MyProductCard';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
 const MyProduct = () => {
+    const navigate = useNavigate();
     const context = useContext(productContext);
     const { myProducts, getMyProduct, deleteProduct, updateProductDetails } = context;
     const [editIsOpen, setEditIsOpen] = useState(false);
@@ -14,10 +16,15 @@ const MyProduct = () => {
     const DeleteProduct = async (product) => {
         deleteProduct(product._id);
     }
+    
     useEffect(() => {
-        getMyProduct();
+        if(localStorage.getItem('renToken')){
+            getMyProduct();
+        }else{
+            navigate('/');
+        }
         // eslint-disable-next-line
-    }, [])
+    }, [localStorage.getItem('renToken')])
 
     const [curProduct, setCurProduct] = useState({ _id: '', productName: '', price: '', location: '', category: '', model: '', duration: 28, noOfProduct: 1 })
     const updateProduct = (currentProduct) => {
@@ -36,7 +43,7 @@ const MyProduct = () => {
     }
     return (
         <>
-            <Container>
+            {localStorage.getItem('renToken') && <Container>
                 <Modal
                     isOpen={editIsOpen}
                     style={
@@ -89,7 +96,7 @@ const MyProduct = () => {
                         return <MyProductCard key={product._id} updateProduct={updateProduct} product={product} DeleteProduct={DeleteProduct} />
                     })}
                 </Grid>
-            </Container>
+            </Container>}
         </>
     )
 }
