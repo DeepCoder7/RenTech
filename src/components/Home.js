@@ -1,9 +1,15 @@
-import { Container, Grid, Typography, useMediaQuery } from '@material-ui/core';
+import { Container, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react'
 import productContext from '../contexts/products/productContext'
-import ProductCard from './ProductCard';
+import ProductCard from './Products/ProductCard';
 import categoryContext from '../contexts/categories/categoryContext'
 import Category from './Category';
+
+const useStyle = makeStyles((theme) => ({
+    containerStyle: {
+        marginTop: theme.spacing(1),
+    }
+}))
 
 const Home = () => {
     const context1 = useContext(categoryContext);
@@ -11,6 +17,7 @@ const Home = () => {
     const productCon = useContext(productContext);
     const { products, getProductDetails } = productCon;
     const matches = useMediaQuery('(min-width:600px)');
+    const classes = useStyle();
     // console.log(product);
     useEffect(() => {
         getProductDetails(category);
@@ -22,7 +29,7 @@ const Home = () => {
     return (
         <>
             {!matches && <Category />}
-            <Container>
+            <Container className={classes.containerStyle}>
                 <Typography variant='h4'>{ category }</Typography>
                 <hr />
                 <Grid container spacing={5}>
