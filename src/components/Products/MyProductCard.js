@@ -1,5 +1,4 @@
 import {
-    Button,
     Card,
     CardActionArea,
     CardContent,
@@ -103,7 +102,7 @@ import {
                 <Typography variant='subtitle1'>
                   Price:{' '}
                   <Typography variant='subtitle2' component='span'>
-                    ${price}
+                    {price} &#x20B9;
                   </Typography>
                 </Typography>
                 <Typography variant='subtitle1'>

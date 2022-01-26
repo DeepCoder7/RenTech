@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import clsx from 'clsx';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { InputBase, useMediaQuery, Divider, List, ListItem, ListItemText, Typography, AppBar, Toolbar } from '@material-ui/core';
+import { InputBase, useMediaQuery, Divider, List, ListItem, ListItemText, Typography, AppBar, Toolbar, IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import Category from './Category';
 import { Bookmark, Notifications } from '@material-ui/icons';
-
+import categoryContext from '../contexts/categories/categoryContext'
 
 const drawerWidth = 240;
 
@@ -92,10 +92,10 @@ const useStyles = makeStyles((theme) => ({
         width: '5rem',
         height: '100%',
         cursor: 'pointer',
-        '& > *:hover': {
-            borderRadius: '100%',
-            backgroundColor: '#2f42a2',
-        }
+        // '& > *:hover': {
+        //     borderRadius: '100%',
+        //     backgroundColor: '#2f42a2',
+        // }
     },
 
     IconsDiv: {
@@ -164,6 +164,28 @@ const Layout = ({ open, children }) => {
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyles();
 
+    const context1 = useContext(categoryContext);
+    const { category } = context1;
+
+    const [search, setSearch] = useState('');
+    const searchProducts = async (e) => {
+        e.preventDefault();
+        console.log(search);
+        const response = await fetch(`http://localhost:8500/api/productDetail/getProduct/${category}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'search':search
+            },
+        })
+        const json = await response.json();
+        console.log(json);
+    }
+
+    const onSearch = e => {
+        setSearch(e.target.value);
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -212,27 +234,30 @@ const Layout = ({ open, children }) => {
                 })}
             >
                 <Toolbar>
-                    <div className={classes.search}>
+                    <form onSubmit={searchProducts} className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
                         <InputBase
                             placeholder="Search…"
+                            value={search}
+                            onChange={onSearch}
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </div>
+                        {false && <button type='submit'>submit</button>}
+                    </form>
                     {matches && <Category />}
                     <div className={classes.Icons}>
-                        <div className={classes.IconsDiv}>
+                        <IconButton color='inherit'>
                             <Notifications />
-                        </div>
-                        <div className={classes.IconsDiv}>
+                        </IconButton>
+                        <IconButton color='inherit'>
                             <Bookmark />
-                        </div>
+                        </IconButton>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -242,7 +267,7 @@ const Layout = ({ open, children }) => {
                 className={clsx(classes.content, {
                     [classes.contentShift]: (open && matches),
                 })}
-            >   
+            >
                 {children}
             </main>
         </div>

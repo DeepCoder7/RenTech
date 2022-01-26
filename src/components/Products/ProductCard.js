@@ -50,7 +50,7 @@ const ProductCard = (props) => {
   }
   return (
     <>
-      <Grid item xs={6} sm={4}>
+      <Grid item xs={12} sm={4}>
         <Modal
           isOpen={modalIsOpen}
           style={
@@ -95,7 +95,7 @@ const ProductCard = (props) => {
               <Typography variant='subtitle1'>
                 Price:{' '}
                 <Typography variant='subtitle2' component='span'>
-                  ${price}
+                  {price} &#x20B9;
                 </Typography>
               </Typography>
               <Typography variant='subtitle1'>

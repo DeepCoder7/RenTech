@@ -44,10 +44,6 @@ const HeadBar = (props) => {
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-    useEffect(() => {
-        console.log(localStorage.getItem('renToken'));
-    }, [localStorage.getItem('renToken')]);
-
     const logOut = e => {
         // e.preventDefault();
         localStorage.removeItem('renToken');
