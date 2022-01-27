@@ -165,21 +165,11 @@ const Layout = ({ open, children }) => {
     const classes = useStyles();
 
     const context1 = useContext(categoryContext);
-    const { category } = context1;
+    const { search, setSearch } = context1;
 
-    const [search, setSearch] = useState('');
     const searchProducts = async (e) => {
         e.preventDefault();
         console.log(search);
-        const response = await fetch(`http://localhost:8500/api/productDetail/getProduct/${category}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'search':search
-            },
-        })
-        const json = await response.json();
-        console.log(json);
     }
 
     const onSearch = e => {

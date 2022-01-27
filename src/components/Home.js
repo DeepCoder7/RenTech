@@ -13,24 +13,21 @@ const useStyle = makeStyles((theme) => ({
 
 const Home = () => {
     const context1 = useContext(categoryContext);
-    const { category } = context1;
+    const { category, search } = context1;
     const productCon = useContext(productContext);
     const { products, getProductDetails } = productCon;
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyle();
     // console.log(product);
     useEffect(() => {
-        getProductDetails(category);
-    }, [category])
+        getProductDetails(search, category);
+    }, [search, category])
 
-    // useEffect(() => {
-    //     console.log(category);
-    // }, [category])
     return (
         <>
             {!matches && <Category />}
             <Container className={classes.containerStyle}>
-                <Typography variant='h4'>{ category }</Typography>
+                <Typography variant='h4'>{category}</Typography>
                 <hr />
                 <Grid container spacing={5}>
                     {products.map((product) => {

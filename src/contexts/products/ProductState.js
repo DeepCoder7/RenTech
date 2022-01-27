@@ -4,21 +4,22 @@ import ProductContext from "./productContext";
 
 const ProductState = (props) => {
     const [authToken, setAuthToken] = useState('');
+
     useEffect(() => {
         setAuthToken(localStorage.getItem('renToken'));
     }, [localStorage.getItem('renToken')]);
-    
+
     const host = 'http://localhost:8500/api/productDetail'
     const [products, setProducts] = useState([]);
     const [myProducts, setMyProducts] = useState([]);
 
     // To get the product details from api
-    const getProductDetails = async (category) => {
+    const getProductDetails = async (search, category) => {
         const response = await fetch(`${host}/getProduct/${category}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': authToken
+                'search': search
             }
         })
 
