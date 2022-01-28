@@ -48,6 +48,24 @@ const ProductCard = (props) => {
     console.log(uChoice);
     setModalIsOpen(false);
   }
+
+  const addBookMarkProducts = async() =>{
+    if(localStorage.getItem('renToken')){
+      const response = await fetch('http://localhost:8500/api/auth/addBookMarkProducts', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-Token': localStorage.getItem('renToken')
+        },
+        body: JSON.stringify({productID:props.product._id}),
+      });
+      const json = await response.json();
+      console.log(json);
+    }else{
+      console.log('You need to must be logged in');
+    }
+  }
+
   return (
     <>
       <Grid item xs={12} sm={4}>
@@ -70,7 +88,7 @@ const ProductCard = (props) => {
           onRequestClose={()=> setModalIsOpen(false)}
         >
           <Typography variant='h6' align='center' className={classes.OptionUser} onClick={()=>UserChoice('Report')}>Report</Typography>
-          <Typography variant='h6' align='center' className={classes.OptionUser} onClick={()=>UserChoice('BookMark')}>BookMark</Typography>
+          <Typography variant='h6' align='center' className={classes.OptionUser} onClick={addBookMarkProducts}>BookMark</Typography>
         </Modal>
         <Card className={classes.root}>
           <CardActionArea>
