@@ -6,10 +6,17 @@ import {
   Grid,
   makeStyles,
   Typography,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  FormLabel,
+  RadioGroup,
+  Button,
 } from '@material-ui/core';
-import { MoreVert } from '@material-ui/icons';
+import { Close, MoreVert } from '@material-ui/icons';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import ReportModal from '../Modals/ReportModal';
 
 Modal.setAppElement('#root');
 
@@ -37,15 +44,18 @@ const useStyles = makeStyles({
 const ProductCard = (props) => {
   const classes = useStyles();
   const { productName, price, location, productImage } = props.product;
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
+
   const [positionVal, setPositionVal] = useState({ xValue: 0, yValue: 0 });
 
   const openModal = (e) => {
     setPositionVal({ xValue: e.clientX, yValue: e.clientY });
     setModalIsOpen(true);
   };
-  const UserChoice = (uChoice) => {
-    console.log(uChoice);
+  const reportProduct = () => {
+    setIsReportOpen(true);
     setModalIsOpen(false);
   };
 
@@ -73,6 +83,7 @@ const ProductCard = (props) => {
   return (
     <>
       <Grid item xs={12} sm={4}>
+        <ReportModal isReportOpen={isReportOpen} setIsReportOpen={setIsReportOpen} />
         <Modal
           isOpen={modalIsOpen}
           style={{
@@ -93,10 +104,12 @@ const ProductCard = (props) => {
             variant='h6'
             align='center'
             className={classes.OptionUser}
-            onClick={() => UserChoice('Report')}
+            onClick={reportProduct}
           >
             Report
           </Typography>
+          {/* Modal for report section */}
+          
           <Typography
             variant='h6'
             align='center'
