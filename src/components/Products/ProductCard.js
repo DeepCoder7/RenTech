@@ -30,8 +30,8 @@ const useStyles = makeStyles({
     padding: '5px',
     '&:hover': {
       backgroundColor: 'rgba(110,110,110,0.35)',
-    }
-  }
+    },
+  },
 });
 
 const ProductCard = (props) => {
@@ -40,55 +40,71 @@ const ProductCard = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [positionVal, setPositionVal] = useState({ xValue: 0, yValue: 0 });
 
-  const openModal = e => {
-    setPositionVal({xValue:e.clientX,yValue:e.clientY});
+  const openModal = (e) => {
+    setPositionVal({ xValue: e.clientX, yValue: e.clientY });
     setModalIsOpen(true);
-  }
+  };
   const UserChoice = (uChoice) => {
     console.log(uChoice);
     setModalIsOpen(false);
-  }
+  };
 
-  const addBookMarkProducts = async() =>{
-    if(localStorage.getItem('renToken')){
-      const response = await fetch('http://localhost:8500/api/auth/addBookMarkProducts', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-Token': localStorage.getItem('renToken')
-        },
-        body: JSON.stringify({productID:props.product._id}),
-      });
+  const addBookMarkProducts = async () => {
+    if (localStorage.getItem('renToken')) {
+      const response = await fetch(
+        'http://localhost:8500/api/auth/addBookMarkProducts',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-Token': localStorage.getItem('renToken'),
+          },
+          body: JSON.stringify({ productID: props.product._id }),
+        }
+      );
       const json = await response.json();
       console.log(json);
-    }else{
+      setModalIsOpen(false);
+    } else {
       console.log('You need to must be logged in');
     }
-  }
+  };
 
   return (
     <>
       <Grid item xs={12} sm={4}>
         <Modal
           isOpen={modalIsOpen}
-          style={
-            {
-              overlay: {
-                backgroundColor: 'rgba(115,115,115,0.2)'
-              },
-              content: {
-                padding:0,
-                width: '115px',
-                height: '86px',
-                top: positionVal.yValue,
-                left: positionVal.xValue,
-              }
-            }
-          }
-          onRequestClose={()=> setModalIsOpen(false)}
+          style={{
+            overlay: {
+              backgroundColor: 'rgba(115,115,115,0.2)',
+            },
+            content: {
+              padding: 0,
+              width: '115px',
+              height: '86px',
+              top: positionVal.yValue,
+              left: positionVal.xValue,
+            },
+          }}
+          onRequestClose={() => setModalIsOpen(false)}
         >
-          <Typography variant='h6' align='center' className={classes.OptionUser} onClick={()=>UserChoice('Report')}>Report</Typography>
-          <Typography variant='h6' align='center' className={classes.OptionUser} onClick={addBookMarkProducts}>BookMark</Typography>
+          <Typography
+            variant='h6'
+            align='center'
+            className={classes.OptionUser}
+            onClick={() => UserChoice('Report')}
+          >
+            Report
+          </Typography>
+          <Typography
+            variant='h6'
+            align='center'
+            className={classes.OptionUser}
+            onClick={addBookMarkProducts}
+          >
+            BookMark
+          </Typography>
         </Modal>
         <Card className={classes.root}>
           <CardActionArea>
@@ -105,7 +121,9 @@ const ProductCard = (props) => {
               <Typography gutterBottom variant='h6' component='h2'>
                 <span>{productName}</span>
                 {/* <Button className={classes.Right} onClick={openModal}><MoreVert /></Button> */}
-                <span className={classes.Right} onClick={openModal}><MoreVert /></span>
+                <span className={classes.Right} onClick={openModal}>
+                  <MoreVert />
+                </span>
               </Typography>
               <Typography variant='body2' color='textSecondary' component='p'>
                 All description will be displayed here

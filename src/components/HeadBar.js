@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import Login from './Forms/Login';
 import { useNavigate } from 'react-router-dom';
+import modalContext from '../contexts/modalOpener/modalContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +49,10 @@ Modal.setAppElement('#root');
 const HeadBar = (props) => {
   const navigate = useNavigate();
   const classes = useStyles();
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const modalOpener = useContext(modalContext);
+  const { isSignUpOpen, setIsSignUpOpen, isLoginOpen, setIsLoginOpen } =
+    modalOpener;
 
   const logOut = (e) => {
     // e.preventDefault();
