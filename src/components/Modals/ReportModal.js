@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   FormControl,
   FormControlLabel,
@@ -8,13 +8,16 @@ import {
   Button,
   TextField,
 } from '@material-ui/core';
-import { Close, MoreVert } from '@material-ui/icons';
+import { Close } from '@material-ui/icons';
 import Modal from 'react-modal';
+import modalContext from '../../contexts/modalOpener/modalContext';
 
 const ReportModal = (props) => {
-  const { isReportOpen, setIsReportOpen } = props;
   const [descRp, setDescRp] = useState('');
   const [textArea, setTextArea] = useState(false);
+  
+  const modalOpener = useContext(modalContext);
+  const { isReportOpen, setIsReportOpen } = modalOpener;
 
   const handleChange = (e) => {
     if (e.target.value === 'other') {
@@ -33,6 +36,7 @@ const ReportModal = (props) => {
   const handleReport = (e) => {
     e.preventDefault();
     console.log(descRp);
+    props.submitReport(descRp);
     setIsReportOpen(false);
   };
 

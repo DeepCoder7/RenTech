@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Avatar,
   Button,
@@ -6,14 +6,13 @@ import {
   FormControlLabel,
   Grid,
   Link,
-  Paper,
   TextField,
   Typography,
 } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Close } from '@material-ui/icons';
+import { Close, LockOutlined } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
+import userContext from '../../contexts/userCred/userContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 const LogIn = (props) => {
   const classes = useStyles();
+  
+  const userCon = useContext(userContext);
+  const { getUser } = userCon;
+
   const avatarStyle = {
     backgroundColor: '#1bbd7e',
   };
@@ -49,13 +52,13 @@ const LogIn = (props) => {
       body: JSON.stringify(logDetail),
     });
     const json = await response.json();
-    console.log(json);
-    localStorage.setItem('renToken', json.authToken);
-    props.setIsLoginOpen(false);
     navigate('/');
-    if (json.success) {
+    if (json.sucess) {
       // Save the auth token and redirect
+      localStorage.setItem('renToken', json.authToken);
+      getUser();
     }
+    props.setIsLoginOpen(false);
   };
 
   const OpenSignUP = e =>{
@@ -74,7 +77,7 @@ const LogIn = (props) => {
           <Close />
         </Button>
         <Avatar style={avatarStyle}>
-          <LockOutlinedIcon />
+          <LockOutlined />
         </Avatar>
         <h2>Sign In</h2>
       </Grid>

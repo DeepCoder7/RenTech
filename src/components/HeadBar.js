@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from './Forms/SignUp';
 import Modal from 'react-modal';
-import { Close, Menu } from '@material-ui/icons';
+import { Menu } from '@material-ui/icons';
 import {
   Divider,
   AppBar,

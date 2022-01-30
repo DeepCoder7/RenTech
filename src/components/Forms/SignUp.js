@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Avatar,
   Button,
   Grid,
-  Paper,
   TextField,
   Typography,
   Radio,
@@ -15,8 +14,12 @@ import {
 } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Close } from '@material-ui/icons';
+import userContext from '../../contexts/userCred/userContext';
 
 const SignUp = (props) => {
+  const userCon = useContext(userContext);
+  const { getUser } = userCon;
+
   const [selected, setSelected] = useState('male');
 
   const handleChange = (e) => {
@@ -48,9 +51,13 @@ const SignUp = (props) => {
       body: JSON.stringify(signUpCreds),
     });
     const Pjson = await respo.json();
-    localStorage.setItem('renToken', Pjson.authToken);
-    props.setIsSignUpOpen(false);
     // ------------------------------------------
+    if(Pjson.sucess){
+      localStorage.setItem('renToken', Pjson.authToken);
+      getUser();
+    }else{
+      console.log("Error");
+    }
     props.setIsSignUpOpen(false);
   };
 
@@ -64,8 +71,6 @@ const SignUp = (props) => {
       location: '',
     });
   };
-
-  const paperStyle = { padding: '30px 20px', width: 300, margin: '20px auto' };
 
   const avatarStyle = { backgroundColor: '#1bbd7e' };
 
