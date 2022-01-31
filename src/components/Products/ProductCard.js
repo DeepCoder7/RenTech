@@ -45,7 +45,7 @@ const ProductCard = (props) => {
   const { setIsReportOpen } = modalOpener;
 
   const userCon = useContext(userContext);
-  const { reportProduct } = userCon;
+  const { reportProduct, userCreds, getUser } = userCon;
 
   const classes = useStyles();
   const { productName, price, location, productImage } = props.product;
@@ -68,10 +68,12 @@ const ProductCard = (props) => {
     // console.log(props.product, props.product._id, descOfReport);
   }
 
+  const url = "http://localhost:8500/api/auth/";
+
   const addBookMarkProducts = async () => {
     if (localStorage.getItem('renToken')) {
       const response = await fetch(
-        'http://localhost:8500/api/auth/addBookMarkProducts',
+        `${url}addBookMarkProducts`,
         {
           method: 'PUT',
           headers: {
@@ -82,12 +84,35 @@ const ProductCard = (props) => {
         }
       );
       const json = await response.json();
-      console.log(json);
+      getUser(json);
       setModalIsOpen(false);
     } else {
       console.log('You need to must be logged in');
+      setModalIsOpen(false);
     }
   };
+
+  const removeFromBookMark = async () => {
+    if (localStorage.getItem('renToken')) {
+      const response = await fetch(
+        `${url}removeFromBookMark`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-Token': localStorage.getItem('renToken'),
+          },
+          body: JSON.stringify({ proId: props.product._id })
+        }
+      );
+      const json = await response.json();
+      getUser(json);
+      setModalIsOpen(false);
+    } else {
+      console.log("You need to logged in");
+      setModalIsOpen(false);
+    }
+  }
 
   return (
     <>
@@ -104,7 +129,7 @@ const ProductCard = (props) => {
             content: {
               padding: 0,
               width: '130px',
-              height: '102px',
+              height: '105px',
               top: positionVal.yValue,
               left: positionVal.xValue - 100,
               display: 'flex',
@@ -123,7 +148,7 @@ const ProductCard = (props) => {
             Report
           </Typography>
 
-          {true ? <Typography
+          {!(userCreds.bookMarkProducts.includes(props.product._id)) ? <Typography
             variant='h6'
             align='center'
             className={classes.OptionUser}
@@ -135,7 +160,7 @@ const ProductCard = (props) => {
               variant='h6'
               align='center'
               className={classes.OptionUser}
-              onClick={() => console.log('removed')}
+              onClick={removeFromBookMark}
             >
               RemoveFrom BookMark
             </Typography>}

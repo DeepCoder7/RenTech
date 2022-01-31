@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UserContext from './userContext';
 
 const UserState = (props) => {
-    const [userCreds, setUserCreds] = useState({});
+    const [userCreds, setUserCreds] = useState({bookMarkProducts:''});
     const url = 'http://localhost:8500/api/'
 
     const getUser = async () => {
@@ -35,11 +35,6 @@ const UserState = (props) => {
             getUser();
         }
     }, [localStorage.getItem('renToken')]);
-
-    useEffect(() => {
-        console.log(userCreds);
-    }, [userCreds]);
-
 
     return (
         <UserContext.Provider
