@@ -18,9 +18,9 @@ const Home = () => {
     const { products, getProductDetails } = productCon;
     const matches = useMediaQuery('(min-width:600px)');
     const classes = useStyle();
-    // console.log(product);
     useEffect(() => {
         getProductDetails(search, category);
+        // eslint-disable-next-line
     }, [search, category])
 
     return (

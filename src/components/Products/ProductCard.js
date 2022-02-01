@@ -12,7 +12,6 @@ import { MoreVert } from '@material-ui/icons';
 import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import ReportModal from '../Modals/ReportModal';
-import modalContext from '../../contexts/modalOpener/modalContext';
 import userContext from '../../contexts/userCred/userContext';
 
 Modal.setAppElement('#root');
@@ -41,8 +40,6 @@ const useStyles = makeStyles({
 });
 
 const ProductCard = (props) => {
-  const modalOpener = useContext(modalContext);
-  const { setIsReportOpen } = modalOpener;
 
   const userCon = useContext(userContext);
   const { reportProduct, userCreds, getUser } = userCon;
@@ -51,6 +48,7 @@ const ProductCard = (props) => {
   const { productName, price, location, productImage } = props.product;
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
 
   const [positionVal, setPositionVal] = useState({ xValue: 0, yValue: 0 });
 
@@ -118,7 +116,7 @@ const ProductCard = (props) => {
     <>
       <Grid item xs={12} sm={4}>
         {/* Modal for report section */}
-        <ReportModal submitReport={submitReport} />
+        <ReportModal isReportOpen={isReportOpen} setIsReportOpen={setIsReportOpen} submitReport={submitReport} />
 
         <Modal
           isOpen={modalIsOpen}

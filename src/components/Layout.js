@@ -232,6 +232,11 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'PostProduct'} />
             </ListItem>
           </Link>
+          <Link to='/requestForProduct' className={classes.link}>
+            <ListItem button>
+              <ListItemText primary={'Request For Product'} />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
 
