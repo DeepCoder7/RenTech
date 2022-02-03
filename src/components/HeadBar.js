@@ -10,6 +10,7 @@ import {
   Typography,
   Button,
   IconButton,
+  useMediaQuery,
 } from '@material-ui/core';
 import Login from './Forms/Login';
 import { useNavigate } from 'react-router-dom';
@@ -48,6 +49,7 @@ Modal.setAppElement('#root');
 
 const HeadBar = (props) => {
   const navigate = useNavigate();
+  const matches = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
 
   const modalOpener = useContext(modalContext);
@@ -97,6 +99,7 @@ const HeadBar = (props) => {
                 <Button
                   color='inherit'
                   variant='outlined'
+                  size='small'
                   onClick={SingUpClick}
                 >
                   Sign-Up
@@ -105,13 +108,14 @@ const HeadBar = (props) => {
                   color='inherit'
                   variant='outlined'
                   onClick={LogInClick}
+                  size='small'
                   style={{ marginLeft: '10px' }}
                 >
                   Log-In
                 </Button>
               </>
             ) : (
-              <Button color='inherit' variant='outlined' onClick={logOut}>
+              <Button color='inherit' size='small' variant='outlined' onClick={logOut}>
                 Log Out
               </Button>
             )}
@@ -125,11 +129,11 @@ const HeadBar = (props) => {
             backgroundColor: 'rgba(115,115,115,0.2)',
           },
           content: {
-            width: '503px',
-            marginTop: '6.6%',
-            marginLeft: 'auto',
+            width: matches?'30rem':'18rem',
+            marginTop: matches?'7rem':'5.1rem',
+            marginLeft: matches?'auto':'0',
             marginRight: 'auto',
-            height: '580px',
+            height: matches?'34rem':'31.8rem',
           },
         }}
       >
@@ -142,11 +146,11 @@ const HeadBar = (props) => {
             backgroundColor: 'rgba(115,115,115,0.2)',
           },
           content: {
-            width: '503px',
-            marginTop: '6.6%',
-            marginLeft: 'auto',
+            width: matches?'30rem':'18rem',
+            marginTop: matches?'7rem':'5.5rem',
+            marginLeft: matches?'auto':'0',
             marginRight: 'auto',
-            height: '580px',
+            height: '27rem',
           },
         }}
       >

@@ -52,11 +52,11 @@ const LogIn = (props) => {
       body: JSON.stringify(logDetail),
     });
     const json = await response.json();
-    navigate('/');
-    if (json.sucess) {
+    if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem('renToken', json.authToken);
       getUser();
+      navigate('/');
     }
     props.setIsLoginOpen(false);
   };

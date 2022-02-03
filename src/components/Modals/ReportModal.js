@@ -47,10 +47,9 @@ const ReportModal = (props) => {
             backgroundColor: 'rgba(115,115,115,0.2)',
           },
           content: {
-            width: '500px',
-            marginTop: '7.6%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            width: '20rem',
+            marginTop: '10%',
+            marginX: 'auto',
             height: '350px',
           },
         }}
@@ -110,7 +109,7 @@ const ReportModal = (props) => {
           </FormControl>
           <div
             style={{
-              marginTop: '50px',
+              marginTop: '20px',
               display: 'flex',
               justifyContent: 'space-between',
             }}

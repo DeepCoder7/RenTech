@@ -22,6 +22,7 @@ import Category from './Category';
 import { Bookmark, Close, Notifications } from '@material-ui/icons';
 import categoryContext from '../contexts/categories/categoryContext';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -181,6 +182,7 @@ const Layout = ({ open, children }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const matches = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const context1 = useContext(categoryContext);
   const { search, setSearch } = context1;
@@ -198,6 +200,10 @@ const Layout = ({ open, children }) => {
     console.log('You clicked notifications');
     setIsNotificationOpen(true);
   };
+
+  const ClickBookMark = () => {
+    navigate('/myBookMark');
+  }
 
   return (
     <div className={classes.root}>
@@ -269,7 +275,7 @@ const Layout = ({ open, children }) => {
             <IconButton color='inherit' onClick={clickNoti}>
               <Notifications />
             </IconButton>
-            <IconButton color='inherit'>
+            <IconButton color='inherit' onClick={ClickBookMark}>
               <Bookmark />
             </IconButton>
             <Modal

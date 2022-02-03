@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import clsx from 'clsx';
 import {
   Avatar,
   Button,
@@ -11,14 +12,48 @@ import {
   FormControl,
   FormLabel,
   Checkbox,
+  makeStyles,
+  useMediaQuery,
 } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Close } from '@material-ui/icons';
 import userContext from '../../contexts/userCred/userContext';
 
+const useStyles = makeStyles((theme) => ({
+  avatarStyle: {
+    backgroundColor: '#1bbd7e',
+  },
+  btnFlex: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop:'2px'
+  },
+  mediaAvatarStyle: {
+    backgroundColor: '#1bbd7e',
+    width: theme.spacing(3),
+    height: theme.spacing(3)
+  },
+  closeBtn: {
+    position: 'absolute',
+    right: '14px',
+    top: '20px'
+  },
+  mediaCloseBtn: {
+    position: 'absolute',
+    right: '14px',
+    top: '13px'
+  },
+  my2:{
+    marginTop: '7px',
+  }
+}))
+
 const SignUp = (props) => {
   const userCon = useContext(userContext);
   const { getUser } = userCon;
+
+  const classes = useStyles();
+  const matches = useMediaQuery('(min-width:600px)');
 
   const [selected, setSelected] = useState('male');
 
@@ -52,10 +87,10 @@ const SignUp = (props) => {
     });
     const Pjson = await respo.json();
     // ------------------------------------------
-    if(Pjson.sucess){
+    if (Pjson.success) {
       localStorage.setItem('renToken', Pjson.authToken);
       getUser();
-    }else{
+    } else {
       console.log("Error");
     }
     props.setIsSignUpOpen(false);
@@ -72,24 +107,24 @@ const SignUp = (props) => {
     });
   };
 
-  const avatarStyle = { backgroundColor: '#1bbd7e' };
-
-  const btnFlex = { display: 'flex', justifyContent: 'space-between' };
-
   return (
     <Grid>
       <Grid align='center'>
         <Button
-          style={{ position: 'absolute', right: '14px', top: '20px' }}
+          className={clsx(classes.closeBtn,{
+            [classes.mediaCloseBtn]: !matches
+          })}
           color='secondary'
           onClick={() => props.setIsSignUpOpen(false)}
         >
           <Close />
         </Button>
-        <Avatar style={avatarStyle}>
+        <Avatar className={clsx(classes.avatarStyle, {
+          [classes.mediaAvatarStyle]: !matches
+        })}>
           <AddCircleOutlineOutlinedIcon />
         </Avatar>
-        <h2 style={{ margin: '0' }}>Sign Up</h2>
+        <h2 style={{ margin: '0', fontSize: !matches?'1.25rem':'1.5rem' }}>Sign Up</h2>
         <Typography variant='caption' gutterBottom>
           Please fill this form to create an account
         </Typography>
@@ -113,8 +148,8 @@ const SignUp = (props) => {
           fullWidth
           required
         />
-        <FormControl component='fieldset' style={{ marginTop: '10px' }}>
-          <FormLabel component='legend'>Gender</FormLabel>
+        <FormControl component='fieldset' className={classes.btnFlex}>
+          <FormLabel component='legend' className={classes.my2}>Gender</FormLabel>
           <RadioGroup
             aria-label='gender'
             name='gender1'
@@ -160,16 +195,17 @@ const SignUp = (props) => {
           control={<Checkbox name='checkedA' />}
           label='I accept the terms and conditions.'
         />
-        <Grid style={btnFlex}>
+        <Grid className={classes.btnFlex}>
           <Button
             onClick={handleReset}
+            size="small"
             type='reset'
             variant='contained'
             color='secondary'
           >
             Reset
           </Button>
-          <Button type='submit' variant='contained' color='primary'>
+          <Button type='submit' size="small" variant='contained' color='primary'>
             Sign Up
           </Button>
         </Grid>

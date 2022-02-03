@@ -10,6 +10,7 @@ import PostProduct from './components/PostProduct';
 import ModalState from './contexts/modalOpener/ModalState';
 import UserState from './contexts/userCred/UserState';
 import RequestForProduct from './components/RequestForProduct';
+import MyBookMarks from './components/MyBookMarks';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -34,6 +35,7 @@ const App = () => {
                     <Route path='/myProduct' element={<MyProduct />} />
                     <Route path='/postProduct' element={<PostProduct />} />
                     <Route path='/requestForProduct' element={<RequestForProduct />} />
+                    <Route path='/myBookMark' element={<MyBookMarks />} />
                   </Routes>
                 </Layout>
               </Router>
