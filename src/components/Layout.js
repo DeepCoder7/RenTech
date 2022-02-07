@@ -14,15 +14,15 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Button,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import Category from './Category';
-import { Bookmark, Close, Notifications } from '@material-ui/icons';
+import { Bookmark, Notifications } from '@material-ui/icons';
 import categoryContext from '../contexts/categories/categoryContext';
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
+import Notification from './Modals/Notification';
 
 const drawerWidth = 240;
 
@@ -171,11 +171,6 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
 
-  // Notifications
-  notif: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
 }));
 
 const Layout = ({ open, children }) => {
@@ -278,37 +273,11 @@ const Layout = ({ open, children }) => {
             <IconButton color='inherit' onClick={ClickBookMark}>
               <Bookmark />
             </IconButton>
-            <Modal
-              isOpen={isNotificationOpen}
-              style={{
-                overlay: {
-                  backgroundColor: 'rgba(115,115,115,0.2)',
-                },
-                content: {
-                  width: '400px',
-                  marginTop: '6.0%',
-                  marginLeft: 'auto',
-                  // marginRight: 'auto',
-                  height: '580px',
-                },
-              }}
-            >
-              <div className={classes.notif}>
-                <Typography variant='h6' component='span'>
-                  Notifications
-                </Typography>
-                <Button
-                  color='secondary'
-                  onClick={() => setIsNotificationOpen(false)}
-                >
-                  <Close />
-                </Button>
-              </div>
-              <hr />
-            </Modal>
           </div>
         </Toolbar>
       </AppBar>
+
+      <Notification isNotificationOpen={isNotificationOpen} setIsNotificationOpen={setIsNotificationOpen} matches={matches} />
 
       <main
         className={clsx(classes.content, {

@@ -1,12 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import productContext from '../contexts/products/productContext';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid, useMediaQuery, makeStyles } from '@material-ui/core';
 import MyProductCard from './Products/MyProductCard';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import modalContext from '../contexts/modalOpener/modalContext';
+import clsx from 'clsx';
 
 Modal.setAppElement('#root');
+
+const useStyle = makeStyles((theme) => ({
+  containerStyle: {
+    marginTop: theme.spacing(1),
+  },
+  containerStyleAfterMedia: {
+    marginTop: theme.spacing(1),
+    paddingLeft: theme.spacing(0.8),
+    paddingRight: theme.spacing(0.8),
+  },
+}))
 
 const MyProduct = () => {
   const modalOpener = useContext(modalContext);
@@ -18,6 +30,9 @@ const MyProduct = () => {
     context;
 
   const [editIsOpen, setEditIsOpen] = useState(false);
+
+  const matches = useMediaQuery('(min-width:600px)');
+  const classes = useStyle();
 
   const DeleteProduct = async (product) => {
     deleteProduct(product._id);
@@ -68,7 +83,9 @@ const MyProduct = () => {
   return (
     <>
       {localStorage.getItem('renToken') && (
-        <Container>
+        <Container className={clsx(classes.containerStyle, {
+          [classes.containerStyleAfterMedia]: !matches
+        })}>
           <Modal
             isOpen={editIsOpen}
             style={{
@@ -185,7 +202,7 @@ const MyProduct = () => {
               </button>
             </div>
           </Modal>
-          <Grid container spacing={5}>
+          <Grid container spacing={2}>
             {myProducts.map((product) => {
               return (
                 <MyProductCard

@@ -7,12 +7,14 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  useMediaQuery,
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import ReportModal from '../Modals/ReportModal';
 import userContext from '../../contexts/userCred/userContext';
+import clsx from 'clsx';
 
 Modal.setAppElement('#root');
 
@@ -21,11 +23,45 @@ const useStyles = makeStyles({
     maxWidth: '100%',
     backgroundColor: '#e2e2e9',
   },
-  Right: {
+  rootAfterClsx: {
+    maxWidth: '100%',
+    backgroundColor: '#e2e2e9',
+    '& > .MuiButtonBase-root': {
+      justifyContent: 'start',
+    }
+  },
+  contentAreaShift: {
+    display: 'flex',
+    height: '120px',
+    '& > .MuiCardMedia-media': {
+      width: '40%',
+      height: '100%'
+    },
+    '& > .MuiCardContent-root': {
+      padding: '9px'
+    },
+  },
+  RightIcon: {
     float: 'right',
     display: 'flex',
     alignItems: 'center',
     borderRadius: '50%',
+  },
+  RightIconAfterMedia: {
+    float: 'right',
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '50%',
+    width: '18px',
+    height: '18px',
+  },
+  IconSize: {
+    width: '1em',
+    height: '1em',
+  },
+  IconSizeAfterMedia: {
+    width: '18px',
+    height: '18px',
   },
   OptionUser: {
     cursor: 'pointer',
@@ -37,6 +73,18 @@ const useStyles = makeStyles({
       backgroundColor: 'rgba(110,110,110,0.35)',
     },
   },
+  font12: {
+    fontSize: '12px',
+  },
+  font14: {
+    fontSize: '14px',
+  },
+  font10: {
+    fontSize: '10px',
+  },
+  fontNormal:{
+    // backgroundColor: 'none'
+  },
 });
 
 const ProductCard = (props) => {
@@ -45,6 +93,8 @@ const ProductCard = (props) => {
   const { reportProduct, userCreds, getUser } = userCon;
 
   const classes = useStyles();
+  const matches = useMediaQuery('(min-width:600px)');
+
   const { productName, price, location, productImage } = props.product;
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -164,36 +214,56 @@ const ProductCard = (props) => {
             </Typography>}
         </Modal>
 
-        <Card className={classes.root}>
-          <CardActionArea>
+        <Card className={clsx(classes.root,{
+          [classes.rootAfterClsx]:!matches
+        })}>
+          <CardActionArea className={clsx(classes.root, {
+            [classes.contentAreaShift]: !matches
+          })}>
             {/* for Image */}
             <CardMedia
               component='img'
               alt='Laptop'
-              height='200'
+              height={matches?'200':'100%'}
               src={productImage}
               title='Laptop'
             />
             {/* For Details */}
             <CardContent>
-              <Typography gutterBottom variant='h6' component='h2'>
+              <Typography className={clsx(classes.fontNormal,{
+                [classes.font14]:!matches
+              })} gutterBottom variant='h6' component='h2'>
                 <span>{productName}</span>
-                <IconButton className={classes.Right} onClick={openModal} component='span'>
-                  <MoreVert />
+                <IconButton className={clsx(classes.RightIcon,{
+                  [classes.RightIconAfterMedia]: !matches
+                })} onClick={openModal} component='span'>
+                  <MoreVert className={clsx(classes.IconSize,{
+                    [classes.IconSizeAfterMedia]: !matches
+                  })} />
                 </IconButton>
               </Typography>
-              <Typography variant='body2' color='textSecondary' component='p'>
+              <Typography className={clsx(classes.fontNormal,{
+                [classes.font10]:!matches
+              })} variant='body2' color='textSecondary' noWrap component='p'>
                 All description will be displayed here
               </Typography>
-              <Typography variant='subtitle1'>
+              <Typography className={clsx(classes.fontNormal,{
+                [classes.font12]:!matches
+              })} variant='subtitle1'>
                 Price:{' '}
-                <Typography variant='subtitle2' component='span'>
+                <Typography className={clsx(classes.fontNormal,{
+                  [classes.font12]:!matches
+                })} variant='subtitle2' component='span'>
                   {price} &#x20B9;
                 </Typography>
               </Typography>
-              <Typography variant='subtitle1'>
+              <Typography className={clsx(classes.fontNormal,{
+                [classes.font12]:!matches
+              })} variant='subtitle1'>
                 Location:{' '}
-                <Typography variant='subtitle2' component='span'>
+                <Typography className={clsx(classes.fontNormal,{
+                  [classes.font12]:!matches
+                })} variant='subtitle2' component='span'>
                   {location}
                 </Typography>
               </Typography>

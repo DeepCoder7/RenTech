@@ -4,11 +4,17 @@ import productContext from '../contexts/products/productContext'
 import ProductCard from './Products/ProductCard';
 import categoryContext from '../contexts/categories/categoryContext'
 import Category from './Category';
+import clsx from 'clsx';
 
 const useStyle = makeStyles((theme) => ({
     containerStyle: {
-        marginTop: theme.spacing(1),
-    }
+        marginTop: theme.spacing(1), 
+    },
+    containerStyleAfterMedia: {
+        marginTop: theme.spacing(1), 
+        paddingLeft: theme.spacing(0.8),
+        paddingRight: theme.spacing(0.8),
+    },
 }))
 
 const Home = () => {
@@ -26,10 +32,12 @@ const Home = () => {
     return (
         <>
             {!matches && <Category />}
-            <Container className={classes.containerStyle}>
+            <Container className={clsx(classes.containerStyle,{
+                [classes.containerStyleAfterMedia]:!matches
+            })}>
                 <Typography variant='h4'>{category}</Typography>
                 <hr />
-                <Grid container spacing={5}>
+                <Grid container spacing={2}>
                     {products.map((product) => {
                         return <ProductCard key={product._id} product={product} />
                     })}
