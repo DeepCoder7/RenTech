@@ -5,8 +5,6 @@ import {
   Paper,
   Typography,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Button,
 } from '@material-ui/core';
 import productContext from '../contexts/products/productContext';
@@ -74,29 +72,31 @@ const PostProduct = () => {
     noOfProduct: 1,
     proDesc: '',
   });
-  const onChange = e =>{
+  const onChange = e => {
     setProductDe({ ...productDe, [e.target.name]: e.target.value });
   }
   const changeCategory = (e) => {
     setProductDe({ ...productDe, category: e.target.value });
   };
 
-  const uploadImage = e =>{
-    setProductDe({...productDe, productImage: e.target.files[0]});
+  const uploadImage = e => {
+    setProductDe({ ...productDe, productImage: e.target.files[0] });
   }
 
-  const submitProduct = e =>{
+  const submitProduct = e => {
     e.preventDefault();
     console.log(productDe);
     postProduct(productDe);
     setProductDe({
       productName: '',
-      price: '',
-      location: '',
-      category: '',
       model: '',
+      price: '',
+      category: 'Computer',
+      productImage: '',
       duration: 28,
+      location: '',
       noOfProduct: 1,
+      proDesc: '',
     });
   }
 
@@ -222,11 +222,6 @@ const PostProduct = () => {
                 label='Description'
                 variant='outlined'
               />
-              {/* <FormControlLabel
-                style={{ margin: '2px' }}
-                control={<Checkbox name='checkedA' />}
-                label='I accept the terms and conditions.'
-              /> */}
               <Grid>
                 <Button
                   style={{ margin: '4px' }}

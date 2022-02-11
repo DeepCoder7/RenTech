@@ -51,6 +51,7 @@ const ProductState = (props) => {
         formData.append("productImage", productDe.productImage, productDe.productImage.name);
         formData.append("productName", productDe.productName);
         formData.append("price", productDe.price);
+        formData.append("proDesc", productDe.proDesc);
         formData.append("location", productDe.location);
         formData.append("category", productDe.category);
         formData.append("model", productDe.model);
