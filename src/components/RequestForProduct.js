@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import { Button, Container, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import modalContext from '../contexts/modalOpener/modalContext';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            marginTop: '20px'
+        }
+    }
+}))
 
 const RequestForProduct = () => {
 
     const [productDe, setProductDe] = useState({ productName: '', category: '', descOfProduct: '' });
+    const classes = useStyles();
+
+    const modalOpener = useContext(modalContext);
+    const { setIsLoginOpen } = modalOpener;
 
     const onChange = (e) => {
         setProductDe({ ...productDe, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async(e) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem('renToken')) {
+            setIsLoginOpen(true);
+            navigate('/');
+        }
+        // eslint-disable-next-line
+    }, []);
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const repo = await fetch('http://localhost:8500/api/requestProduct/addRequestProduct', {
@@ -31,52 +56,39 @@ const RequestForProduct = () => {
         })
     }
 
+
+
     return (
         <>
-            <div className="container">
-                <form className="my-3" onSubmit={handleSubmit}>
-                    <div className='mb-3'>
-                        <label htmlFor='productName' className='form-label'>
-                            Product Name
-                        </label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            onChange={onChange}
-                            value={productDe.productName}
-                            name='productName'
-                            id='productName'
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='category' className='form-label'>
-                            Category
-                        </label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            onChange={onChange}
-                            value={productDe.category}
-                            name='category'
-                            id='category'
-                        />
-                    </div>
-                    <div className='mb-3'>
-                        <label htmlFor='descOfProduct' className='form-label'>
-                            Description
-                        </label>
-                        <input
-                            type='text'
-                            className='form-control'
-                            onChange={onChange}
-                            value={productDe.descOfProduct}
-                            name='descOfProduct'
-                            id='descOfProduct'
-                        />
-                    </div>
-                    <button className="btn btn-primary" type='submit'>Submit</button>
+            <Container className={classes.root}>
+                <form onSubmit={handleSubmit} className={classes.root}>
+                    <TextField
+                        id="productName"
+                        fullWidth
+                        name='productName'
+                        onChange={onChange}
+                        variant='outlined'
+                        label="Product Name"
+                    />
+                    <TextField
+                        id="category"
+                        fullWidth
+                        name='category'
+                        onChange={onChange}
+                        variant='outlined'
+                        label="Category"
+                    />
+                    <TextField
+                        id="productName"
+                        fullWidth
+                        name='productName'
+                        onChange={onChange}
+                        variant='outlined'
+                        label="Product Name"
+                    />
+                    <Button color='primary' variant='contained' type='submit'>Submit</Button>
                 </form>
-            </div>
+            </Container>
         </>
     );
 };

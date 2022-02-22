@@ -10,10 +10,11 @@ import {
 import productContext from '../contexts/products/productContext';
 import { useNavigate } from 'react-router-dom';
 import modalContext from '../contexts/modalOpener/modalContext';
+import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
   fields: {
-    width: '80%',
+    width: '90%',
     margin: theme.spacing(1),
   },
 
@@ -22,8 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   pageContent: {
-    margin: theme.spacing(5),
-    padding: theme.spacing(3),
+    margin: theme.spacing(2),
+    padding: theme.spacing(2),
+  },
+  pageContentMobileView: {
+    margin: theme.spacing(0),
+    padding: theme.spacing(0),
   },
 }));
 
@@ -83,6 +88,21 @@ const PostProduct = () => {
     setProductDe({ ...productDe, productImage: e.target.files[0] });
   }
 
+  const resetFormValues = e =>{
+    // e.preventDefault();
+    setProductDe({
+      productName: '',
+      model: '',
+      price: '',
+      category: 'Computer',
+      productImage: '',
+      duration: 28,
+      location: '',
+      noOfProduct: 1,
+      proDesc: '',
+    });
+  }
+
   const submitProduct = e => {
     e.preventDefault();
     console.log(productDe);
@@ -102,8 +122,9 @@ const PostProduct = () => {
 
   return (
     <>
-      <Paper className={classes.pageContent}>
-        {/* <h2 style={{ textAlign: 'center' }}>Post Product Form</h2> */}
+      <Paper className={clsx(classes.pageContent,{
+        [classes.pageContentMobileView]: true
+      })}>
         <form onSubmit={submitProduct}>
           <Typography variant='h5' align='center'>
             Post Product Form
@@ -155,9 +176,7 @@ const PostProduct = () => {
                 name='noOfProduct'
                 id='noOfProduct'
                 onChange={onChange}
-                value={productDe.noOfProduct}
                 variant='outlined'
-                id='outlined-number'
                 type='number'
                 inputProps={{ min: 1 }}
                 defaultValue={1}
@@ -181,7 +200,6 @@ const PostProduct = () => {
                 name='price'
                 id='price'
                 onChange={onChange}
-                value={productDe.price}
                 inputProps={{ min: 0 }}
                 type='number'
                 variant='outlined'
@@ -191,7 +209,6 @@ const PostProduct = () => {
                 className={classes.fields}
                 name='duration'
                 id='duration'
-                value={productDe.duration}
                 required
                 onChange={onChange}
                 label='Rent Duration In Days'
@@ -207,6 +224,7 @@ const PostProduct = () => {
                 value={productDe.location}
                 required
                 onChange={onChange}
+                value={productDe.location}
                 label='Rent Location'
                 variant='outlined'
               />
@@ -214,18 +232,19 @@ const PostProduct = () => {
                 className={classes.fields}
                 name='proDesc'
                 id='proDesc'
-                value={productDe.proDesc}
                 required
                 onChange={onChange}
+                value={productDe.proDesc}
                 multiline
                 rows={2}
                 label='Description'
                 variant='outlined'
               />
-              <Grid>
+              <Grid container justifyContent='space-around'>
                 <Button
                   style={{ margin: '4px' }}
                   type='reset'
+                  onClick={resetFormValues}
                   variant='contained'
                   color='secondary'
                 >

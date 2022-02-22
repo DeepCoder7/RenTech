@@ -7,6 +7,7 @@ const ProductState = (props) => {
 
     useEffect(() => {
         setAuthToken(localStorage.getItem('renToken'));
+        // eslint-disable-next-line
     }, [localStorage.getItem('renToken')]);
 
     const host = 'http://localhost:8500/api/productDetail'
@@ -84,7 +85,7 @@ const ProductState = (props) => {
                 },
                 body: JSON.stringify(curProduct)
             })
-            getMyProduct();
+            getMyProduct(respon);
         } catch (err) {
             console.log(err);
         }
@@ -100,7 +101,7 @@ const ProductState = (props) => {
         })
 
         const Djson = await response.json();
-        getMyProduct();
+        getMyProduct(Djson);
     }
 
     return (

@@ -104,8 +104,10 @@ const ProductCard = (props) => {
 
   const openModal = (e) => {
     setPositionVal({ xValue: e.clientX, yValue: e.clientY });
+    console.log("CardIcon");
     setModalIsOpen(true);
   };
+  
   const reportModalOn = () => {
     setIsReportOpen(true);
     setModalIsOpen(false);
@@ -216,10 +218,14 @@ const ProductCard = (props) => {
 
         <Card className={clsx(classes.root,{
           [classes.rootAfterClsx]:!matches
-        })}>
+        })}
+        onClick={()=> { console.log("Card"); }}
+        >
           <CardActionArea className={clsx(classes.root, {
             [classes.contentAreaShift]: !matches
-          })}>
+          })}
+          onClick={()=> { console.log("CardAction"); }}
+          >
             {/* for Image */}
             <CardMedia
               component='img'
@@ -229,7 +235,7 @@ const ProductCard = (props) => {
               title='Laptop'
             />
             {/* For Details */}
-            <CardContent>
+            <CardContent onClick={()=> { console.log("CardContent"); }}>
               <Typography className={clsx(classes.fontNormal,{
                 [classes.font14]:!matches
               })} gutterBottom variant='h6' component='h2'>

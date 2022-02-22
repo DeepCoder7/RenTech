@@ -150,11 +150,11 @@ const HeadBar = (props) => {
             marginTop: matches?'7rem':'5.5rem',
             marginLeft: matches?'auto':'0',
             marginRight: 'auto',
-            height: '27rem',
+            height: '28rem',
           },
         }}
       >
-        <Divider variant='middle' />
+        
         <Login
           setIsLoginOpen={setIsLoginOpen}
           setIsSignUpOpen={setIsSignUpOpen}
