@@ -11,6 +11,9 @@ import ModalState from './contexts/modalOpener/ModalState';
 import UserState from './contexts/userCred/UserState';
 import RequestForProduct from './components/RequestForProduct';
 import MyBookMarks from './components/MyBookMarks';
+import Analysis from './components/Analysis';
+import ProductAnalysis from './components/Analysis/ProductAnalysis';
+import MyProductAnalysis from './components/Analysis/MyProductAnalysis';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -36,6 +39,10 @@ const App = () => {
                     <Route path='/postProduct' element={<PostProduct />} />
                     <Route path='/requestForProduct' element={<RequestForProduct />} />
                     <Route path='/myBookMark' element={<MyBookMarks />} />
+                    <Route path='/analysis' element={<Analysis />}>
+                      <Route path='productAnalysis' element={<ProductAnalysis />} />
+                      <Route path='myAnalysis' element={<MyProductAnalysis />} />
+                    </Route>
                   </Routes>
                 </Layout>
               </Router>
