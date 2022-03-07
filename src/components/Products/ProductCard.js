@@ -82,7 +82,7 @@ const useStyles = makeStyles({
   font10: {
     fontSize: '10px',
   },
-  fontNormal:{
+  fontNormal: {
     // backgroundColor: 'none'
   },
 });
@@ -107,7 +107,7 @@ const ProductCard = (props) => {
     console.log("CardIcon");
     setModalIsOpen(true);
   };
-  
+
   const reportModalOn = () => {
     setIsReportOpen(true);
     setModalIsOpen(false);
@@ -164,6 +164,21 @@ const ProductCard = (props) => {
     }
   }
 
+  const increaseClick = async () => {
+    const response = await fetch(
+      `http://localhost:8500/api/productDetail/increaseClick/${props.product._id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-Token': localStorage.getItem('renToken'),
+        },
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+  }
+
   return (
     <>
       <Grid item xs={12} sm={4}>
@@ -216,59 +231,59 @@ const ProductCard = (props) => {
             </Typography>}
         </Modal>
 
-        <Card className={clsx(classes.root,{
-          [classes.rootAfterClsx]:!matches
+        <Card className={clsx(classes.root, {
+          [classes.rootAfterClsx]: !matches
         })}
-        onClick={()=> { console.log("Card"); }}
+          onClick={() => { increaseClick() }}
         >
           <CardActionArea className={clsx(classes.root, {
             [classes.contentAreaShift]: !matches
           })}
-          onClick={()=> { console.log("CardAction"); }}
+            onClick={() => { console.log("CardAction"); }}
           >
             {/* for Image */}
             <CardMedia
               component='img'
               alt='Laptop'
-              height={matches?'200':'100%'}
+              height={matches ? '200' : '100%'}
               src={productImage}
               title='Laptop'
             />
             {/* For Details */}
-            <CardContent onClick={()=> { console.log("CardContent"); }}>
-              <Typography className={clsx(classes.fontNormal,{
-                [classes.font14]:!matches
+            <CardContent onClick={() => { console.log("CardContent"); }}>
+              <Typography className={clsx(classes.fontNormal, {
+                [classes.font14]: !matches
               })} gutterBottom variant='h6' component='h2'>
                 <span>{productName}</span>
-                <IconButton className={clsx(classes.RightIcon,{
+                <IconButton className={clsx(classes.RightIcon, {
                   [classes.RightIconAfterMedia]: !matches
                 })} onClick={openModal} component='span'>
-                  <MoreVert className={clsx(classes.IconSize,{
+                  <MoreVert className={clsx(classes.IconSize, {
                     [classes.IconSizeAfterMedia]: !matches
                   })} />
                 </IconButton>
               </Typography>
-              <Typography className={clsx(classes.fontNormal,{
-                [classes.font10]:!matches
+              <Typography className={clsx(classes.fontNormal, {
+                [classes.font10]: !matches
               })} variant='body2' color='textSecondary' noWrap component='p'>
                 All description will be displayed here
               </Typography>
-              <Typography className={clsx(classes.fontNormal,{
-                [classes.font12]:!matches
+              <Typography className={clsx(classes.fontNormal, {
+                [classes.font12]: !matches
               })} variant='subtitle1'>
                 Price:{' '}
-                <Typography className={clsx(classes.fontNormal,{
-                  [classes.font12]:!matches
+                <Typography className={clsx(classes.fontNormal, {
+                  [classes.font12]: !matches
                 })} variant='subtitle2' component='span'>
                   {price} &#x20B9;
                 </Typography>
               </Typography>
-              <Typography className={clsx(classes.fontNormal,{
-                [classes.font12]:!matches
+              <Typography className={clsx(classes.fontNormal, {
+                [classes.font12]: !matches
               })} variant='subtitle1'>
                 Location:{' '}
-                <Typography className={clsx(classes.fontNormal,{
-                  [classes.font12]:!matches
+                <Typography className={clsx(classes.fontNormal, {
+                  [classes.font12]: !matches
                 })} variant='subtitle2' component='span'>
                   {location}
                 </Typography>
