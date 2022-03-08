@@ -59,17 +59,41 @@ const MyProductAnalysis = () => {
     getData();
   }, [])
 
+  const generateRandomColor = () => {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
   useEffect(() => {
-    console.log(productNames);
-    console.log(ratingsOfProduct);
-    console.log(clicksInProduct);
-    console.log(noOfBookMarked);
+    // console.log(productNames);
+    let container = '';
+    for (let i = 0; i < productNames.length ; i++) {
+      let color23 = generateRandomColor();
+      if (!container.includes(color23)) {
+        if(i==0){
+          container+=(`"${color23}"`);
+        }else{
+          container+=(','+`"${color23}"`);
+        }
+      }else{
+        i--;
+      }
+      console.log(color23);
+    }
+    console.log(`[${container}]`);
+    // console.log(ratingsOfProduct);
+    // console.log(clicksInProduct);
+    // console.log(noOfBookMarked);
     setViewData({
       labels: productNames,
       datasets: [{
         label: 'No of Views',
         data: clicksInProduct,
-        backgroundColor: ['green', 'red', 'blue'],
+        backgroundColor: JSON.parse(`[${container}]`),
       }]
     })
 
@@ -78,9 +102,12 @@ const MyProductAnalysis = () => {
       datasets: [{
         label: 'No of BookMarked',
         data: noOfBookMarked,
-        backgroundColor: ['yellow', 'blue', 'red'],
+        backgroundColor: JSON.parse(`[${container}]`),
       }]
     })
+
+    console.log(bookMarkedData);
+
   }, [noOfBookMarked])
 
   return (
