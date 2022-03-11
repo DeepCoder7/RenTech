@@ -2,19 +2,23 @@ import React, { useEffect, useState } from 'react';
 import UserContext from './userContext';
 
 const UserState = (props) => {
-    const [userCreds, setUserCreds] = useState({bookMarkProducts:''});
-    const url = 'http://localhost:8500/api/'
+    const [userCreds, setUserCreds] = useState({ bookMarkProducts: '' });
+    const url = 'http://localhost:8500/api/';
 
     const getUser = async () => {
-        const getuser = await fetch(`${url}auth/getuser`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('renToken')
-            },
-        });
-        const User = await getuser.json();
-        setUserCreds(User);
+        if (localStorage.getItem('renToken')) {
+            const getuser = await fetch(`${url}auth/getuser`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': localStorage.getItem('renToken')
+                },
+            });
+            const User = await getuser.json();
+            setUserCreds(User);
+        } else {
+            setUserCreds({ bookMarkProducts: '' });
+        }
     }
 
     const reportProduct = async (proOwnId, proID, descOfReport) => {
@@ -27,12 +31,14 @@ const UserState = (props) => {
             body: JSON.stringify({ proOwnId, proID, descOfReport })
         })
         const Pjson = await report.json();
-        console.log(Pjson);
+        return Pjson;
     }
 
     useEffect(() => {
         if (localStorage.getItem('renToken')) {
             getUser();
+        } else {
+            setUserCreds({ bookMarkProducts: '' });
         }
     }, [localStorage.getItem('renToken')]);
 

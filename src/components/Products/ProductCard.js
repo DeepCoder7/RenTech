@@ -10,11 +10,14 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Modal from 'react-modal';
 import ReportModal from '../Modals/ReportModal';
 import userContext from '../../contexts/userCred/userContext';
+import productContext from '../../contexts/products/productContext';
+import notifyContext from '../../contexts/NotificationBar/notifyContext';
 import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
@@ -46,14 +49,18 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     borderRadius: '50%',
+    marginRight: '6px',
+    marginTop: '6px'
   },
   RightIconAfterMedia: {
-    float: 'right',
     display: 'flex',
-    alignItems: 'center',
     borderRadius: '50%',
     width: '18px',
     height: '18px',
+    left: '0%',
+    position: 'relative',
+    top: '-33px',
+    left: '16px'
   },
   IconSize: {
     width: '1em',
@@ -92,6 +99,14 @@ const ProductCard = (props) => {
   const userCon = useContext(userContext);
   const { reportProduct, userCreds, getUser } = userCon;
 
+  const context = useContext(productContext);
+  const { MyBookMarkProducts } = context;
+
+  const navigate = useNavigate();
+
+  const notifyCOn = useContext(notifyContext);
+  const { notify } = notifyCOn;
+
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -103,10 +118,17 @@ const ProductCard = (props) => {
   const [positionVal, setPositionVal] = useState({ xValue: 0, yValue: 0 });
 
   const openModal = (e) => {
+    e.preventDefault();
     setPositionVal({ xValue: e.clientX, yValue: e.clientY });
     console.log("CardIcon");
     setModalIsOpen(true);
   };
+
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line
+  }, [localStorage.getItem('renToken')])
+
 
   const reportModalOn = () => {
     setIsReportOpen(true);
@@ -114,7 +136,16 @@ const ProductCard = (props) => {
   };
 
   const submitReport = (descOfReport) => {
-    reportProduct(props.product.userId, props.product._id, descOfReport)
+    if (localStorage.getItem('renToken')) {
+      const repoJson = reportProduct(props.product.userId, props.product._id, descOfReport);
+      if (repoJson.success) {
+        notify('success', repoJson.message)
+      } else {
+        notify('error', repoJson.message)
+      }
+    } else {
+      notify('warn', 'Not Allowed')
+    }
     // console.log(props.product, props.product._id, descOfReport);
   }
 
@@ -134,10 +165,13 @@ const ProductCard = (props) => {
         }
       );
       const json = await response.json();
-      getUser(json);
+      if (json.success) {
+        notify("success", "BookMark Successful");
+      }
+      getUser();
       setModalIsOpen(false);
     } else {
-      console.log('You need to must be logged in');
+      notify("warn", 'You need to must be logged in');
       setModalIsOpen(false);
     }
   };
@@ -156,10 +190,14 @@ const ProductCard = (props) => {
         }
       );
       const json = await response.json();
-      getUser(json);
+      if (json.success) {
+        notify("success", "product is remove from bookMark");
+        getUser();
+        MyBookMarkProducts();
+      }
       setModalIsOpen(false);
     } else {
-      console.log("You need to logged in");
+      notify("warn", 'You need to must be logged in');
       setModalIsOpen(false);
     }
   }
@@ -234,7 +272,6 @@ const ProductCard = (props) => {
         <Card className={clsx(classes.root, {
           [classes.rootAfterClsx]: !matches
         })}
-          onClick={() => { increaseClick() }}
         >
           <CardActionArea className={clsx(classes.root, {
             [classes.contentAreaShift]: !matches
@@ -250,18 +287,18 @@ const ProductCard = (props) => {
               title='Laptop'
             />
             {/* For Details */}
-            <CardContent onClick={() => { console.log("CardContent"); }}>
+            {matches && <IconButton className={clsx(classes.RightIcon, {
+              [classes.RightIconAfterMedia]: !matches
+            })} onClick={openModal} component='span'>
+              <MoreVert className={clsx(classes.IconSize, {
+                [classes.IconSizeAfterMedia]: !matches
+              })} />
+            </IconButton>}
+            <CardContent onClick={() => { increaseClick(); navigate('/analysis'); }}>
               <Typography className={clsx(classes.fontNormal, {
                 [classes.font14]: !matches
               })} gutterBottom variant='h6' component='h2'>
                 <span>{productName}</span>
-                <IconButton className={clsx(classes.RightIcon, {
-                  [classes.RightIconAfterMedia]: !matches
-                })} onClick={openModal} component='span'>
-                  <MoreVert className={clsx(classes.IconSize, {
-                    [classes.IconSizeAfterMedia]: !matches
-                  })} />
-                </IconButton>
               </Typography>
               <Typography className={clsx(classes.fontNormal, {
                 [classes.font10]: !matches
@@ -289,6 +326,13 @@ const ProductCard = (props) => {
                 </Typography>
               </Typography>
             </CardContent>
+            {!matches && <IconButton className={clsx(classes.RightIcon, {
+              [classes.RightIconAfterMedia]: !matches
+            })} onClick={openModal} component='span'>
+              <MoreVert className={clsx(classes.IconSize, {
+                [classes.IconSizeAfterMedia]: !matches
+              })} />
+            </IconButton>}
           </CardActionArea>
         </Card>
       </Grid>

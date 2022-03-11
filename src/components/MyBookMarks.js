@@ -1,7 +1,8 @@
-import { Container, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import React, { useContext, useEffect } from 'react'
 import ProductCard from './Products/ProductCard';
 import { useNavigate } from 'react-router-dom';
+import productContext from '../contexts/products/productContext';
 
 const useStyle = makeStyles((theme) => ({
     containerStyle: {
@@ -13,24 +14,18 @@ const MyBookMarks = () => {
     const classes = useStyle();
     const navigate = useNavigate();
 
-    const [myBookMarkProducts, setmyBookMarkProducts] = useState([]);
+    const context = useContext(productContext);
+    const { myBookMarkProducts, MyBookMarkProducts } = context;
 
-    useEffect(async () => {
+    // const [myBookMarkProducts, setmyBookMarkProducts] = useState([]);
+
+    useEffect( () => {
         if (localStorage.getItem('renToken')) {
-            const respo = await fetch('http://localhost:8500/api/productDetail/getBookMarkProducts', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('renToken')
-                }
-            });
-
-            const MyBookmarkPro = await respo.json();
-            console.log(MyBookmarkPro);
-            setmyBookMarkProducts(MyBookmarkPro);
+            MyBookMarkProducts();
         } else {
             navigate('/');
         }
+        // eslint-disable-next-line
     }, [localStorage.getItem('renToken')])
 
     return (

@@ -2,8 +2,6 @@ import React, { useState, useContext } from 'react';
 import {
   Avatar,
   Button,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Link,
   TextField,
@@ -13,6 +11,7 @@ import { Close, LockOutlined } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import userContext from '../../contexts/userCred/userContext';
+import notifyContext from '../../contexts/NotificationBar/notifyContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +29,9 @@ const LogIn = (props) => {
   
   const userCon = useContext(userContext);
   const { getUser } = userCon;
+
+  const notifyCon = useContext(notifyContext);
+  const { notify } = notifyCon;
 
   const avatarStyle = {
     backgroundColor: '#1bbd7e',
@@ -52,14 +54,21 @@ const LogIn = (props) => {
       body: JSON.stringify(logDetail),
     });
     const json = await response.json();
+    console.log(json);
     if (json.success) {
       // Save the auth token and redirect
       localStorage.setItem('renToken', json.authToken);
       getUser();
       navigate('/');
     }
+    notify("success",json.message)
     props.setIsLoginOpen(false);
   };
+  
+  const forgetPassword = () =>{
+    props.setIsLoginOpen(false);
+    navigate('/forgetPass');
+  }
 
   const OpenSignUP = e =>{
       e.preventDefault();
@@ -102,10 +111,6 @@ const LogIn = (props) => {
           fullWidth
           required
         />
-        <FormControlLabel
-          control={<Checkbox name='checkedB' color='primary' />}
-          label='Remember Me'
-        />
         <Button
           type='submit'
           color='primary'
@@ -117,7 +122,7 @@ const LogIn = (props) => {
         </Button>
       </form>
       <Typography>
-        <Link href='#'>Forgot Password ?</Link>
+        <Link className={classes.cursorLink} onClick={forgetPassword}>Forgot Password ?</Link>
       </Typography>
       <Typography>
         Do you have an account ? <Link className={classes.cursorLink} onClick={OpenSignUP}>Sign up</Link>

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BarChart from '../Charts/BarChart';
 import LineChart from '../Charts/LineChart';
 import PieChart from '../Charts/PieChart';
 import DoughnutChart from '../Charts/DoughnutChart';
+import { useNavigate } from 'react-router-dom';
+import modalContext from '../../contexts/modalOpener/modalContext';
 
 // Analysis with ClickCount - Done
 // Analysis with BookMarked - Done
@@ -10,13 +12,13 @@ import DoughnutChart from '../Charts/DoughnutChart';
 // Analysis with NoOfReport - 
 
 const MyProductAnalysis = () => {
-  const onClick = () => {
-    setTimeout(() => {
-      console.log("Not Accepted");
-    }, 15000);
-  }
+  const navigate = useNavigate();
+
+  const modalOpener = useContext(modalContext);
+  const { setIsLoginOpen } = modalOpener;
 
   const [productNames, setProductNames] = useState([]);
+  // eslint-disable-next-line
   const [ratingsOfProduct, setRatingsOfProduct] = useState([]);
   const [clicksInProduct, setClicksInProduct] = useState([]);
   const [noOfBookMarked, setNoOfBookMarked] = useState([]);
@@ -56,8 +58,14 @@ const MyProductAnalysis = () => {
   }
 
   useEffect(() => {
-    getData();
-  }, [])
+    if (localStorage.getItem('renToken')) {
+      getData();
+    } else {
+      setIsLoginOpen(true);
+      navigate('/');
+    }
+    // eslint-disable-next-line
+  }, [localStorage.getItem('renToken')])
 
   const generateRandomColor = () => {
     var letters = '0123456789ABCDEF';
@@ -71,23 +79,18 @@ const MyProductAnalysis = () => {
   useEffect(() => {
     // console.log(productNames);
     let container = '';
-    for (let i = 0; i < productNames.length ; i++) {
+    for (let i = 0; i < productNames.length; i++) {
       let color23 = generateRandomColor();
       if (!container.includes(color23)) {
-        if(i==0){
-          container+=(`"${color23}"`);
-        }else{
-          container+=(','+`"${color23}"`);
+        if (i === 0) {
+          container += (`"${color23}"`);
+        } else {
+          container += (',' + `"${color23}"`);
         }
-      }else{
+      } else {
         i--;
       }
-      console.log(color23);
     }
-    console.log(`[${container}]`);
-    // console.log(ratingsOfProduct);
-    // console.log(clicksInProduct);
-    // console.log(noOfBookMarked);
     setViewData({
       labels: productNames,
       datasets: [{
@@ -107,7 +110,7 @@ const MyProductAnalysis = () => {
     })
 
     console.log(bookMarkedData);
-
+    // eslint-disable-next-line
   }, [noOfBookMarked])
 
   return (

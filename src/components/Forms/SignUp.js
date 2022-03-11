@@ -11,13 +11,13 @@ import {
   FormControlLabel,
   FormControl,
   FormLabel,
-  Checkbox,
   makeStyles,
   useMediaQuery,
 } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Close } from '@material-ui/icons';
 import userContext from '../../contexts/userCred/userContext';
+import notifyContext from '../../contexts/NotificationBar/notifyContext';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -55,6 +55,9 @@ const SignUp = (props) => {
   const userCon = useContext(userContext);
   const { getUser } = userCon;
 
+  const notifyCon = useContext(notifyContext);
+  const { notify } = notifyCon;
+
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -82,17 +85,22 @@ const SignUp = (props) => {
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    const respo = await fetch('http://localhost:8500/api/auth/getEmail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(signUpCreds),
-    });
-
-    const respJson = await respo.json();
-    setCheckOTP(respJson.OTP);
-    setOtpModal(true);
+    if(signUpCreds.password.length >= 8 && signUpCreds.password.length <=15 ){
+      const respo = await fetch('http://localhost:8500/api/auth/getOTP', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signUpCreds),
+      });
+      
+      const respJson = await respo.json();
+      setCheckOTP(respJson.OTP);
+      notify("success","Your OTP is send Successfully");
+      setOtpModal(true);
+    }else{
+      notify("error","Password must be more than 8 char and less than 15");
+    }
   };
 
   const CheckOTP = (e) => {
@@ -264,10 +272,6 @@ const SignUp = (props) => {
           value={signUpCreds.cpassword}
           label='Confirm Password'
           required
-        />
-        <FormControlLabel
-          control={<Checkbox name='checkedA' />}
-          label='I accept the terms and conditions.'
         />
         <Grid className={classes.btnFlex}>
           <Button
