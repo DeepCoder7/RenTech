@@ -16,6 +16,8 @@ import ProductAnalysis from './components/Analysis/ProductAnalysis';
 import MyProductAnalysis from './components/Analysis/MyProductAnalysis';
 import ForgotPassword from './components/ForgotPassword';
 import NotifyState from './contexts/NotificationBar/NotifyState';
+import ProductPage from './components/Products/ProductPage';
+
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -47,6 +49,7 @@ const App = () => {
                         <Route path='myAnalysis' element={<MyProductAnalysis />} />
                       </Route>
                       <Route path='/forgetPass' element={<ForgotPassword />} />
+                      <Route path='/productPage/:productID' element={<ProductPage />} />
                     </Routes>
                   </Layout>
                 </Router>

@@ -294,7 +294,7 @@ const ProductCard = (props) => {
                 [classes.IconSizeAfterMedia]: !matches
               })} />
             </IconButton>}
-            <CardContent onClick={() => { increaseClick(); navigate('/analysis'); }}>
+            <CardContent onClick={() => { increaseClick(); navigate(`/productPage/${props.product._id}`); }}>
               <Typography className={clsx(classes.fontNormal, {
                 [classes.font14]: !matches
               })} gutterBottom variant='h6' component='h2'>
