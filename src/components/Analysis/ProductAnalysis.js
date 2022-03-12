@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import DoughnutChart from '../Charts/DoughnutChart';
+import LineChart from '../Charts/LineChart';
 
 const ProductAnalysis = () => {
     const [productNames, setProductNames] = useState([]);
     const [totalProduct, setTotalProduct] = useState([]);
+    const [popularProducts, setPopularProducts] = useState([]);
+    const [popularData, setPopularData] = useState({
+        labels: productNames,
+        datasets: [{
+            label: 'Over All products',
+            data: [],
+            backgroundColor: ['green', 'red', 'black'],
+        }]
+    })
     const [chartData, setChartData] = useState({
         labels: productNames,
         datasets: [{
@@ -23,6 +33,7 @@ const ProductAnalysis = () => {
 
         const Pjson = await response.json();
         setProductNames(Pjson.productNames);
+        setPopularProducts(Pjson.popularityOfProducts);
         setTotalProduct(Pjson.totalProducts);
     }
 
@@ -53,7 +64,6 @@ const ProductAnalysis = () => {
             } else {
                 i--;
             }
-            console.log(color23);
         }
         setChartData({
             labels: productNames,
@@ -63,13 +73,26 @@ const ProductAnalysis = () => {
                 backgroundColor: JSON.parse(`[${container}]`),
             }]
         })
+        setPopularData({
+            labels: productNames,
+            datasets: [{
+                label: 'Popularity of Products',
+                data: popularProducts,
+                backgroundColor: JSON.parse(`[${container}]`),
+            }]
+        })
     }, [totalProduct])
 
 
     return (
-        <div style={{ width: '700px' }}>
-            <DoughnutChart chartData={chartData} />
-        </div>
+        <>
+            <div style={{ width: '700px' }}>
+                <DoughnutChart chartData={chartData} />
+            </div>
+            <div style={{ width: '700px' }}>
+                <LineChart chartData={popularData} />
+            </div>
+        </>
     )
 }
 

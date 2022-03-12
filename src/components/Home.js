@@ -46,7 +46,7 @@ const Home = () => {
             })}>
                 <Typography variant='h4'>{category}</Typography>
                 <hr />
-                <button onClick={CheckDate}>Click</button>
+                {/* <button onClick={CheckDate}>Click</button> */}
                 <Grid container spacing={2}>
                     {products.map((product) => {
                         return <ProductCard key={product._id} product={product} />

@@ -114,12 +114,22 @@ const MyProductAnalysis = () => {
   }, [noOfBookMarked])
 
   return (
-    <div style={{ width: '50%' }}>
-      <BarChart key={1} chartData={bookMarkedData} />
-      <DoughnutChart key={2} chartData={viewData} />
-      <LineChart key={3} chartData={viewData} />
-      <div style={{ width: '70%' }}>
+    <div style={{ display: 'flex', flexWrap:'wrap', width: '100%' }}>
+      <div style={{ width: '45%', marginRight:'10px' }}>
+        <BarChart key={1} chartData={bookMarkedData} />
+        <h2>BarChart</h2>
+      </div>
+      <div style={{ width: '49%', marginLeft:'20px' }}>
+        <DoughnutChart key={2} chartData={viewData} />
+        <h2>DoughnutChart</h2>
+      </div>
+      <div style={{ width: '49%' }}>
+        <LineChart key={3} chartData={viewData} />
+        <h2>LineChart</h2>
+      </div>
+      <div style={{ width: '30%', marginLeft:'20px' }}>
         <PieChart chartData={viewData} />
+        <h2>PieChart</h2>
       </div>
     </div>
   )
