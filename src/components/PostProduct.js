@@ -224,7 +224,6 @@ const PostProduct = () => {
                 value={productDe.location}
                 required
                 onChange={onChange}
-                value={productDe.location}
                 label='Rent Location'
                 variant='outlined'
               />
@@ -264,7 +263,7 @@ const PostProduct = () => {
         </form>
       </Paper>
     </>
-  );
+  )
 };
 
 export default PostProduct;

@@ -37,10 +37,11 @@ const useStyles = makeStyles({
     display: 'flex',
     height: '120px',
     '& > .MuiCardMedia-media': {
-      width: '40%',
+      width: '37%',
       height: '100%'
     },
     '& > .MuiCardContent-root': {
+      width: '50%',
       padding: '9px'
     },
   },
@@ -59,7 +60,7 @@ const useStyles = makeStyles({
     height: '18px',
     left: '0%',
     position: 'relative',
-    top: '-33px',
+    top: '-36px',
     left: '16px'
   },
   IconSize: {

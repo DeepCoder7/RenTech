@@ -7,14 +7,16 @@ import {
   RadioGroup,
   Button,
   TextField,
+  useMediaQuery,
 } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
 import Modal from 'react-modal';
 
 const ReportModal = (props) => {
   const [descRp, setDescRp] = useState('');
   const [textArea, setTextArea] = useState(false);
-  
+
+  const matches = useMediaQuery('(min-width:600px)');
+
   const { isReportOpen, setIsReportOpen } = props;
 
   const handleChange = (e) => {
@@ -47,23 +49,13 @@ const ReportModal = (props) => {
             backgroundColor: 'rgba(115,115,115,0.2)',
           },
           content: {
-            width: '20rem',
-            marginTop: '10%',
-            marginX: 'auto',
-            height: '350px',
+            width: matches ? '20rem' : '17rem',
+            marginTop: matches ? '10%' : '40%',
+            marginLeft: matches ? '40%' : '0%',
+            height: '300px',
           },
         }}
       >
-        <Button
-          style={{ position: 'absolute', right: '14px', top: '20px' }}
-          color='secondary'
-          onClick={() => {
-            setIsReportOpen(false);
-          }}
-        >
-          <Close />
-        </Button>
-
         <form onSubmit={handleReport}>
           <FormControl component='fieldset'>
             <FormLabel component='legend'>Report Product</FormLabel>
