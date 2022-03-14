@@ -17,7 +17,7 @@ import MyProductAnalysis from './components/Analysis/MyProductAnalysis';
 import ForgotPassword from './components/ForgotPassword';
 import NotifyState from './contexts/NotificationBar/NotifyState';
 import ProductPage from './components/Products/ProductPage';
-
+import AdminTable from './components/admin/AdminTable';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -42,14 +42,27 @@ const App = () => {
                       <Route path='/' element={<Home />} />
                       <Route path='/myProduct' element={<MyProduct />} />
                       <Route path='/postProduct' element={<PostProduct />} />
-                      <Route path='/requestForProduct' element={<RequestForProduct />} />
+                      <Route
+                        path='/requestForProduct'
+                        element={<RequestForProduct />}
+                      />
                       <Route path='/myBookMark' element={<MyBookMarks />} />
                       <Route path='/analysis' element={<Analysis />}>
-                        <Route path='productAnalysis' element={<ProductAnalysis />} />
-                        <Route path='myAnalysis' element={<MyProductAnalysis />} />
+                        <Route
+                          path='productAnalysis'
+                          element={<ProductAnalysis />}
+                        />
+                        <Route
+                          path='myAnalysis'
+                          element={<MyProductAnalysis />}
+                        />
                       </Route>
                       <Route path='/forgetPass' element={<ForgotPassword />} />
-                      <Route path='/productPage/:productID' element={<ProductPage />} />
+                      <Route
+                        path='/productPage/:productID'
+                        element={<ProductPage />}
+                      />
+                      <Route path='/adminTable' element={<AdminTable />} />
                     </Routes>
                   </Layout>
                 </Router>

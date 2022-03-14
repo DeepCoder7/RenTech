@@ -215,7 +215,7 @@ const ProductPage = (props) => {
             />
             <TextField
               className={classes.mY2}
-              label="Reasone"
+              label="Reason"
               name="ratingDesc"
               variant='outlined'
               onChange={onChange}
