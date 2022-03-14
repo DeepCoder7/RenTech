@@ -12,9 +12,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const categories = [
+    {
+        value: 'Computer',
+    },
+    {
+        value: 'Laptop',
+    },
+    {
+        value: 'Console',
+    },
+    {
+        value: 'Camera',
+    },
+];
+
 const RequestForProduct = () => {
 
-    const [productDe, setProductDe] = useState({ productName: '', category: '', descOfProduct: '' });
+    const [productDe, setProductDe] = useState({ productName: '', category: 'Computer', descOfProduct: '' });
     const classes = useStyles();
 
     const modalOpener = useContext(modalContext);
@@ -22,6 +37,10 @@ const RequestForProduct = () => {
 
     const onChange = (e) => {
         setProductDe({ ...productDe, [e.target.name]: e.target.value });
+    };
+
+    const changeCategory = (e) => {
+        setProductDe({ ...productDe, category: e.target.value });
     };
 
     const navigate = useNavigate();
@@ -51,7 +70,7 @@ const RequestForProduct = () => {
         }
         setProductDe({
             productName: '',
-            category: '',
+            category: 'Computer',
             descOfProduct: ''
         })
     }
@@ -71,20 +90,31 @@ const RequestForProduct = () => {
                         label="Product Name"
                     />
                     <TextField
-                        id="category"
+                        id='category'
+                        select
+                        label='Category'
+                        className={classes.fields}
+                        value={productDe.category}
+                        SelectProps={{
+                            native: true,
+                        }}
                         fullWidth
-                        name='category'
-                        onChange={onChange}
                         variant='outlined'
-                        label="Category"
-                    />
+                        onChange={changeCategory}
+                    >
+                        {categories.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.value}
+                            </option>
+                        ))}
+                    </TextField>
                     <TextField
-                        id="productName"
+                        id="descOfProduct"
                         fullWidth
-                        name='productName'
+                        name='descOfProduct'
                         onChange={onChange}
                         variant='outlined'
-                        label="Product Name"
+                        label="Specification"
                     />
                     <Button color='primary' variant='contained' type='submit'>Submit</Button>
                 </form>
