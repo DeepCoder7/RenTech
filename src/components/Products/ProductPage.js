@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Grid, Paper, TextField, Typography, useMediaQuery } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import StarsRating from 'stars-rating';
 import { useParams } from 'react-router-dom';
@@ -31,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '2px',
     padding: '4px',
     backgroundColor: 'ghostwhite',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
   contentShiftDe: {
     display: 'flex',
@@ -41,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '6px',
     padding: '4px',
     backgroundColor: 'ghostwhite',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
   comments: {
     display: 'flex',
@@ -73,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '30%',
+    width: '35%',
   },
   overallRatingShift: {
     display: 'flex',
@@ -111,13 +118,13 @@ const ProductPage = (props) => {
   const [rateOfProduct, setrateOfProduct] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
   const [isRateModal, setIsRateModal] = useState(false);
-  const [rateDetails, setRateDetails] = useState({ rating: 0, ratingDesc: "" });
+  const [rateDetails, setRateDetails] = useState({ rating: 0, ratingDesc: '' });
 
   const matches = useMediaQuery('(min-width:600px)');
 
-  const onChange = e => {
+  const onChange = (e) => {
     setRateDetails({ ...rateDetails, [e.target.name]: e.target.value });
-  }
+  };
 
   const getProduct = async () => {
     const resp = await fetch(
@@ -136,31 +143,35 @@ const ProductPage = (props) => {
       setProductDetails('');
     }
   };
+  
   const submitRate = async (e) => {
     e.preventDefault();
     console.log(rateDetails);
-    const resp = await fetch(`http://localhost:8500/api/productDetail/ratePorduct/${params.productID}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('renToken'),
-      },
-      body: JSON.stringify(rateDetails),
-    });
+    const resp = await fetch(
+      `http://localhost:8500/api/productDetail/ratePorduct/${params.productID}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('renToken'),
+        },
+        body: JSON.stringify(rateDetails),
+      }
+    );
     const Pjson = await resp.json();
     if (Pjson.success) {
       getProduct();
-      notify("success", "Rating recorded");
+      notify('success', 'Rating recorded');
     } else {
-      notify("error", Pjson.message);
+      notify('error', Pjson.message);
     }
-    setRateDetails({ rating: 0, ratingDesc: "" });
-  }
+    setRateDetails({ rating: 0, ratingDesc: '' });
+  };
   useEffect(() => {
     if (productDetails.ratingOfProduct) {
-      let ratingOfPro = JSON.parse(productDetails.ratingOfProduct)
+      let ratingOfPro = JSON.parse(productDetails.ratingOfProduct);
       let sumOfRating = 0;
-      ratingOfPro.forEach(prod => {
+      ratingOfPro.forEach((prod) => {
         sumOfRating += Number(prod.rating);
       });
       sumOfRating = sumOfRating / ratingOfPro.length;
@@ -181,11 +192,15 @@ const ProductPage = (props) => {
           <Paper
             elevation={6}
             className={clsx(classes.content, {
-              [classes.contentShift]: !matches
+              [classes.contentShift]: !matches,
             })}
             style={{ backgroundColor: 'white' }}
           >
-            <img className={classes.img} src={productDetails.productImage} alt="Not Found" />
+            <img
+              className={classes.img}
+              src={productDetails.productImage}
+              alt='Not Found'
+            />
           </Paper>
         </Grid>
         <Modal
@@ -204,8 +219,8 @@ const ProductPage = (props) => {
         >
           <form onSubmit={submitRate}>
             <TextField
-              label="Rating"
-              name="rating"
+              label='Rating'
+              name='rating'
               variant='outlined'
               inputProps={{ min: 0, max: 5 }}
               type='number'
@@ -215,15 +230,24 @@ const ProductPage = (props) => {
             />
             <TextField
               className={classes.mY2}
-              label="Reason"
-              name="ratingDesc"
+              label='Reason'
+              name='ratingDesc'
               variant='outlined'
               onChange={onChange}
               fullWidth
             />
-            <div className={classes.mY2} >
-              <Button variant='contained' onClick={() => { setIsRateModal(false) }}>Close</Button>
-              <Button variant="contained" type="submit">Submit</Button>
+            <div className={classes.mY2}>
+              <Button
+                variant='contained'
+                onClick={() => {
+                  setIsRateModal(false);
+                }}
+              >
+                Close
+              </Button>
+              <Button variant='contained' type='submit'>
+                Submit
+              </Button>
             </div>
           </form>
         </Modal>
@@ -231,7 +255,7 @@ const ProductPage = (props) => {
           <Paper
             elevation={6}
             className={clsx(classes.content, {
-              [classes.contentShiftDe]: !matches
+              [classes.contentShiftDe]: !matches,
             })}
             style={{
               flexDirection: 'column',
@@ -240,19 +264,24 @@ const ProductPage = (props) => {
               paddingRight: '30px',
             }}
           >
-            <Typography variant='h4'
+            <Typography
+              variant='h4'
               className={clsx(classes.fontNormal, {
-                [classes.font27]: !matches
+                [classes.font27]: !matches,
               })}
-            >{productDetails.productName}</Typography>
+            >
+              {productDetails.productName}
+            </Typography>
             <Typography
               className={clsx(classes.fontNormal, {
-                [classes.font15]: !matches
+                [classes.font15]: !matches,
               })}
-            ><b>Model : </b> {productDetails.model}</Typography>
+            >
+              <b>Model : </b> {productDetails.model}
+            </Typography>
             <div
               className={clsx(classes.overallRating, {
-                [classes.overallRatingShift]: !matches
+                [classes.overallRatingShift]: !matches,
               })}
             >
               <b>Overall Rating:</b>
@@ -267,22 +296,29 @@ const ProductPage = (props) => {
             </div>
             <Typography
               className={clsx(classes.fontNormal, {
-                [classes.font15]: !matches
+                [classes.font15]: !matches,
               })}
-            ><b>Price:</b> {productDetails.price}₹  For {productDetails.duration} days</Typography>
+            >
+              <b>Price:</b> {productDetails.price}₹ For{' '}
+              {productDetails.duration} days
+            </Typography>
             <Typography
               className={clsx(classes.fontNormal, {
-                [classes.font15]: !matches
+                [classes.font15]: !matches,
               })}
-            ><b>No Of product:</b> {productDetails.noOfProduct}</Typography>
+            >
+              <b>No Of product:</b> {productDetails.noOfProduct}
+            </Typography>
             <Typography
               className={clsx(classes.fontNormal, {
-                [classes.font15]: !matches
+                [classes.font15]: !matches,
               })}
-            ><b>Location: </b> {productDetails.location}</Typography>
+            >
+              <b>Location: </b> {productDetails.location}
+            </Typography>
             <Typography
               className={clsx(classes.fontNormal, {
-                [classes.font15]: !matches
+                [classes.font15]: !matches,
               })}
             >
               <b>Description:</b> {productDetails.proDesc}
@@ -291,7 +327,14 @@ const ProductPage = (props) => {
               <Button size='small' variant='contained' color='inherit'>
                 Take Rent
               </Button>
-              <Button size='small' variant='contained' color='inherit' onClick={() => { setIsRateModal(true) }}>
+              <Button
+                size='small'
+                variant='contained'
+                color='inherit'
+                onClick={() => {
+                  setIsRateModal(true);
+                }}
+              >
                 Give Rating
               </Button>
             </div>
@@ -300,38 +343,50 @@ const ProductPage = (props) => {
       </Grid>
       <Grid container>
         <Grid item xs={12}>
-          <Paper elevation={1} className={clsx(classes.comments, {
-            [classes.commentShift]: !matches
-          })}>
-            <div style={{width:'100%'}}>
-              <Typography variant='h4'
+          <Paper
+            elevation={1}
+            className={clsx(classes.comments, {
+              [classes.commentShift]: !matches,
+            })}
+          >
+            <div style={{ width: '100%' }}>
+              <Typography
+                variant='h4'
                 className={clsx(classes.fontNormal, {
-                  [classes.font20]: !matches
+                  [classes.font20]: !matches,
                 })}
-              >User Reviews</Typography>
+              >
+                User Reviews
+              </Typography>
               <div>
-                {rateOfProduct && rateOfProduct.map((productEle,index) => {
-                  return (
-                    <ul key={index} style={{ listStyle: 'none', backgroundColor: 'wheat', width: '100%' }}>
-                      <li>{productEle.userName}</li>
-                      <li>
-                        <StarsRating
-                          count={5}
-                          value={Number(productEle.rating)}
-                          size={15}
-                          color1={'blue'}
-                          color2={'#ffd700'}
-                          edit={false}
-                        />
-                      </li>
-                      <li>
-                        <Typography>
-                          {productEle.ratingDesc}
-                        </Typography>
-                      </li>
-                    </ul>
-                  )
-                })}
+                {rateOfProduct &&
+                  rateOfProduct.map((productEle, index) => {
+                    return (
+                      <ul
+                        key={index}
+                        style={{
+                          listStyle: 'none',
+                          backgroundColor: 'wheat',
+                          width: '100%',
+                        }}
+                      >
+                        <li>{productEle.userName}</li>
+                        <li>
+                          <StarsRating
+                            count={5}
+                            value={Number(productEle.rating)}
+                            size={15}
+                            color1={'blue'}
+                            color2={'#ffd700'}
+                            edit={false}
+                          />
+                        </li>
+                        <li>
+                          <Typography>{productEle.ratingDesc}</Typography>
+                        </li>
+                      </ul>
+                    );
+                  })}
               </div>
             </div>
           </Paper>

@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import productContext from '../contexts/products/productContext';
-import { Container, Grid, useMediaQuery, makeStyles } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  useMediaQuery,
+  makeStyles,
+  TextField,
+  Button,
+} from '@material-ui/core';
 import MyProductCard from './Products/MyProductCard';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +25,7 @@ const useStyle = makeStyles((theme) => ({
     paddingLeft: theme.spacing(0.8),
     paddingRight: theme.spacing(0.8),
   },
-}))
+}));
 
 const MyProduct = () => {
   const modalOpener = useContext(modalContext);
@@ -83,9 +90,11 @@ const MyProduct = () => {
   return (
     <>
       {localStorage.getItem('renToken') && (
-        <Container className={clsx(classes.containerStyle, {
-          [classes.containerStyleAfterMedia]: !matches
-        })}>
+        <Container
+          className={clsx(classes.containerStyle, {
+            [classes.containerStyleAfterMedia]: !matches,
+          })}
+        >
           <Modal
             isOpen={editIsOpen}
             style={{
@@ -103,103 +112,88 @@ const MyProduct = () => {
           >
             {/* <h2>Edit a Note</h2> */}
             <div>
-              <div className='mb-3'>
-                <label htmlFor='productName' className='form-label'>
-                  Product Name
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='productName'
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: '60vh',
+                  justifyContent: 'space-evenly',
+                }}
+              >
+                <TextField
+                  label='Product Name'
                   name='productName'
-                  aria-describedby='emailHelp'
+                  required
+                  fullWidth
+                  variant='outlined'
                   onChange={onChange}
                   value={curProduct.productName}
                 />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='price' className='form-label'>
-                  Price
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='price'
+                <TextField
+                  label='Price'
                   name='price'
-                  aria-describedby='emailHelp'
+                  required
+                  fullWidth
+                  variant='outlined'
                   onChange={onChange}
                   value={curProduct.price}
                 />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='location' className='form-label'>
-                  Location
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='location'
+                <TextField
+                  label='Location'
                   name='location'
-                  aria-describedby='emailHelp'
+                  required
+                  fullWidth
+                  variant='outlined'
                   onChange={onChange}
                   value={curProduct.location}
                 />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='model' className='form-label'>
-                  Model
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='model'
+                <TextField
+                  label='Model'
                   name='model'
-                  aria-describedby='emailHelp'
+                  required
+                  fullWidth
+                  variant='outlined'
                   onChange={onChange}
                   value={curProduct.model}
                 />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='duration' className='form-label'>
-                  Duration
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='duration'
+                <TextField
+                  label='Duration'
                   name='duration'
-                  aria-describedby='emailHelp'
+                  required
+                  fullWidth
+                  variant='outlined'
                   onChange={onChange}
                   value={curProduct.duration}
                 />
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='noOfProduct' className='form-label'>
-                  No Of Product
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='noOfProduct'
+                <TextField
+                  label='No Of Product'
                   name='noOfProduct'
-                  aria-describedby='emailHelp'
+                  required
+                  fullWidth
+                  variant='outlined'
                   onChange={onChange}
                   value={curProduct.noOfProduct}
                 />
               </div>
-              <button
-                type='submit'
-                className='btn btn-primary'
-                onClick={editProducts}
-              >
-                Submit
-              </button>
-              <button
-                className='btn btn-primary mx-2'
-                onClick={() => setEditIsOpen(false)}
-              >
-                Close
-              </button>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button
+                  style={{ margin: '4px' }}
+                  type='submit'
+                  onClick={editProducts}
+                  variant='contained'
+                  color='secondary'
+                >
+                  Submit
+                </Button>
+                <Button
+                  style={{ margin: '4px' }}
+                  onClick={() => setEditIsOpen(false)}
+                  variant='contained'
+                  color='primary'
+                >
+                  Close
+                </Button>
+              </div>
             </div>
           </Modal>
           <Grid container spacing={2}>
