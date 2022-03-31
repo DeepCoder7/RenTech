@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '35%',
+    width: '37%',
   },
   overallRatingShift: {
     display: 'flex',
@@ -126,6 +126,27 @@ const ProductPage = (props) => {
     setRateDetails({ ...rateDetails, [e.target.name]: e.target.value });
   };
 
+  const sendRequest = async (e) => {
+    const respOfRequest = await fetch(
+      `http://localhost:8500/api/notifyUS/sendNotify/${productDetails.userId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('renToken'),
+        },
+        body: JSON.stringify({ messageNote: "User is requested you to rent your product", role: "userToUser", proID: productDetails._id })
+      }
+    );
+    const productJson = await respOfRequest.json();
+    if (productJson.success) {
+      notify("success", "Request is send Successfully");
+      console.log("OK");
+    } else {
+      notify("error", productJson.message);
+    }
+  }
+
   const getProduct = async () => {
     const resp = await fetch(
       `http://localhost:8500/api/productDetail/getProductDe/${params.productID}`,
@@ -143,7 +164,7 @@ const ProductPage = (props) => {
       setProductDetails('');
     }
   };
-  
+
   const submitRate = async (e) => {
     e.preventDefault();
     console.log(rateDetails);
@@ -176,7 +197,6 @@ const ProductPage = (props) => {
       });
       sumOfRating = sumOfRating / ratingOfPro.length;
       setOverAllRating(sumOfRating);
-      console.log(sumOfRating);
       setrateOfProduct(ratingOfPro);
     }
   }, [productDetails]);
@@ -324,7 +344,7 @@ const ProductPage = (props) => {
               <b>Description:</b> {productDetails.proDesc}
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Button size='small' variant='contained' color='inherit'>
+              <Button size='small' variant='contained' color='inherit' onClick={sendRequest}>
                 Take Rent
               </Button>
               <Button
