@@ -17,7 +17,7 @@ import MyProductAnalysis from './components/Analysis/MyProductAnalysis';
 import ForgotPassword from './components/ForgotPassword';
 import NotifyState from './contexts/NotificationBar/NotifyState';
 import ProductPage from './components/Products/ProductPage';
-import AdminTable from './components/admin/AdminTable';
+import AdminUserTable from './components/admin/AdminUserTable';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -62,7 +62,10 @@ const App = () => {
                         path='/productPage/:productID'
                         element={<ProductPage />}
                       />
-                      <Route path='/adminTable' element={<AdminTable />} />
+                      <Route
+                        path='/adminUserTable'
+                        element={<AdminUserTable />}
+                      />
                     </Routes>
                   </Layout>
                 </Router>

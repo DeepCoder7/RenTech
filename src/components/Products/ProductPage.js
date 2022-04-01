@@ -135,17 +135,21 @@ const ProductPage = (props) => {
           'Content-Type': 'application/json',
           'auth-token': localStorage.getItem('renToken'),
         },
-        body: JSON.stringify({ messageNote: "User is requested you to rent your product", role: "userToUser", proID: productDetails._id })
+        body: JSON.stringify({
+          messageNote: 'User is requested you to rent your product',
+          role: 'userToUser',
+          proID: productDetails._id,
+        }),
       }
     );
     const productJson = await respOfRequest.json();
     if (productJson.success) {
-      notify("success", "Request is send Successfully");
-      console.log("OK");
+      notify('success', 'Request is send Successfully');
+      console.log('OK');
     } else {
-      notify("error", productJson.message);
+      notify('error', productJson.message);
     }
-  }
+  };
 
   const getProduct = async () => {
     const resp = await fetch(
@@ -185,6 +189,7 @@ const ProductPage = (props) => {
       notify('success', 'Rating recorded');
     } else {
       notify('error', Pjson.message);
+      setIsRateModal(false);
     }
     setRateDetails({ rating: 0, ratingDesc: '' });
   };
@@ -240,9 +245,10 @@ const ProductPage = (props) => {
           <form onSubmit={submitRate}>
             <TextField
               label='Rating'
+              required
               name='rating'
               variant='outlined'
-              inputProps={{ min: 0, max: 5 }}
+              inputProps={{ min: 0.0, max: 5.0 }}
               type='number'
               onChange={onChange}
               defaultValue={0}
@@ -251,21 +257,36 @@ const ProductPage = (props) => {
             <TextField
               className={classes.mY2}
               label='Reason'
+              required
               name='ratingDesc'
               variant='outlined'
               onChange={onChange}
               fullWidth
             />
-            <div className={classes.mY2}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '5px',
+              }}
+            >
               <Button
                 variant='contained'
+                color='secondary'
                 onClick={() => {
                   setIsRateModal(false);
                 }}
               >
                 Close
               </Button>
-              <Button variant='contained' type='submit'>
+              <Button
+                variant='contained'
+                color='primary'
+                type='submit'
+                // onClick={() => {
+                //   setIsRateModal(false);
+                // }}
+              >
                 Submit
               </Button>
             </div>
@@ -344,7 +365,12 @@ const ProductPage = (props) => {
               <b>Description:</b> {productDetails.proDesc}
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Button size='small' variant='contained' color='inherit' onClick={sendRequest}>
+              <Button
+                size='small'
+                variant='contained'
+                color='inherit'
+                onClick={sendRequest}
+              >
                 Take Rent
               </Button>
               <Button

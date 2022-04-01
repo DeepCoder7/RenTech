@@ -13,6 +13,7 @@ import {
   FormLabel,
   makeStyles,
   useMediaQuery,
+  Link,
 } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Close } from '@material-ui/icons';
@@ -49,6 +50,14 @@ const useStyles = makeStyles((theme) => ({
   my2: {
     marginTop: '7px',
   },
+  cursorLink: {
+    cursor: 'pointer',
+  },
+  OTPClose: {
+    '&:hover': {
+      backgroundColor: '#9a0036',
+    },
+  },
 }));
 
 const SignUp = (props) => {
@@ -79,13 +88,19 @@ const SignUp = (props) => {
     location: '',
   });
 
+  const OpenLogin = (e) => {
+    e.preventDefault();
+    props.setIsSignUpOpen(false);
+    props.setIsLoginOpen(true);
+  };
+
   const onChange = (e) => {
     setSignUpCreds({ ...signUpCreds, [e.target.name]: e.target.value });
   };
 
   const onSignUp = async (e) => {
     e.preventDefault();
-    if(signUpCreds.password.length >= 8 && signUpCreds.password.length <=15 ){
+    if (signUpCreds.password.length >= 8 && signUpCreds.password.length <= 15) {
       const respo = await fetch('http://localhost:8500/api/auth/getOTP', {
         method: 'POST',
         headers: {
@@ -93,13 +108,13 @@ const SignUp = (props) => {
         },
         body: JSON.stringify(signUpCreds),
       });
-      
+
       const respJson = await respo.json();
       setCheckOTP(respJson.OTP);
-      notify("success","Your OTP is send Successfully");
+      notify('success', 'Your OTP is send Successfully');
       setOtpModal(true);
-    }else{
-      notify("error","Password must be more than 8 char and less than 15");
+    } else {
+      notify('error', 'Password must be more than 8 char and less than 15');
     }
   };
 
@@ -156,10 +171,11 @@ const SignUp = (props) => {
             },
             content: {
               padding: 0,
-              width: '230px',
-              height: '205px',
-              top: '50%',
-              left: '30%',
+              marginTop: '5px',
+              width: matches ? '330px' : '230px',
+              height: matches ? '205px' : '150px',
+              top: matches ? '40%' : '30%',
+              left: matches ? '40%' : '20%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around',
@@ -167,7 +183,12 @@ const SignUp = (props) => {
           }}
           // onRequestClose={() => setOtpModal(false)}
         >
-          <Button onClick={() => setOtpModal(false)}>Close</Button>
+          <Button
+            className={classes.OTPClose}
+            onClick={() => setOtpModal(false)}
+          >
+            Close
+          </Button>
           <TextField
             label='OTP'
             variant='outlined'
@@ -273,7 +294,7 @@ const SignUp = (props) => {
           label='Confirm Password'
           required
         />
-        <Grid className={classes.btnFlex}>
+        <Grid className={classes.btnFlex} style={{ marginTop: '10px' }}>
           <Button
             onClick={handleReset}
             size='small'
@@ -293,6 +314,12 @@ const SignUp = (props) => {
           </Button>
         </Grid>
       </form>
+      <Typography style={{ marginTop: '5px' }}>
+        Already have an account ?{' '}
+        <Link className={classes.cursorLink} onClick={OpenLogin}>
+          Log In
+        </Link>
+      </Typography>
     </Grid>
   );
 };

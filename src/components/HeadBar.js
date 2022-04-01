@@ -115,7 +115,12 @@ const HeadBar = (props) => {
                 </Button>
               </>
             ) : (
-              <Button color='inherit' size='small' variant='outlined' onClick={logOut}>
+              <Button
+                color='inherit'
+                size='small'
+                variant='outlined'
+                onClick={logOut}
+              >
                 Log Out
               </Button>
             )}
@@ -129,15 +134,18 @@ const HeadBar = (props) => {
             backgroundColor: 'rgba(115,115,115,0.2)',
           },
           content: {
-            width: matches?'30rem':'18rem',
-            marginTop: matches?'7rem':'5.1rem',
-            marginLeft: matches?'auto':'0',
+            width: matches ? '30rem' : '18rem',
+            marginTop: matches ? '7rem' : '5.1rem',
+            marginLeft: matches ? 'auto' : '0',
             marginRight: 'auto',
-            height: matches?'34rem':'31.8rem',
+            height: matches ? '34rem' : '31.8rem',
           },
         }}
       >
-        <SignUp setIsSignUpOpen={setIsSignUpOpen} />
+        <SignUp
+          setIsSignUpOpen={setIsSignUpOpen}
+          setIsLoginOpen={setIsLoginOpen}
+        />
       </Modal>
       <Modal
         isOpen={isLoginOpen}
@@ -146,15 +154,14 @@ const HeadBar = (props) => {
             backgroundColor: 'rgba(115,115,115,0.2)',
           },
           content: {
-            width: matches?'30rem':'18rem',
-            marginTop: matches?'7rem':'5.5rem',
-            marginLeft: matches?'auto':'0',
+            width: matches ? '30rem' : '18rem',
+            marginTop: matches ? '7rem' : '5.5rem',
+            marginLeft: matches ? 'auto' : '0',
             marginRight: 'auto',
             height: '28rem',
           },
         }}
       >
-        
         <Login
           setIsLoginOpen={setIsLoginOpen}
           setIsSignUpOpen={setIsSignUpOpen}

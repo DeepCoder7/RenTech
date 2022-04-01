@@ -170,7 +170,6 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'white',
   },
-
 }));
 
 const Layout = ({ open, children }) => {
@@ -198,7 +197,7 @@ const Layout = ({ open, children }) => {
 
   const ClickBookMark = () => {
     navigate('/myBookMark');
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -243,7 +242,7 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'Analysis'} />
             </ListItem>
           </Link>
-          <Link to='/adminTable' className={classes.link}>
+          <Link to='/adminUserTable' className={classes.link}>
             <ListItem button>
               <ListItemText primary={'Admin'} />
             </ListItem>
@@ -287,7 +286,11 @@ const Layout = ({ open, children }) => {
         </Toolbar>
       </AppBar>
 
-      <Notification isNotificationOpen={isNotificationOpen} setIsNotificationOpen={setIsNotificationOpen} matches={matches} />
+      <Notification
+        isNotificationOpen={isNotificationOpen}
+        setIsNotificationOpen={setIsNotificationOpen}
+        matches={matches}
+      />
 
       <main
         className={clsx(classes.content, {
