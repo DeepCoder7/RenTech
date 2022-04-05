@@ -30,15 +30,6 @@ const Home = () => {
         // eslint-disable-next-line
     }, [search, category])
 
-    const DateOfLoad = new Date();
-
-    const CheckDate = e =>{
-        e.preventDefault();
-        let newDate =new Date();
-        newDate.setDate(DateOfLoad.getDate() + 10);
-        console.log(DateOfLoad,"<",newDate);
-    }
-
     return (
         <>
             {!matches && <Category />}
@@ -47,7 +38,6 @@ const Home = () => {
             })}>
                 <Typography variant='h4'>{category}</Typography>
                 <hr />
-                {/* <button onClick={CheckDate}>Click</button> */}
                 <Grid container spacing={2}>
                     {products.map((product) => {
                         return <ProductCard key={product._id} product={product} />

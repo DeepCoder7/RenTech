@@ -2,34 +2,51 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Button } from '@material-ui/core';
 
-const columns = [
-  { field: 'id', headerName: 'ID' },
-  { field: '_id', headerName: 'Identifier', width: 350 },
-  { field: 'name', headerName: 'Name', width: 250 },
-  { field: 'location', headerName: 'Location', width: 250 },
-  { field: 'email', headerName: 'Email', width: 250 },
-  { field: 'date', headerName: 'Date', width: 250 },
-  {
-    field: "active",
-    headerName: "Status",
-    renderCell: (cellValues) => {
-      return (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={(e) => {
-            console.log(cellValues);
-          }}
-        >
-          {cellValues.row.active ? 'Activate' : 'Deactive'}
-        </Button>
-      );
-    }, width: 150
-  }
-];
+
 
 const AdminTable = () => {
+  const changeStatus = async (userID, value) => {
+    const resp = await fetch(
+      `http://localhost:8500/api/auth/activeUSer/${userID}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('renToken'),
+        },
+        body: JSON.stringify({ value: value })
+      }
+    );
+
+    getUserDetails();
+  }
+  const columns = [
+    { field: 'id', headerName: 'ID' },
+    { field: '_id', headerName: 'Identifier', width: 350 },
+    { field: 'name', headerName: 'Name', width: 250 },
+    { field: 'location', headerName: 'Location', width: 250 },
+    { field: 'email', headerName: 'Email', width: 250 },
+    { field: 'date', headerName: 'Date', width: 250 },
+    {
+      field: "active",
+      headerName: "Status",
+      renderCell: (cellValues) => {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => {
+              changeStatus(cellValues.row._id, !cellValues.row.active);
+            }}
+          >
+            {cellValues.row.active ? 'Activate' : 'Deactive'}
+          </Button>
+        );
+      }, width: 150
+    }
+  ];
   const [tableData, setTableData] = useState([]);
+
 
   useEffect(() => {
     // fetch('https://jsonplaceholder.typicode.com/posts')
@@ -37,6 +54,11 @@ const AdminTable = () => {
     //   .then((data) => setTableData(data));
     getUserDetails();
   }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line
+  }, [tableData])
+
 
   const getUserDetails = async () => {
     const resp = await fetch(
