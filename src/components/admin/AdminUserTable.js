@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import { Button } from '@material-ui/core';
 
 const columns = [
   { field: 'id', headerName: 'ID' },
@@ -8,6 +9,23 @@ const columns = [
   { field: 'location', headerName: 'Location', width: 250 },
   { field: 'email', headerName: 'Email', width: 250 },
   { field: 'date', headerName: 'Date', width: 250 },
+  {
+    field: "active",
+    headerName: "Status",
+    renderCell: (cellValues) => {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(e) => {
+            console.log(cellValues);
+          }}
+        >
+          {cellValues.row.active ? 'Activate' : 'Deactive'}
+        </Button>
+      );
+    }, width: 150
+  }
 ];
 
 const AdminTable = () => {

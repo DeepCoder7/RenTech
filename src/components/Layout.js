@@ -242,7 +242,7 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'Analysis'} />
             </ListItem>
           </Link>
-          <Link to='/adminUserTable' className={classes.link}>
+          <Link to='/admin' className={classes.link}>
             <ListItem button>
               <ListItemText primary={'Admin'} />
             </ListItem>

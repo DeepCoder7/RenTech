@@ -18,6 +18,9 @@ import ForgotPassword from './components/ForgotPassword';
 import NotifyState from './contexts/NotificationBar/NotifyState';
 import ProductPage from './components/Products/ProductPage';
 import AdminUserTable from './components/admin/AdminUserTable';
+import Admin from './components/Admin';
+import AdminProductTable from './components/admin/AdminProductTable';
+import AdminReportTable from './components/admin/AdminReportTable';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -62,10 +65,11 @@ const App = () => {
                         path='/productPage/:productID'
                         element={<ProductPage />}
                       />
-                      <Route
-                        path='/adminUserTable'
-                        element={<AdminUserTable />}
-                      />
+                      <Route path='/admin' element={<Admin />}>
+                        <Route path='userDetails' element={<AdminUserTable />} />
+                        <Route path='productdetails' element={<AdminProductTable />} />
+                        <Route path='reportdetails' element={<AdminReportTable />} />
+                      </Route>
                     </Routes>
                   </Layout>
                 </Router>
