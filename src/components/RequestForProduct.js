@@ -7,7 +7,7 @@ import modalContext from '../contexts/modalOpener/modalContext';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
-            marginTop: '20px'
+            marginTop: '20px',
         }
     }
 }))
@@ -29,7 +29,7 @@ const categories = [
 
 const RequestForProduct = () => {
 
-    const [productDe, setProductDe] = useState({ productName: '', category: 'Computer', descOfProduct: '' });
+    const [productDe, setProductDe] = useState({ productName: '', category: 'Computer', modelName: '', descOfProduct: '' });
     const classes = useStyles();
 
     const modalOpener = useContext(modalContext);
@@ -71,7 +71,8 @@ const RequestForProduct = () => {
         setProductDe({
             productName: '',
             category: 'Computer',
-            descOfProduct: ''
+            descOfProduct: '',
+            modelName: ''
         })
     }
 
@@ -88,6 +89,7 @@ const RequestForProduct = () => {
                         onChange={onChange}
                         variant='outlined'
                         label="Product Name"
+                        value={productDe.productName}
                     />
                     <TextField
                         id='category'
@@ -109,10 +111,20 @@ const RequestForProduct = () => {
                         ))}
                     </TextField>
                     <TextField
+                        id="modelName"
+                        fullWidth
+                        name="modelName"
+                        onChange={onChange}
+                        value={productDe.modelName}
+                        variant='outlined'
+                        label='Model'
+                    />
+                    <TextField
                         id="descOfProduct"
                         fullWidth
                         name='descOfProduct'
                         onChange={onChange}
+                        value={productDe.descOfProduct}
                         variant='outlined'
                         label="Specification"
                     />

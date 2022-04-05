@@ -74,6 +74,7 @@ const Notification = (props) => {
         if (localStorage.getItem('renToken')) {
             getNotification();
         }
+        // eslint-disable-next-line
     }, [localStorage.getItem('renToken')])
 
 
@@ -117,7 +118,7 @@ const Notification = (props) => {
                                 <Paper key={notification._id}>
                                     <h4>{notification.messageNote}</h4>
                                     <Link to={`/productPage/${notification.proId}`}>Product</Link>
-                                    {notification.role == 'userToUser' && <>
+                                    {notification.role === 'userToUser' && <>
                                         <Button variant='contained' onClick={() => { Confirm(notification.userId, notification._id) }}>Confirm</Button>
                                         <Button variant='contained' onClick={() => { Reject(notification.userId, notification._id) }}>Reject</Button>
                                     </>}

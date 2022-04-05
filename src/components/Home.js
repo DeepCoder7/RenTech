@@ -8,7 +8,8 @@ import clsx from 'clsx';
 
 const useStyle = makeStyles((theme) => ({
     containerStyle: {
-        marginTop: theme.spacing(1), 
+        marginTop: theme.spacing(1),
+        maxWidth: '1420px',
     },
     containerStyleAfterMedia: {
         marginTop: theme.spacing(1), 

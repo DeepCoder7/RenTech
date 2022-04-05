@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
   useMediaQuery,
+  Avatar
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import StarsRating from 'stars-rating';
@@ -106,6 +107,17 @@ const useStyles = makeStyles((theme) => ({
   },
   fontNormal: {
     // backgroundColor: 'none'
+  },
+
+  commentItem: {
+    listStyle: 'none',
+    backgroundColor: 'wheat',
+    width: '100%',
+    padding: '1%'
+  },
+  AvatarSet: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 const ProductPage = (props) => {
@@ -208,7 +220,7 @@ const ProductPage = (props) => {
   useEffect(() => {
     getProduct();
     // eslint-disable-next-line
-  }, []);
+  }, [params.productID]);
 
   return (
     <div className={classes.root}>
@@ -283,9 +295,9 @@ const ProductPage = (props) => {
                 variant='contained'
                 color='primary'
                 type='submit'
-                // onClick={() => {
-                //   setIsRateModal(false);
-                // }}
+              // onClick={() => {
+              //   setIsRateModal(false);
+              // }}
               >
                 Submit
               </Button>
@@ -410,22 +422,21 @@ const ProductPage = (props) => {
                     return (
                       <ul
                         key={index}
-                        style={{
-                          listStyle: 'none',
-                          backgroundColor: 'wheat',
-                          width: '100%',
-                        }}
+                        className={classes.commentItem}
                       >
-                        <li>{productEle.userName}</li>
-                        <li>
-                          <StarsRating
-                            count={5}
-                            value={Number(productEle.rating)}
-                            size={15}
-                            color1={'blue'}
-                            color2={'#ffd700'}
-                            edit={false}
-                          />
+                        <li className={classes.AvatarSet}>
+                          <Avatar style={{ width: '30px', height: '30px', marginLeft: '7px' }}>{productEle.userName[0]}</Avatar>
+                          <div style={{ marginLeft: '7px' }}>{productEle.userName}</div>
+                          <div style={{ marginLeft: '8px' }}>
+                            <StarsRating
+                              count={5}
+                              value={Number(productEle.rating)}
+                              size={20}
+                              color1={'blue'}
+                              color2={'#ffd700'}
+                              edit={false}
+                            />
+                          </div>
                         </li>
                         <li>
                           <Typography>{productEle.ratingDesc}</Typography>

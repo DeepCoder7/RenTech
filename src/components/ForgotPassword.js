@@ -1,8 +1,9 @@
-import { Button, makeStyles, Paper, TextField } from '@material-ui/core'
+import { Button, makeStyles, Paper, TextField, useMediaQuery } from '@material-ui/core'
 import React, { useState, useContext } from 'react'
 import clsx from 'clsx';
 import Modal from 'react-modal';
 import modalContext from '../contexts/modalOpener/modalContext';
+import notifyContext from '../contexts/NotificationBar/notifyContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +17,19 @@ const useStyles = makeStyles((theme) => ({
             paddingRight: theme.spacing(2.5),
             paddingTop: theme.spacing(2),
             width: theme.spacing(64),
+        }
+    },
+    rootShift: {
+        display: 'flex',
+        height: '600px',
+        justifyContent: 'center',
+        marginTop: '-30%',
+        '& > *': {
+            margin: theme.spacing(1),
+            paddingLeft: theme.spacing(2.5),
+            paddingRight: theme.spacing(2.5),
+            paddingTop: theme.spacing(2),
+            width: "90%",
         }
     },
     paper: {
@@ -35,7 +49,12 @@ const ForgotPassword = () => {
     const modalOpener = useContext(modalContext);
     const { setIsLoginOpen } = modalOpener;
 
+    const notifyCon = useContext(notifyContext);
+    const { notify } = notifyCon;
+
     const classes = useStyles();
+    const matches = useMediaQuery('(min-width:600px)');
+
     const [email, setEmail] = useState('');
     const [allOTP, setAllOTP] = useState({ resOTP: '', checkOTP: '# $ #%%', otpGen: false })
     const [changePassModal, setChangePassModal] = useState(false);
@@ -60,13 +79,19 @@ const ForgotPassword = () => {
         });
 
         const respJson = await respo.json();
-        setAllOTP({ ...allOTP, ['checkOTP']: respJson.OTP, ['otpGen']: true });
+        if (respJson.success) {
+            notify("success", "OTP is sended to your email id")
+            setAllOTP({ ...allOTP, ['checkOTP']: respJson.OTP, ['otpGen']: true });
+        } else {
+            notify("error", respJson.message)
+        }
     }
     const verifyOTP = e => {
         if ((allOTP.checkOTP === allOTP.resOTP) && (allOTP.resOTP.length == 6)) {
             setChangePassModal(true);
         } else {
             console.log("Not Matched");
+            notify("warn", "Not Matched");
         }
     }
 
@@ -86,18 +111,21 @@ const ForgotPassword = () => {
             } else {
                 console.log(response.message);
             }
+            setChangePassModal(false);
+            setEmail('');
+            setAllOTP({ resOTP: '', checkOTP: '# $ #%%', otpGen: false });
+            setChangePass({ newPass: '', confPass: '' });
         } else {
             console.log("Not Matches");
+            notify("warn", "Password Not matched")
         }
-        setChangePassModal(false);
-        setEmail('');
-        setAllOTP({ resOTP: '', checkOTP: '# $ #%%', otpGen: false });
-        setChangePass({ newPass: '', confPass: '' });
     }
 
     return (
         <>
-            <div className={classes.root}>
+            <div className={clsx(classes.root,{
+                [classes.rootShift]:!matches
+            })}>
                 <Modal
                     isOpen={changePassModal}
                     style={{
@@ -108,11 +136,13 @@ const ForgotPassword = () => {
                             padding: 6,
                             width: '330px',
                             height: '255px',
-                            top: '40%',
-                            left: '40%',
+                            top: matches?'40%':'20%',
+                            left: matches?'40%':'10%',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-around',
+                            backgroundColor: 'white',
+                            zIndex:1
                         },
                     }}
                 >
@@ -142,7 +172,6 @@ const ForgotPassword = () => {
                         change PassWord
                     </Button>
                 </Modal>
-
 
                 <Paper
                     elevation={3}
