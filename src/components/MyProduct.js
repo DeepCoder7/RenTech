@@ -102,11 +102,11 @@ const MyProduct = () => {
                 backgroundColor: 'rgba(115,115,115,0.2)',
               },
               content: {
-                width: '1000px',
-                marginTop: '5.5%',
-                marginLeft: 'auto',
+                width: matches ? '80%' : '95%',
+                height: matches ? '640px' : '780px',
+                marginTop: matches ? '6%' : '20%',
+                marginLeft: matches?'auto':'-5%',
                 marginRight: 'auto',
-                height: '580px',
               },
             }}
           >
@@ -116,7 +116,7 @@ const MyProduct = () => {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  height: '60vh',
+                  height: '70vh',
                   justifyContent: 'space-evenly',
                 }}
               >

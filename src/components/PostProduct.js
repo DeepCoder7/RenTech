@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import {
   Grid,
   makeStyles,
@@ -10,7 +10,7 @@ import {
 import productContext from '../contexts/products/productContext';
 import { useNavigate } from 'react-router-dom';
 import modalContext from '../contexts/modalOpener/modalContext';
-import clsx from 'clsx'
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   fields: {
@@ -48,6 +48,7 @@ const categories = [
 ];
 
 const PostProduct = () => {
+  const ref = useRef(null);
   const modalOpener = useContext(modalContext);
   const { setIsLoginOpen } = modalOpener;
 
@@ -77,18 +78,18 @@ const PostProduct = () => {
     noOfProduct: 1,
     proDesc: '',
   });
-  const onChange = e => {
+  const onChange = (e) => {
     setProductDe({ ...productDe, [e.target.name]: e.target.value });
-  }
+  };
   const changeCategory = (e) => {
     setProductDe({ ...productDe, category: e.target.value });
   };
 
-  const uploadImage = e => {
+  const uploadImage = (e) => {
     setProductDe({ ...productDe, productImage: e.target.files[0] });
-  }
+  };
 
-  const resetFormValues = e =>{
+  const resetFormValues = (e) => {
     // e.preventDefault();
     setProductDe({
       productName: '',
@@ -101,30 +102,33 @@ const PostProduct = () => {
       noOfProduct: 1,
       proDesc: '',
     });
-  }
+  };
 
-  const submitProduct = e => {
+  const submitProduct = (e) => {
     e.preventDefault();
     console.log(productDe);
     postProduct(productDe);
-    setProductDe({
-      productName: '',
-      model: '',
-      price: '',
-      category: 'Computer',
-      productImage: '',
-      duration: 28,
-      location: '',
-      noOfProduct: 1,
-      proDesc: '',
-    });
-  }
+    // setProductDe({
+    //   productName: '',
+    //   model: '',
+    //   price: '',
+    //   category: 'Computer',
+    //   productImage: '',
+    //   duration: 28,
+    //   location: '',
+    //   noOfProduct: 1,
+    //   proDesc: '',
+    // });
+    ref.current.click();
+  };
 
   return (
     <>
-      <Paper className={clsx(classes.pageContent,{
-        [classes.pageContentMobileView]: true
-      })}>
+      <Paper
+        className={clsx(classes.pageContent, {
+          [classes.pageContentMobileView]: true,
+        })}
+      >
         <form onSubmit={submitProduct}>
           <Typography variant='h5' align='center'>
             Post Product Form
@@ -246,6 +250,7 @@ const PostProduct = () => {
                   onClick={resetFormValues}
                   variant='contained'
                   color='secondary'
+                  ref={ref}
                 >
                   Reset
                 </Button>
@@ -263,7 +268,7 @@ const PostProduct = () => {
         </form>
       </Paper>
     </>
-  )
+  );
 };
 
 export default PostProduct;
