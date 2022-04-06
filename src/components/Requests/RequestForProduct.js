@@ -2,7 +2,7 @@ import { Button, Container, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import modalContext from '../contexts/modalOpener/modalContext';
+import modalContext from '../../contexts/modalOpener/modalContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {

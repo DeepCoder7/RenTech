@@ -103,9 +103,9 @@ const MyProduct = () => {
               },
               content: {
                 width: matches ? '80%' : '95%',
-                height: matches ? '640px' : '780px',
-                marginTop: matches ? '6%' : '20%',
-                marginLeft: matches?'auto':'-5%',
+                height: matches ? '640px' : '81.2%',
+                marginTop: matches ? '6%' : '22%',
+                marginLeft: matches?'auto':'-8%',
                 marginRight: 'auto',
               },
             }}

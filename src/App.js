@@ -9,7 +9,7 @@ import MyProduct from './components/MyProduct';
 import PostProduct from './components/PostProduct';
 import ModalState from './contexts/modalOpener/ModalState';
 import UserState from './contexts/userCred/UserState';
-import RequestForProduct from './components/RequestForProduct';
+import RequestForProduct from './components/Requests/RequestForProduct';
 import MyBookMarks from './components/MyBookMarks';
 import Analysis from './components/Analysis';
 import ProductAnalysis from './components/Analysis/ProductAnalysis';

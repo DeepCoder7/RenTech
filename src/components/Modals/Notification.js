@@ -39,7 +39,6 @@ const Notification = (props) => {
     if (respNotification.success) {
       notify('success', 'Get Notification successfull');
       setNotifications(respNotification.notification);
-      console.log(respNotification.notification);
     } else {
       notify('error', respNotification.message);
     }
@@ -96,6 +95,8 @@ const Notification = (props) => {
   useEffect(() => {
     if (localStorage.getItem('renToken')) {
       getNotification();
+    }else{
+      setNotifications([]);
     }
     // eslint-disable-next-line
   }, [localStorage.getItem('renToken')]);
@@ -154,7 +155,7 @@ const Notification = (props) => {
                           variant='contained'
                           color='primary'
                           onClick={() => {
-                            Confirm(notification.userId, notification._id);
+                            Confirm(notification._id);
                           }}
                         >
                           Confirm
@@ -163,7 +164,7 @@ const Notification = (props) => {
                           variant='contained'
                           color='secondary'
                           onClick={() => {
-                            Reject(notification.userId, notification._id);
+                            Reject(notification._id);
                           }}
                         >
                           Reject
