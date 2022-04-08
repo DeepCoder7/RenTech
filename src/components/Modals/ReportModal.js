@@ -55,7 +55,7 @@ const ReportModal = (props) => {
             height: '300px',
           },
         }}
-      >
+      > 
         <form onSubmit={handleReport}>
           <FormControl component='fieldset'>
             <FormLabel component='legend'>Report Product</FormLabel>

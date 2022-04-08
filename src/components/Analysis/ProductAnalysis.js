@@ -86,11 +86,13 @@ const ProductAnalysis = () => {
 
     return (
         <>
-            <div style={{ width: '700px' }}>
-                <DoughnutChart chartData={chartData} />
-            </div>
-            <div style={{ width: '700px' }}>
-                <LineChart chartData={popularData} />
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: '10px' }}>
+                <div style={{ width: '500px' }}>
+                    <DoughnutChart chartData={chartData} />
+                </div>
+                <div style={{ width: '600px' }}>
+                    <LineChart chartData={popularData} />
+                </div>
             </div>
         </>
     )

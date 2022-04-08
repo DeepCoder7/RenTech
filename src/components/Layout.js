@@ -236,6 +236,11 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'Request For Product'} />
             </ListItem>
           </Link>
+          <Link to='/viewProdRequest' className={classes.link}>
+            <ListItem button>
+              <ListItemText primary={'View Requested Product'} />
+            </ListItem>
+          </Link>
           <Link to='/analysis/productAnalysis' className={classes.link}>
             <ListItem button>
               <ListItemText primary={'Analysis'} />

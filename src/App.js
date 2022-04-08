@@ -10,6 +10,7 @@ import PostProduct from './components/PostProduct';
 import ModalState from './contexts/modalOpener/ModalState';
 import UserState from './contexts/userCred/UserState';
 import RequestForProduct from './components/Requests/RequestForProduct';
+import RequestProductTable from './components/Requests/RequestProductTable';
 import MyBookMarks from './components/MyBookMarks';
 import Analysis from './components/Analysis';
 import ProductAnalysis from './components/Analysis/ProductAnalysis';
@@ -21,6 +22,8 @@ import AdminUserTable from './components/admin/AdminUserTable';
 import Admin from './components/Admin';
 import AdminProductTable from './components/admin/AdminProductTable';
 import AdminReportTable from './components/admin/AdminReportTable';
+import Deactivate from './components/Forms/Deactivate';
+import UserProfile from './components/Forms/UserProfile';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -49,6 +52,7 @@ const App = () => {
                         path='/requestForProduct'
                         element={<RequestForProduct />}
                       />
+                      <Route path='/viewProdRequest' element={<RequestProductTable />} />
                       <Route path='/myBookMark' element={<MyBookMarks />} />
                       <Route path='/analysis' element={<Analysis />}>
                         <Route
@@ -70,6 +74,8 @@ const App = () => {
                         <Route path='productdetails' element={<AdminProductTable />} />
                         <Route path='reportdetails' element={<AdminReportTable />} />
                       </Route>
+                      <Route path='/deactivate' element={<Deactivate />} />
+                      <Route path='/userProfile' element={<UserProfile />} />
                     </Routes>
                   </Layout>
                 </Router>
