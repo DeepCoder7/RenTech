@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Modal from 'react-modal';
 import modalContext from '../contexts/modalOpener/modalContext';
 import notifyContext from '../contexts/NotificationBar/notifyContext';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,6 +52,8 @@ const ForgotPassword = () => {
 
     const notifyCon = useContext(notifyContext);
     const { notify } = notifyCon;
+
+    const navigate = useNavigate();
 
     const classes = useStyles();
     const matches = useMediaQuery('(min-width:600px)');
@@ -108,6 +111,7 @@ const ForgotPassword = () => {
             if (response.success) {
                 console.log(response.message);
                 setIsLoginOpen(true);
+                navigate('/');
             } else {
                 console.log(response.message);
             }
@@ -123,8 +127,8 @@ const ForgotPassword = () => {
 
     return (
         <>
-            <div className={clsx(classes.root,{
-                [classes.rootShift]:!matches
+            <div className={clsx(classes.root, {
+                [classes.rootShift]: !matches
             })}>
                 <Modal
                     isOpen={changePassModal}
@@ -136,13 +140,13 @@ const ForgotPassword = () => {
                             padding: 6,
                             width: '330px',
                             height: '255px',
-                            top: matches?'40%':'20%',
-                            left: matches?'40%':'10%',
+                            top: matches ? '40%' : '30%',
+                            left: matches ? '40%' : '4%',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-around',
                             backgroundColor: 'white',
-                            zIndex:1
+                            zIndex: 1
                         },
                     }}
                 >
@@ -179,40 +183,44 @@ const ForgotPassword = () => {
                         [classes.paperHeight]: allOTP.otpGen,
                     })}
                 >
-                    <TextField
-                        fullWidth
-                        variant='outlined'
-                        name='email'
-                        value={email}
-                        onChange={onChange}
-                        label='Email'
-                    />
-                    {!allOTP.otpGen && <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.mY2}
-                        onClick={getOTP}
-                    >
-                        Get OTP
-                    </Button>}
-                    {allOTP.otpGen && <><TextField
-                        fullWidth
-                        label='OTP'
-                        variant='outlined'
-                        name='resOTP'
-                        className={classes.mY4}
-                        value={allOTP.resOTP}
-                        onChange={changeOTP}
-                    />
-                        <Button
+                    <form>
+
+
+                        <TextField
+                            fullWidth
+                            variant='outlined'
+                            name='email'
+                            value={email}
+                            onChange={onChange}
+                            label={changePassModal?'':'Email'}
+                        />
+                        {!allOTP.otpGen && <Button
                             variant="contained"
                             color="primary"
                             className={classes.mY2}
-                            onClick={verifyOTP}
+                            onClick={getOTP}
                         >
-                            Verify OTP
-                        </Button>
-                    </>}
+                            Get OTP
+                        </Button>}
+                        {allOTP.otpGen && <><TextField
+                            fullWidth
+                            label={changePassModal?'':'OTP'}
+                            variant='outlined'
+                            name='resOTP'
+                            className={classes.mY4}
+                            value={allOTP.resOTP}
+                            onChange={changeOTP}
+                        />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.mY2}
+                                onClick={verifyOTP}
+                            >
+                                Verify OTP
+                            </Button>
+                        </>}
+                    </form>
                 </Paper>
             </div>
         </>

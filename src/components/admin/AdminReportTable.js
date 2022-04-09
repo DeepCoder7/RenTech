@@ -28,6 +28,7 @@ const AdminReportTable = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'auth-token': localStorage.getItem('renToken'),
                 },
             }
         );

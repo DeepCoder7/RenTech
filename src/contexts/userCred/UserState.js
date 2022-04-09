@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UserContext from './userContext';
 
 const UserState = (props) => {
-    const [userCreds, setUserCreds] = useState({ bookMarkProducts: '' });
+    const [userCreds, setUserCreds] = useState({ bookMarkProducts: '', role:'user' });
     const url = 'http://localhost:8500/api/';
 
     const getUser = async () => {
@@ -16,6 +16,9 @@ const UserState = (props) => {
             });
             const User = await getuser.json();
             setUserCreds(User);
+            if(User.role === 'Admin'){
+                localStorage.setItem('rolo',User.role);
+            }
         } else {
             setUserCreds({ bookMarkProducts: '' });
         }

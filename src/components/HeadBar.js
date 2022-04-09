@@ -70,6 +70,7 @@ const HeadBar = (props) => {
   const logOut = (e) => {
     // e.preventDefault();
     localStorage.removeItem('renToken');
+    localStorage.removeItem('rolo');
     navigate('/');
   };
 

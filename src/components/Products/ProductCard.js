@@ -277,7 +277,6 @@ const ProductCard = (props) => {
           <CardActionArea className={clsx(classes.root, {
             [classes.contentAreaShift]: !matches
           })}
-            onClick={() => { console.log("CardAction"); }}
           >
             {/* for Image */}
             <CardMedia

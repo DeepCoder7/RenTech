@@ -6,7 +6,7 @@ import { Button } from '@material-ui/core';
 
 const AdminTable = () => {
   const changeStatus = async (userID, value) => {
-    const resp = await fetch(
+    await fetch(
       `http://localhost:8500/api/auth/activeUSer/${userID}`,
       {
         method: 'PUT',
@@ -67,6 +67,7 @@ const AdminTable = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('renToken'),
         },
       }
     );

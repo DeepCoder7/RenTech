@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useLayoutEffect } from 'react';
 import clsx from 'clsx';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,14 +20,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import Category from './Category';
 import { Bookmark, Notifications } from '@material-ui/icons';
 import categoryContext from '../contexts/categories/categoryContext';
-// import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import Notification from './Modals/Notification';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  //1. for Roor
+  //1. for Root
   root: {
     display: 'flex',
   },
@@ -181,6 +180,11 @@ const Layout = ({ open, children }) => {
   const context1 = useContext(categoryContext);
   const { search, setSearch } = context1;
 
+  useEffect(() => {
+    console.log(localStorage.getItem('rolo'));
+  }, [localStorage.getItem('rolo')])
+
+
   const searchProducts = async (e) => {
     e.preventDefault();
     console.log(search);
@@ -197,6 +201,9 @@ const Layout = ({ open, children }) => {
   const ClickBookMark = () => {
     navigate('/myBookMark');
   };
+
+  
+  
 
   return (
     <div className={classes.root}>
@@ -246,11 +253,11 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'Analysis'} />
             </ListItem>
           </Link>
-          <Link to='/admin' className={classes.link}>
+          {localStorage.getItem('rolo') ==='Admin' && <Link to='/admin' className={classes.link}>
             <ListItem button>
               <ListItemText primary={'Admin'} />
             </ListItem>
-          </Link>
+          </Link>}
         </List>
       </Drawer>
 

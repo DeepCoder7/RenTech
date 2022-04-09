@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/styles';
 import userContext from '../../contexts/userCred/userContext';
 import notifyContext from '../../contexts/NotificationBar/notifyContext';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
       marginTop: '10px',
@@ -112,8 +112,8 @@ const LogIn = (props) => {
         </Grid>
         <form onSubmit={SubmitLog} className={classes.root}>
           <TextField
-            label='Username'
-            placeholder='Enter Username'
+            label='Email'
+            placeholder='Enter Email'
             name='email'
             type='email'
             onChange={onChange}

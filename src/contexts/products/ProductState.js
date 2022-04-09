@@ -20,13 +20,14 @@ const ProductState = (props) => {
   const [myBookMarkProducts, setMyBookMarkProducts] = useState([]);
 
   // To get the product details from api
-  const getProductDetails = async (search, category) => {
+  const getProductDetails = async (search, category, filterValue) => {
     const response = await fetch(`${host}/getProduct/${category}`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         search: search,
       },
+      body: JSON.stringify(filterValue)
     });
 
     const Pjson = await response.json();
@@ -98,14 +99,6 @@ const ProductState = (props) => {
     formData.append('model', productDe.model);
     formData.append('noOfProduct', productDe.noOfProduct);
     formData.append('duration', productDe.duration);
-    // const response = await fetch(`${host}/addProduct`,{
-    //     method : 'POST',
-    //     headers : {
-    //         "Content-Type": "multipart/form-data",
-    //         'auth-token': authToken
-    //     },
-    //     body: formData
-    // })
 
     console.log(formData);
     const response = await axios.post(`${host}/addProduct`, formData);
