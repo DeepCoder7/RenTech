@@ -4,6 +4,8 @@ import userContext from '../../contexts/userCred/userContext';
 import clsx from 'clsx';
 import categoryContext from '../../contexts/categories/categoryContext';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import notifyContext from '../../contexts/NotificationBar/notifyContext';
 
 Modal.setAppElement('#root');
 
@@ -49,6 +51,11 @@ const UserProfile = () => {
   const filterCon = useContext(categoryContext);
   const { filterValue, setFilterValue } = filterCon;
 
+  const navigate = useNavigate();
+
+  const notifyCon = useContext(notifyContext);
+  const { notify } = notifyCon;
+
   const [updateProf, setUpdateProf] = useState(false)
   const [currentUsrDtls, setCurrentUsrDtls] = useState({
     userName: '',
@@ -90,14 +97,31 @@ const UserProfile = () => {
     setCurrentUsrDtls({ ...currentUsrDtls, [e.target.name]: e.target.value });
   }
 
+  const updateUserPorfile = async (e) => {
+    console.log(currentUsrDtls);
+    const resp = await fetch('http://localhost:8500/api/auth/changeUserDetails', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('renToken')
+      },
+      body: JSON.stringify({ name: currentUsrDtls.userName, location: currentUsrDtls.location })
+    });
+    getUser();
+    notify("success", "User Profile update successfully");
+    setUpdateProf(false);
+  }
+
 
   const classes = useStyles();
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} >
         <Paper elevation={5} className={classes.userImage}>
-          <Avatar className={classes.avatar} alt="Remy Sharp" src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg" />
-          <Button style={{position:"absolute",right:"2%",top:"22%"}}  color="inherit" onClick={updateProfile}>Primary</Button>
+          <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+            <Avatar className={classes.avatar} alt="Remy Sharp" src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg" />
+            <Button color="inherit" onClick={updateProfile}>Edit Profile</Button>
+          </div>
           <Modal
             isOpen={updateProf}
             style={{
@@ -108,17 +132,17 @@ const UserProfile = () => {
                 width: matches ? '40%' : '85%',
                 height: matches ? '380px' : '50%',
                 marginTop: matches ? '6%' : '28%',
-                marginLeft: matches?'auto':'-2%',
+                marginLeft: matches ? 'auto' : '-2%',
                 marginRight: 'auto',
               },
             }}
           >
             <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '45vh',
-                  justifyContent: 'space-evenly',
-                }}>
+              display: 'flex',
+              flexDirection: 'column',
+              height: '45vh',
+              justifyContent: 'space-evenly',
+            }}>
               <TextField
                 label='User Name'
                 name='userName'
@@ -137,11 +161,12 @@ const UserProfile = () => {
                 onChange={changeUsrDtls}
                 value={currentUsrDtls.name}
               />
+              <Button color="inherit" onClick={() => { setUpdateProf(false); navigate('/') }}>change Password</Button>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button
                   style={{ margin: '4px' }}
                   type='submit'
-
+                  onClick={updateUserPorfile}
                   variant='contained'
                   color='secondary'
                 >
@@ -165,10 +190,10 @@ const UserProfile = () => {
       <Grid item xs={12} sm={6} >
         <Paper elevation={5} className={classes.userDetails} >
           <Typography>User Name : {userCreds.name}</Typography>
-         
+
           <Typography>Email : {userCreds.email}</Typography>
           <Typography>Location : {userCreds.location}</Typography>
-         
+
           <Typography>Date : {userCreds.date}</Typography>
         </Paper>
       </Grid>
@@ -203,6 +228,7 @@ const UserProfile = () => {
               name='count'
               type='number'
               inputProps={{ min: 1 }}
+              defaultValue={filterValue.count}
             />
             <TextField
               label='Max Price'
@@ -210,7 +236,7 @@ const UserProfile = () => {
               name='maxPrice'
               type='number'
               inputProps={{ min: filterValue.minPrice }}
-              defaultValue={10000000}
+              defaultValue={filterValue.maxPrice}
             />
           </>}
         </Paper>

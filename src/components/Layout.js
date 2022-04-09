@@ -14,6 +14,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  Avatar,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
@@ -22,6 +23,7 @@ import { Bookmark, Notifications } from '@material-ui/icons';
 import categoryContext from '../contexts/categories/categoryContext';
 import { useNavigate } from 'react-router-dom';
 import Notification from './Modals/Notification';
+import userContext from '../contexts/userCred/userContext';
 
 const drawerWidth = 240;
 
@@ -180,6 +182,9 @@ const Layout = ({ open, children }) => {
   const context1 = useContext(categoryContext);
   const { search, setSearch } = context1;
 
+  const userDet = useContext(userContext);
+  const { userCreds } = userDet;
+
   useEffect(() => {
     console.log(localStorage.getItem('rolo'));
   }, [localStorage.getItem('rolo')])
@@ -202,8 +207,8 @@ const Layout = ({ open, children }) => {
     navigate('/myBookMark');
   };
 
-  
-  
+
+
 
   return (
     <div className={classes.root}>
@@ -219,7 +224,14 @@ const Layout = ({ open, children }) => {
         }}
       >
         <Typography variant='h5' align='center' className={classes.title}>
-          RenTech
+          <div style={{ display: 'flex', marginLeft:'20%' }}>
+            <Avatar className={classes.avatar} alt="Remy Sharp" src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg" />
+            <Link to='/userProfile' className={classes.link}>
+              <ListItem button>
+                <ListItemText primary={userCreds.name} />
+              </ListItem>
+            </Link>
+          </div>
         </Typography>
         <Divider classes={{ root: classes.divider }} />
         <List>
@@ -253,7 +265,7 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'Analysis'} />
             </ListItem>
           </Link>
-          {localStorage.getItem('rolo') ==='Admin' && <Link to='/admin' className={classes.link}>
+          {localStorage.getItem('rolo') === 'Admin' && <Link to='/admin' className={classes.link}>
             <ListItem button>
               <ListItemText primary={'Admin'} />
             </ListItem>
