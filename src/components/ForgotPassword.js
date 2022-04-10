@@ -92,6 +92,7 @@ const ForgotPassword = () => {
     const verifyOTP = e => {
         if ((allOTP.checkOTP === allOTP.resOTP) && (allOTP.resOTP.length == 6)) {
             setChangePassModal(true);
+
         } else {
             console.log("Not Matched");
             notify("warn", "Not Matched");
@@ -110,6 +111,8 @@ const ForgotPassword = () => {
             const response = await respo.json();
             if (response.success) {
                 console.log(response.message);
+                localStorage.removeItem("renToken")
+                notify("success", "Password successfully updated")
                 setIsLoginOpen(true);
                 navigate('/');
             } else {
@@ -192,7 +195,7 @@ const ForgotPassword = () => {
                             name='email'
                             value={email}
                             onChange={onChange}
-                            label={changePassModal?'':'Email'}
+                            label={changePassModal ? '' : 'Email'}
                         />
                         {!allOTP.otpGen && <Button
                             variant="contained"
@@ -204,7 +207,7 @@ const ForgotPassword = () => {
                         </Button>}
                         {allOTP.otpGen && <><TextField
                             fullWidth
-                            label={changePassModal?'':'OTP'}
+                            label={changePassModal ? '' : 'OTP'}
                             variant='outlined'
                             name='resOTP'
                             className={classes.mY4}

@@ -62,9 +62,6 @@ const UserProfile = () => {
     location: '',
   })
 
-  // const [filter, setFilter] = useState(false);
-  // const [filterValue, setFilterValue] = useState({ location: userCreds.location, count: 1, minPrice: 0, maxPrice: 100000000 })
-
   const matches = useMediaQuery('(min-width:600px)');
 
   const handleChange = e => {
@@ -118,7 +115,7 @@ const UserProfile = () => {
     <Grid container spacing={3}>
       <Grid item xs={12} >
         <Paper elevation={5} className={classes.userImage}>
-          <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <Avatar className={classes.avatar} alt="Remy Sharp" src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg" />
             <Button color="inherit" onClick={updateProfile}>Edit Profile</Button>
           </div>
@@ -161,7 +158,7 @@ const UserProfile = () => {
                 onChange={changeUsrDtls}
                 value={currentUsrDtls.name}
               />
-              <Button color="inherit" onClick={() => { setUpdateProf(false); navigate('/') }}>change Password</Button>
+              <Button color="inherit" onClick={() => { setUpdateProf(false); navigate('/forgetPass') }}>change Password</Button>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button
                   style={{ margin: '4px' }}
