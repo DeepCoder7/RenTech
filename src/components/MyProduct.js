@@ -19,13 +19,31 @@ Modal.setAppElement('#root');
 const useStyle = makeStyles((theme) => ({
   containerStyle: {
     marginTop: theme.spacing(1),
+    maxWidth: '1420px',
   },
   containerStyleAfterMedia: {
     marginTop: theme.spacing(1),
     paddingLeft: theme.spacing(0.8),
     paddingRight: theme.spacing(0.8),
   },
+  btnFlex: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '2px',
+  },
+  my2: {
+    marginTop: '7px',
+  },
 }));
+
+const availables = [
+  {
+    value: 'Yes',
+  },
+  {
+    value: 'No',
+  },
+];
 
 const MyProduct = () => {
   const modalOpener = useContext(modalContext);
@@ -64,6 +82,7 @@ const MyProduct = () => {
     model: '',
     duration: 28,
     noOfProduct: 1,
+    available: true,
   });
   const updateProduct = (currentProduct) => {
     setCurProduct({
@@ -74,14 +93,26 @@ const MyProduct = () => {
       model: currentProduct.model,
       duration: currentProduct.duration,
       noOfProduct: currentProduct.noOfProduct,
+      available: currentProduct.available,
+      checkAva: currentProduct.available ? "Yes" : "No",
     });
+    console.log(currentProduct);
     setEditIsOpen(true);
   };
   const editProducts = (e) => {
     e.preventDefault();
+    console.log(curProduct);
     updateProductDetails(curProduct);
 
     setEditIsOpen(false);
+  };
+
+  const changeAvailability = (e) => {
+    if (e.target.value === 'Yes') {
+      setCurProduct({ ...curProduct, available: true, checkAva: e.target.value });
+    } else {
+      setCurProduct({ ...curProduct, available: false, checkAva: e.target.value });
+    }
   };
 
   const onChange = (e) => {
@@ -105,7 +136,7 @@ const MyProduct = () => {
                 width: matches ? '80%' : '95%',
                 height: matches ? '640px' : '81.2%',
                 marginTop: matches ? '6%' : '22%',
-                marginLeft: matches?'auto':'-8%',
+                marginLeft: matches ? 'auto' : '-8%',
                 marginRight: 'auto',
               },
             }}
@@ -165,33 +196,53 @@ const MyProduct = () => {
                   onChange={onChange}
                   value={curProduct.duration}
                 />
-                <TextField
-                  label='No Of Product'
-                  name='noOfProduct'
-                  required
-                  fullWidth
-                  variant='outlined'
-                  onChange={onChange}
-                  value={curProduct.noOfProduct}
-                />
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <TextField
+                    label='No Of Product'
+                    name='noOfProduct'
+                    required
+                    style={{ width: '35%' }}
+                    variant='outlined'
+                    onChange={onChange}
+                    value={curProduct.noOfProduct}
+                  />
+                  <TextField
+                    id='category'
+                    select
+                    label='Available'
+                    style={{ width: '35%' }}
+                    value={curProduct.checkAva}
+                    SelectProps={{
+                      native: true,
+                    }}
+                    variant='outlined'
+                    onChange={changeAvailability}
+                  >
+                    {availables.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.value}
+                      </option>
+                    ))}
+                  </TextField>
+                </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button
+                  style={{ margin: '4px' }}
+                  onClick={() => setEditIsOpen(false)}
+                  variant='contained'
+                  color='secondary'
+                >
+                  Close
+                </Button>
                 <Button
                   style={{ margin: '4px' }}
                   type='submit'
                   onClick={editProducts}
                   variant='contained'
-                  color='secondary'
-                >
-                  Submit
-                </Button>
-                <Button
-                  style={{ margin: '4px' }}
-                  onClick={() => setEditIsOpen(false)}
-                  variant='contained'
                   color='primary'
                 >
-                  Close
+                  Submit
                 </Button>
               </div>
             </div>

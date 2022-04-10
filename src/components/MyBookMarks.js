@@ -7,6 +7,7 @@ import productContext from '../contexts/products/productContext';
 const useStyle = makeStyles((theme) => ({
     containerStyle: {
         marginTop: theme.spacing(1),
+        maxWidth: '1420px',
     }
 }))
 

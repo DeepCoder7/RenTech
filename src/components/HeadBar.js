@@ -128,10 +128,10 @@ const HeadBar = (props) => {
               </>
             ) : (
               <div>
-                <Link to='/userProfile' style={{
+                {/* <Link to='/userProfile' style={{
                   textDecoration: "none",
                   color: 'white',
-                }} >{userCreds.name}</Link>
+                }} >{userCreds.name}</Link> */}
                 <Button
                   color='inherit'
                   size='small'

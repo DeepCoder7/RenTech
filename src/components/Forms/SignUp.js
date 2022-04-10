@@ -123,7 +123,7 @@ const SignUp = (props) => {
       console.log(otp);
       onSubmit();
     }
-    console.log(otp, checkOTP);
+    
     setOtpModal(false);
   };
 
@@ -143,8 +143,9 @@ const SignUp = (props) => {
     if (Pjson.success) {
       localStorage.setItem('renToken', Pjson.authToken);
       getUser();
+      notify("success","You have successfully signUP")
     } else {
-      console.log('Error');
+      notify("error",Pjson.message)
     }
     props.setIsSignUpOpen(false);
   };

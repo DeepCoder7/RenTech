@@ -374,7 +374,7 @@ const ProductPage = (props) => {
                 [classes.font15]: !matches,
               })}
             >
-              <b>Description:</b> {productDetails.proDesc}
+              <b>Specification:</b> {productDetails.proDesc}
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button
@@ -382,8 +382,9 @@ const ProductPage = (props) => {
                 variant='contained'
                 color='inherit'
                 onClick={sendRequest}
+                disabled={!productDetails.available}
               >
-                Take Rent
+                Rent it!
               </Button>
               <Button
                 size='small'

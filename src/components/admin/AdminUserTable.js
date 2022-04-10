@@ -21,7 +21,7 @@ const AdminTable = () => {
     getUserDetails();
   }
   const columns = [
-    { field: 'id', headerName: 'ID' },
+    // { field: 'id', headerName: 'ID' },
     { field: '_id', headerName: 'Identifier', width: 350 },
     { field: 'name', headerName: 'Name', width: 250 },
     { field: 'location', headerName: 'Location', width: 250 },

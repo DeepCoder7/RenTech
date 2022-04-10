@@ -225,12 +225,13 @@ const Layout = ({ open, children }) => {
       >
         <Typography variant='h5' align='center' className={classes.title}>
           <div style={{ display: 'flex', marginLeft:'20%' }}>
-            <Avatar className={classes.avatar} alt="Remy Sharp" src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg" />
+            {localStorage.getItem('renToken')?<><Avatar className={classes.avatar} alt="Remy Sharp" src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg" />
             <Link to='/userProfile' className={classes.link}>
               <ListItem button>
                 <ListItemText primary={userCreds.name} />
               </ListItem>
-            </Link>
+            </Link></>:'RenTech'
+            }
           </div>
         </Typography>
         <Divider classes={{ root: classes.divider }} />
@@ -265,7 +266,7 @@ const Layout = ({ open, children }) => {
               <ListItemText primary={'Analysis'} />
             </ListItem>
           </Link>
-          {localStorage.getItem('rolo') === 'Admin' && <Link to='/admin' className={classes.link}>
+          {localStorage.getItem('rolo') === 'Admin' && <Link to='/admin/userDetails' className={classes.link}>
             <ListItem button>
               <ListItemText primary={'Admin'} />
             </ListItem>

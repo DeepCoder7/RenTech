@@ -2,18 +2,21 @@ import React, { useContext, useEffect } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import modalContext from '../contexts/modalOpener/modalContext';
 import { useNavigate } from 'react-router-dom';
+import userContext from '../contexts/userCred/userContext';
 
 const Admin = () => {
     const modalOpener = useContext(modalContext);
     const { setIsLoginOpen } = modalOpener;
 
+    const userDe = useContext(userContext);
+    const { role } = userDe.userCreds;
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem('renToken')) {
-            navigate('/admin')
+        if (localStorage.getItem('renToken') && role === 'Admin') {
+            navigate('/admin/userDetails')
         } else {
-            setIsLoginOpen(true);
             navigate('/');
         }
         // eslint-disable-next-line

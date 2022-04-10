@@ -9,7 +9,7 @@ const AdminProductTable = () => {
   const { notify } = notifyCon;
 
   const columns = [
-    { field: 'id', headerName: 'ID' },
+    // { field: 'id', headerName: 'ID' },
     { field: '_id', headerName: 'Product ID', width: 350 },
     { field: 'userId', headerName: 'User ID', width: 350 },
     { field: 'productName', headerName: 'Product Name', width: 250 },
