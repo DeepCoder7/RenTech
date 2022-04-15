@@ -65,13 +65,14 @@ const UserProfile = () => {
   const matches = useMediaQuery('(min-width:600px)');
 
   const handleChange = e => {
-    setFilterValue({ ...filterValue, ['status']: !filterValue.status })
+    setFilterValue({ ...filterValue, status: !filterValue.status })
   }
 
   useEffect(() => {
     if (localStorage.getItem('renToken')) {
       getUser();
     }
+    // eslint-disable-next-line
   }, [localStorage.getItem('renToken')])
 
   const onChange = e => {
@@ -79,11 +80,10 @@ const UserProfile = () => {
   }
 
   useEffect(() => {
-    if (filterValue.status) {
-      console.log(filterValue);
-    } else {
+    if (!filterValue.status) {
       setFilterValue({ location: '', maxPrice: 10000000, count: 1, status: false })
     }
+    // eslint-disable-next-line
   }, [filterValue.status])
 
   const updateProfile = () => {
@@ -96,7 +96,7 @@ const UserProfile = () => {
 
   const updateUserPorfile = async (e) => {
     console.log(currentUsrDtls);
-    const resp = await fetch('http://localhost:8500/api/auth/changeUserDetails', {
+    await fetch('http://localhost:8500/api/auth/changeUserDetails', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -147,6 +147,7 @@ const UserProfile = () => {
                 fullWidth
                 variant='outlined'
                 onChange={changeUsrDtls}
+                defaultValue={userCreds.name}
                 value={currentUsrDtls.name}
               />
               <TextField
@@ -155,27 +156,28 @@ const UserProfile = () => {
                 required
                 fullWidth
                 variant='outlined'
+                defaultValue={userCreds.location}
                 onChange={changeUsrDtls}
                 value={currentUsrDtls.name}
               />
-              <Button color="inherit" onClick={() => { setUpdateProf(false); navigate('/forgetPass') }}>change Password</Button>
+              <Button color="inherit" onClick={() => { setUpdateProf(false); localStorage.removeItem('renToken'); navigate('/forgetPass') }}>change Password</Button>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button
+                  style={{ margin: '4px' }}
+                  onClick={() => setUpdateProf(false)}
+                  variant='contained'
+                  color='secondary'
+                >
+                  Close
+                </Button>
                 <Button
                   style={{ margin: '4px' }}
                   type='submit'
                   onClick={updateUserPorfile}
                   variant='contained'
-                  color='secondary'
-                >
-                  Submit
-                </Button>
-                <Button
-                  style={{ margin: '4px' }}
-                  onClick={() => setUpdateProf(false)}
-                  variant='contained'
                   color='primary'
                 >
-                  Close
+                  Submit
                 </Button>
               </div>
             </div>

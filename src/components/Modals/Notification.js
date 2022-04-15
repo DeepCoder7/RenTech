@@ -37,7 +37,6 @@ const Notification = (props) => {
     );
     const respNotification = await respOfRequest.json();
     if (respNotification.success) {
-      notify('success', 'Get Notification successfull');
       setNotifications(respNotification.notification);
     } else {
       notify('error', respNotification.message);
@@ -60,6 +59,7 @@ const Notification = (props) => {
       const respoJson = await respo.json();
       if (respoJson.success) {
         notify('success', respoJson.message);
+        getNotification();
       } else {
         notify('error', respoJson.message);
       }
@@ -84,6 +84,7 @@ const Notification = (props) => {
       const respoJson = await respo.json();
       if (respoJson.success) {
         notify('success', respoJson.message);
+        getNotification();
       } else {
         notify('error', respoJson.message);
       }

@@ -88,7 +88,7 @@ const useStyles = makeStyles({
 const MyProductCard = (props) => {
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:600px)');
-  const { productName, price, location, productImage, available } = props.product;
+  const { productName, price, location, productImage, available, proDesc } = props.product;
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [positionVal, setPositionVal] = useState({ xValue: 0, yValue: 0 });
 
@@ -162,7 +162,7 @@ const MyProductCard = (props) => {
               <Typography className={clsx(classes.fontNormal, {
                 [classes.font10]: !matches
               })} variant='body2' color='textSecondary' noWrap component='p'>
-                All description will be displayed here
+                {proDesc}
               </Typography>
               <Typography className={clsx(classes.fontNormal, {
                 [classes.font12]: !matches

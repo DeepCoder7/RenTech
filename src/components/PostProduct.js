@@ -240,7 +240,7 @@ const PostProduct = () => {
                 value={productDe.proDesc}
                 multiline
                 rows={2}
-                label='Description'
+                label='Specification'
                 variant='outlined'
               />
               <Grid container justifyContent='space-around'>

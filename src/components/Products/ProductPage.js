@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import Modal from 'react-modal';
 import notifyContext from '../../contexts/NotificationBar/notifyContext';
+import userContext from '../../contexts/userCred/userContext';
 
 Modal.setAppElement('#root');
 
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px',
     backgroundColor: 'ghostwhite',
     borderRadius: '10px',
+    overflow: 'hidden',
   },
   contentShift: {
     display: 'flex',
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '4px',
     backgroundColor: 'ghostwhite',
     borderRadius: '10px',
+    overflow: 'hidden',
   },
   contentShiftDe: {
     display: 'flex',
@@ -124,6 +127,9 @@ const ProductPage = (props) => {
   const classes = useStyles();
   const notifyCon = useContext(notifyContext);
   const { notify } = notifyCon;
+
+  const userCon = useContext(userContext);
+  const { userCreds } = userCon;
 
   const params = useParams();
   const [overAllRating, setOverAllRating] = useState(0);
@@ -376,7 +382,7 @@ const ProductPage = (props) => {
             >
               <b>Specification:</b> {productDetails.proDesc}
             </Typography>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {userCreds._id !== productDetails.userId && <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button
                 size='small'
                 variant='contained'
@@ -396,7 +402,7 @@ const ProductPage = (props) => {
               >
                 Give Rating
               </Button>
-            </div>
+            </div>}
           </Paper>
         </Grid>
       </Grid>

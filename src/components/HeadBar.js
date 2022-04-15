@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SignUp from './Forms/SignUp';
 import Modal from 'react-modal';
 import { Menu } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -15,7 +14,6 @@ import {
 import Login from './Forms/Login';
 import { useNavigate } from 'react-router-dom';
 import modalContext from '../contexts/modalOpener/modalContext';
-import userContext from '../contexts/userCred/userContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,19 +51,9 @@ const HeadBar = (props) => {
   const matches = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
 
-  const usrCon = useContext(userContext)
-  const { userCreds, getUser } = usrCon
-
   const modalOpener = useContext(modalContext);
   const { isSignUpOpen, setIsSignUpOpen, isLoginOpen, setIsLoginOpen } =
     modalOpener;
-
-  useEffect(() => {
-    if (localStorage.getItem('renToken')) {
-      getUser();
-    }
-  }, [localStorage.getItem('renToken')])
-
 
   const logOut = (e) => {
     // e.preventDefault();
@@ -73,19 +61,21 @@ const HeadBar = (props) => {
     localStorage.removeItem('rolo');
     navigate('/');
   };
-
+  
   const LogInClick = () => {
     setIsLoginOpen(true);
     if (isSignUpOpen) {
       setIsSignUpOpen(false);
     }
+    navigate('/');
   };
-
+  
   const SingUpClick = () => {
     setIsSignUpOpen(true);
     if (isLoginOpen) {
       setIsLoginOpen(false);
     }
+    navigate('/');
   };
   return (
     <>
