@@ -207,8 +207,8 @@ const ProductPage = (props) => {
       notify('success', 'Rating recorded');
     } else {
       notify('error', Pjson.message);
-      setIsRateModal(false);
     }
+    setIsRateModal(false);
     setRateDetails({ rating: 0, ratingDesc: '' });
   };
   useEffect(() => {

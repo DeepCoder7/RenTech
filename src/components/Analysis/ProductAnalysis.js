@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import DoughnutChart from '../Charts/DoughnutChart';
 import LineChart from '../Charts/LineChart';
@@ -86,11 +87,12 @@ const ProductAnalysis = () => {
 
     return (
         <>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: '10px' }}>
-                <div style={{ width: '500px' }}>
+            <div style={{ display: "flex", flexDirection:'column', justifyContent: "space-between", marginTop: '10px' }}>
+                <div style={{ width: '500px', alignSelf:'center' }}>
+                    <Typography>No Of Products</Typography>
                     <DoughnutChart chartData={chartData} />
                 </div>
-                <div style={{ width: '600px' }}>
+                <div style={{ width: '70%', backgroundColor:'rgba(200,200,200,0.39)', marginTop: '10px' }}>
                     <LineChart chartData={popularData} />
                 </div>
             </div>
