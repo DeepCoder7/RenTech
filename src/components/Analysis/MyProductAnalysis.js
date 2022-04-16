@@ -5,6 +5,7 @@ import PieChart from '../Charts/PieChart';
 import DoughnutChart from '../Charts/DoughnutChart';
 import { useNavigate } from 'react-router-dom';
 import modalContext from '../../contexts/modalOpener/modalContext';
+import { Paper, useMediaQuery } from '@material-ui/core';
 
 // Analysis with ClickCount - Done
 // Analysis with BookMarked - Done
@@ -16,6 +17,8 @@ const MyProductAnalysis = () => {
 
   const modalOpener = useContext(modalContext);
   const { setIsLoginOpen } = modalOpener;
+
+  const matches = useMediaQuery('(min-width:600px)');
 
   const [productNames, setProductNames] = useState([]);
   // eslint-disable-next-line
@@ -31,6 +34,24 @@ const MyProductAnalysis = () => {
       backgroundColor: ['green', 'red', 'black'],
     }]
   });
+  
+  const [viewAllAna, setViewAllAna] = useState({
+    labels: productNames,
+    datasets: [{
+      label: 'Over All products',
+      data: clicksInProduct,
+      backgroundColor: ['green', 'red', 'black'],
+    }]
+  });
+
+  const [ratingData, setRatingData] = useState({
+    labels: productNames,
+    datasets: [{
+      label: 'Over All products',
+      data: ratingsOfProduct,
+      backgroundColor: ['green', 'red', 'black'],
+    }]
+  })
 
   const [bookMarkedData, setBookMarkedData] = useState({
     labels: productNames,
@@ -100,6 +121,15 @@ const MyProductAnalysis = () => {
       }]
     })
 
+    setRatingData({
+      labels: productNames,
+      datasets: [{
+        label: 'OverAll Rating to the Product',
+        data: ratingsOfProduct,
+        backgroundColor: JSON.parse(`[${container}]`),
+      }]
+    })
+
     setBookMarkedData({
       labels: productNames,
       datasets: [{
@@ -108,29 +138,48 @@ const MyProductAnalysis = () => {
         backgroundColor: JSON.parse(`[${container}]`),
       }]
     })
+    
+    setViewAllAna({
+      labels: productNames,
+      datasets: [{
+        label: 'No of BookMarked',
+        data: noOfBookMarked,
+        backgroundColor: 'green',
+      },{
+        label: 'No of Views',
+        data: clicksInProduct,
+        backgroundColor: 'blue',
+      },{
+        label: 'OverAll Rating to the Product',
+        data: ratingsOfProduct,
+        backgroundColor: 'red',
+      }]
+    })
 
-    console.log(bookMarkedData);
+    // console.log(ratingsOfProduct);
+
+    // console.log(bookMarkedData);
     // eslint-disable-next-line
   }, [noOfBookMarked])
 
   return (
-    <div style={{ display: 'flex', flexWrap:'wrap', width: '100%' }}>
-      <div style={{ width: '45%', marginRight:'10px' }}>
+    <div style={{ display: 'flex', flexWrap:matches?'wrap':'nowrap', flexDirection: matches?'row':'column', width: '100%', justifyContent: matches?'space-around':'center', textAlign:'center' }}>
+      <Paper elevation={2} style={{ width: matches?'45%':'90%', backgroundColor:'rgba(200,200,200,0.4)', marginRight:'10px', marginBottom:'20px' }}>
         <BarChart key={1} chartData={bookMarkedData} />
-        <h2>BarChart</h2>
-      </div>
-      <div style={{ width: '49%', marginLeft:'20px' }}>
+        <h2>No Of BookMarks</h2>
+      </Paper>
+      <Paper style={{ width: matches?'30%':'94%', backgroundColor:'rgba(200,200,200,0.4)', marginLeft:'20px', display:'flex',flexDirection:'column', alignItems:'center', marginLeft:'1%' }}>
         <DoughnutChart key={2} chartData={viewData} />
-        <h2>DoughnutChart</h2>
-      </div>
-      <div style={{ width: '49%' }}>
-        <LineChart key={3} chartData={viewData} />
-        <h2>LineChart</h2>
-      </div>
-      <div style={{ width: '30%', marginLeft:'20px' }}>
-        <PieChart chartData={viewData} />
+        <h2>No. Of View in Product</h2>
+      </Paper>
+      <Paper style={{ height: '30%',width: matches?'39%':'85%', backgroundColor:'rgba(200,200,200,0.4)', marginTop: '20px' }}>
+        <LineChart key={3} chartData={ratingData} />
+        <h2>Overall Rating to the product</h2>
+      </Paper>
+      <Paper style={{ width: matches?'35%':'85%', backgroundColor:'rgba(200,200,200,0.4)', marginTop:'20px', padding:'20px' }}>
+        <BarChart chartData={viewAllAna} />
         <h2>PieChart</h2>
-      </div>
+      </Paper>
     </div>
   )
 }

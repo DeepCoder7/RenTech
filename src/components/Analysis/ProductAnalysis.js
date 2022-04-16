@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import DoughnutChart from '../Charts/DoughnutChart';
 import LineChart from '../Charts/LineChart';
@@ -7,6 +7,19 @@ const ProductAnalysis = () => {
     const [productNames, setProductNames] = useState([]);
     const [totalProduct, setTotalProduct] = useState([]);
     const [popularProducts, setPopularProducts] = useState([]);
+
+    const [genders, setGenders] = useState([]);
+    const [totalStrength, setTotalStrength] = useState([]);
+
+    const [ratioOfGender, setRatioOfGender] = useState({
+        labels: genders,
+        datasets: [{
+            label: 'Over All products',
+            data: [],
+            backgroundColor: ['green', 'red', 'black'],
+        }]
+    });
+
     const [popularData, setPopularData] = useState({
         labels: productNames,
         datasets: [{
@@ -35,6 +48,8 @@ const ProductAnalysis = () => {
         const Pjson = await response.json();
         setProductNames(Pjson.productNames);
         setPopularProducts(Pjson.popularityOfProducts);
+        setGenders(Pjson.genders);
+        setTotalStrength(Pjson.totalStrength);
         setTotalProduct(Pjson.totalProducts);
     }
 
@@ -74,6 +89,14 @@ const ProductAnalysis = () => {
                 backgroundColor: JSON.parse(`[${container}]`),
             }]
         })
+        setRatioOfGender({
+            labels: genders,
+            datasets: [{
+                label: 'Over All products',
+                data: totalStrength,
+                backgroundColor: JSON.parse(`[${container}]`),
+            }]
+        })
         setPopularData({
             labels: productNames,
             datasets: [{
@@ -87,14 +110,19 @@ const ProductAnalysis = () => {
 
     return (
         <>
-            <div style={{ display: "flex", flexDirection:'column', justifyContent: "space-between", marginTop: '10px' }}>
-                <div style={{ width: '500px', alignSelf:'center' }}>
-                    <Typography>No Of Products</Typography>
+            <div style={{ display: "flex", justifyContent: "space-around",flexWrap:'wrap', marginTop: '10px', textAlign:'center' }}>
+                <Paper elevation={5} style={{ width: '45%',display: "flex", backgroundColor:'rgba(200,200,230,0.39)',flexDirection:'column', alignItems:'center' }}>
                     <DoughnutChart chartData={chartData} />
-                </div>
-                <div style={{ width: '70%', backgroundColor:'rgba(200,200,200,0.39)', marginTop: '10px' }}>
+                    <Typography>No Of Products</Typography>
+                </Paper>
+                <Paper elevation={5} style={{ width: '45%',display: "flex", backgroundColor:'rgba(200,200,230,0.39)', flexDirection:'column', alignItems:'center' }}>
+                    <DoughnutChart chartData={ratioOfGender} />
+                    <Typography>Total ration of male and female users</Typography>
+                </Paper>
+                <Paper elevation={5} style={{ width: '70%', backgroundColor:'rgba(200,200,230,0.39)', marginTop: '20px' }}>
                     <LineChart chartData={popularData} />
-                </div>
+                    <Typography>Popularity of Product</Typography>
+                </Paper>
             </div>
         </>
     )
