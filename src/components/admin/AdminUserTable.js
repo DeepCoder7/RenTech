@@ -22,9 +22,9 @@ const AdminTable = () => {
   }
   const columns = [
     // { field: 'id', headerName: 'ID' },
-    { field: '_id', headerName: 'Identifier', width: 350 },
-    { field: 'name', headerName: 'Name', width: 250 },
-    { field: 'location', headerName: 'Location', width: 250 },
+    { field: '_id', headerName: 'Identifier', width: 250 },
+    { field: 'name', headerName: 'Name', width: 240 },
+    { field: 'location', headerName: 'Location', width: 200 },
     { field: 'email', headerName: 'Email', width: 250 },
     { field: 'date', headerName: 'Date', width: 250 },
     {

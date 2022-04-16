@@ -78,11 +78,13 @@ const SignUp = (props) => {
 
   const handleChange = (e) => {
     setSelected(e.target.value);
+    setSignUpCreds({...signUpCreds, gender: e.target.value})
   };
 
   const [signUpCreds, setSignUpCreds] = useState({
     name: '',
     email: '',
+    gender: 'male',
     password: '',
     cpassword: '',
     location: '',
@@ -110,9 +112,13 @@ const SignUp = (props) => {
       });
 
       const respJson = await respo.json();
-      setCheckOTP(respJson.OTP);
-      notify('success', 'Your OTP is send Successfully');
-      setOtpModal(true);
+      if(respJson.success){
+        setCheckOTP(respJson.OTP);
+        notify('success', 'Your OTP is send Successfully');
+        setOtpModal(true);
+      }else{
+        notify('error',respJson.message)
+      }
     } else {
       notify('error', 'Password must be more than 8 char and less than 15');
     }
@@ -122,6 +128,8 @@ const SignUp = (props) => {
     if (checkOTP === otp) {
       console.log(otp);
       onSubmit();
+    }else{
+      notify('warn','Wrong OTP');
     }
     
     setOtpModal(false);
@@ -155,6 +163,7 @@ const SignUp = (props) => {
     setSignUpCreds({
       name: '',
       email: '',
+      gender: 'male',
       password: '',
       cpassword: '',
       location: '',
