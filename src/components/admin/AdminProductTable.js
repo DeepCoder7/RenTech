@@ -41,24 +41,25 @@ const AdminProductTable = () => {
   ];
 
   const deleteProduct = async (userID) => {
-    const resp = await fetch(
-      `http://localhost:8500/api/auth/deleteProd/${userID}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': localStorage.getItem('renToken'),
-        },
-      }
-    );
+    if (window.confirm("Are You Sure, You want to delete this product")) {
+      const resp = await fetch(
+        `http://localhost:8500/api/auth/deleteProd/${userID}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('renToken'),
+          },
+        }
+      );
 
-    getProdDetails();
-    const deleteresp = await resp.json();
-    if (deleteresp.success) {
-      notify('success', deleteresp.message);
-      console.log('OK');
-    } else {
-      notify('error', deleteresp.message);
+      getProdDetails();
+      const deleteresp = await resp.json();
+      if (deleteresp.success) {
+        notify('success', deleteresp.message);
+      } else {
+        notify('error', deleteresp.message);
+      }
     }
   };
 

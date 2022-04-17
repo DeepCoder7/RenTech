@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserContext from './userContext';
 
 const UserState = (props) => {
@@ -34,7 +34,11 @@ const UserState = (props) => {
             body: JSON.stringify({ proOwnId, proID, descOfReport })
         })
         const Pjson = await report.json();
-        return Pjson;
+        if(Pjson.success){
+            return {success:"success",message:Pjson.message}
+        }else{
+            return {success:'error', message:Pjson.message}
+        }
     }
 
     useEffect(() => {

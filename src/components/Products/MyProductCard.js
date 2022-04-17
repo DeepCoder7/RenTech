@@ -99,7 +99,9 @@ const MyProductCard = (props) => {
 
   const DeleteProductCard = () => {
     setModalIsOpen(false);
-    props.DeleteProduct(props.product);
+    if(window.confirm("Are You Sure, You want to delete this product")){
+      props.DeleteProduct(props.product);
+    }
   }
 
   const productUpdate = () => {

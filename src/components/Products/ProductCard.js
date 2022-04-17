@@ -136,13 +136,23 @@ const ProductCard = (props) => {
     setModalIsOpen(false);
   };
 
-  const submitReport = (descOfReport) => {
+  const submitReport = async(descOfReport) => {
     if (localStorage.getItem('renToken')) {
-      const repoJson = reportProduct(props.product.userId, props.product._id, descOfReport);
-      if (repoJson.success) {
-        notify('success', repoJson.message)
+      // const check = reportProduct(props.product.userId, props.product._id, descOfReport);
+      // notify(check.success, check.message)
+      const report = await fetch(`http://localhost:8500/api/reportProduct/ReportProduct`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('renToken')
+        },
+        body: JSON.stringify({ proOwnId:props.product.userId, proID:props.product._id, descOfReport })
+      })
+      const Pjson = await report.json();
+      if (Pjson.success) {
+        notify("success",Pjson.message);
       } else {
-        notify('error', repoJson.message)
+        notify("error",Pjson.message);
       }
     } else {
       notify('warn', 'Not Allowed')

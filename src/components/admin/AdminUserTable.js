@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Button } from '@material-ui/core';
 
-
-
 const AdminTable = () => {
-  const changeStatus = async (userID, value) => {
-    await fetch(
-      `http://localhost:8500/api/auth/activeUSer/${userID}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': localStorage.getItem('renToken'),
-        },
-        body: JSON.stringify({ value: value })
-      }
-    );
+  const changeStatus = async (userID, value, active) => {
+    if (window.confirm(`Are you sure, you want to ${active}`)) {
+
+      await fetch(
+        `http://localhost:8500/api/auth/activeUSer/${userID}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('renToken'),
+          },
+          body: JSON.stringify({ value: value })
+        }
+      );
+
+    }
+
 
     getUserDetails();
   }
@@ -36,7 +39,7 @@ const AdminTable = () => {
             variant="contained"
             color="primary"
             onClick={(e) => {
-              changeStatus(cellValues.row._id, !cellValues.row.active);
+              changeStatus(cellValues.row._id, !cellValues.row.active, cellValues.row.active?"Deactive":"Active");
             }}
           >
             {cellValues.row.active ? 'Activate' : 'Deactive'}
