@@ -58,7 +58,7 @@ const useStyles = makeStyles({
     borderRadius: '50%',
     width: '18px',
     height: '18px',
-    left: '0%',
+    // left: '0%',
     position: 'relative',
     top: '-36px',
     left: '16px'

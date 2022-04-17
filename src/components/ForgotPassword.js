@@ -84,15 +84,14 @@ const ForgotPassword = () => {
         const respJson = await respo.json();
         if (respJson.success) {
             notify("success", "OTP is sended to your email id")
-            setAllOTP({ ...allOTP, ['checkOTP']: respJson.OTP, ['otpGen']: true });
+            setAllOTP({ ...allOTP, checkOTP: respJson.OTP, otpGen: true });
         } else {
             notify("error", respJson.message)
         }
     }
     const verifyOTP = e => {
-        if ((allOTP.checkOTP === allOTP.resOTP) && (allOTP.resOTP.length == 6)) {
+        if ((allOTP.checkOTP === allOTP.resOTP) && (allOTP.resOTP.length === 6)) {
             setChangePassModal(true);
-
         } else {
             console.log("Not Matched");
             notify("warn", "Not Matched");

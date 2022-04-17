@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import BarChart from '../Charts/BarChart';
 import LineChart from '../Charts/LineChart';
-import PieChart from '../Charts/PieChart';
 import DoughnutChart from '../Charts/DoughnutChart';
 import { useNavigate } from 'react-router-dom';
 import modalContext from '../../contexts/modalOpener/modalContext';
@@ -104,8 +103,10 @@ const MyProductAnalysis = () => {
       let color23 = generateRandomColor();
       if (!container.includes(color23)) {
         if (i === 0) {
+          // eslint-disable-next-line
           container += (`"${color23}"`);
         } else {
+          // eslint-disable-next-line
           container += (',' + `"${color23}"`);
         }
       } else {
@@ -168,7 +169,7 @@ const MyProductAnalysis = () => {
         <BarChart key={1} chartData={bookMarkedData} />
         <h2>No Of BookMarks</h2>
       </Paper>
-      <Paper style={{ width: matches?'30%':'94%', backgroundColor:'rgba(200,200,200,0.4)', marginLeft:'20px', display:'flex',flexDirection:'column', alignItems:'center', marginLeft:'1%' }}>
+      <Paper style={{ width: matches?'30%':'94%', backgroundColor:'rgba(200,200,200,0.4)', display:'flex',flexDirection:'column', alignItems:'center', marginLeft:'1%' }}>
         <DoughnutChart key={2} chartData={viewData} />
         <h2>No. Of View in Product</h2>
       </Paper>
@@ -178,7 +179,7 @@ const MyProductAnalysis = () => {
       </Paper>
       <Paper style={{ width: matches?'35%':'85%', backgroundColor:'rgba(200,200,200,0.4)', marginTop:'20px', padding:'20px' }}>
         <BarChart chartData={viewAllAna} />
-        <h2>PieChart</h2>
+        <h2>Overall Analysis</h2>
       </Paper>
     </div>
   )

@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 const columns = [
     // { field: 'id', headerName: 'ID' },
-    { field: '_id', headerName: 'Request ID', width: 350 },
-    { field: 'userId', headerName: 'User ID', width: 250 },
+    // { field: '_id', headerName: 'Request ID', width: 350 },
+    // { field: 'userId', headerName: 'User ID', width: 250 },
     { field: 'productName', headerName: 'Product Name', width: 250 },
     { field: 'descOfProduct', headerName: 'Specification', width: 250 },
     { field: 'modelName', headerName: 'Model', width: 250 },

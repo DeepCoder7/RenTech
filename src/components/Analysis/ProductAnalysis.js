@@ -72,9 +72,11 @@ const ProductAnalysis = () => {
         for (let i = 0; i < productNames.length; i++) {
             let color23 = generateRandomColor();
             if (!container.includes(color23)) {
-                if (i == 0) {
+                if (i === 0) {
+                    // eslint-disable-next-line
                     container += (`"${color23}"`);
                 } else {
+                    // eslint-disable-next-line
                     container += (',' + `"${color23}"`);
                 }
             } else {
@@ -105,6 +107,7 @@ const ProductAnalysis = () => {
                 backgroundColor: JSON.parse(`[${container}]`),
             }]
         })
+        // eslint-disable-next-line
     }, [totalProduct])
 
 
@@ -117,7 +120,7 @@ const ProductAnalysis = () => {
                 </Paper>
                 <Paper elevation={5} style={{ width: '45%',display: "flex", backgroundColor:'rgba(200,200,230,0.39)', flexDirection:'column', alignItems:'center' }}>
                     <DoughnutChart chartData={ratioOfGender} />
-                    <Typography>Total ration of male and female users</Typography>
+                    <Typography>Total ratio of male and female users</Typography>
                 </Paper>
                 <Paper elevation={5} style={{ width: '70%', backgroundColor:'rgba(200,200,230,0.39)', marginTop: '20px' }}>
                     <LineChart chartData={popularData} />
