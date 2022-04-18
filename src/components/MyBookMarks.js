@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import ProductCard from './Products/ProductCard';
 import { useNavigate } from 'react-router-dom';
 import productContext from '../contexts/products/productContext';
+import notifyContext from '../contexts/NotificationBar/notifyContext';
 
 const useStyle = makeStyles((theme) => ({
     containerStyle: {
@@ -18,13 +19,17 @@ const MyBookMarks = () => {
     const context = useContext(productContext);
     const { myBookMarkProducts, MyBookMarkProducts } = context;
 
+    const notCon = useContext(notifyContext)
+    const { notify } = notCon;
+
     // const [myBookMarkProducts, setmyBookMarkProducts] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         if (localStorage.getItem('renToken')) {
             MyBookMarkProducts();
         } else {
             navigate('/');
+            notify("warn", "You need to log in.")
         }
         // eslint-disable-next-line
     }, [localStorage.getItem('renToken')])

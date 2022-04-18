@@ -39,7 +39,7 @@ const AdminTable = () => {
             variant="contained"
             color="primary"
             onClick={(e) => {
-              changeStatus(cellValues.row._id, !cellValues.row.active, cellValues.row.active?"Deactive":"Active");
+              changeStatus(cellValues.row._id, !cellValues.row.active, cellValues.row.active ? "Deactive" : "Active");
             }}
           >
             {cellValues.row.active ? 'Activate' : 'Deactive'}
@@ -91,6 +91,7 @@ const AdminTable = () => {
         rows={tableData}
         columns={columns}
         pageSize={10}
+        rowsPerPageOptions={[10]}
         // autoPageSize={true}
         checkboxSelection
       />

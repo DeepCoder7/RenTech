@@ -388,7 +388,7 @@ const ProductPage = (props) => {
                 variant='contained'
                 color='inherit'
                 onClick={sendRequest}
-                disabled={!productDetails.available}
+                disabled={!productDetails.available || !localStorage.getItem('renToken')}
               >
                 Rent it!
               </Button>
@@ -396,6 +396,7 @@ const ProductPage = (props) => {
                 size='small'
                 variant='contained'
                 color='inherit'
+                disabled={!localStorage.getItem('renToken')}
                 onClick={() => {
                   setIsRateModal(true);
                 }}
